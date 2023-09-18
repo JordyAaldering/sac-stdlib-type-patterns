@@ -8,56 +8,71 @@ export all;
 
 #include "Templates.mac"
 
-
 /******************************************************************************
  *
- * Helper functions
+ * Function to perform min_SxS_( x, y),
+ * but written to let the optimizers simplify the arguments.
  *
  ******************************************************************************/
+
 inline 
 int Min( int x, int y)
-{ /* Function to perform min_SxS_( x, y), but written to 
-   * let the optimizers simplify the arguments.
-   */
-
+{
   z = _min_SxS_( x, y);
-  return(z);
+  return( z);
 }
+
+/******************************************************************************
+ *
+ * Function to perform min_VxV_( x, y)
+ * but written to let the optimizers simplify the arguments.
+ *
+ ******************************************************************************/
 
 inline 
-int[.] Min( int[.] x, int[.] y)
-{ /* Function to perform min_VxV_( x, y), but written to 
-   * let the optimizers simplify the arguments.
-   */
-
+int[n] Min( int[n] x, int[n] y)
+{
   z = _min_VxV_( x, y);
-  return(z);
+  return( z);
 }
+
+/******************************************************************************
+ *
+ * Function to perform max_SxS_( x, y)
+ * but written to let the optimizers simplify the arguments.
+ *
+ ******************************************************************************/
 
 inline 
 int Max( int x, int y)
-{ /* Function to perform max_SxS_( x, y), but written to 
-   * let the optimizers simplify the arguments.
-   */
-
+{
   z = _max_SxS_( x, y);
   return(z);
 }
 
-inline 
-int[.] Max( int[.] x, int y)
-{ /* Function to perform max_VxS_( x, y), but written to 
-   * let the optimizers simplify the arguments.
-   */
+/******************************************************************************
+ *
+ * Function to perform max_VxS_( x, y)
+ * but written to let the optimizers simplify the arguments.
+ *
+ ******************************************************************************/
 
+inline 
+int[n] Max( int[n] x, int y)
+{
   z = _max_VxS_( x, y);
-  return(z);
+  return( z);
 }
+
+/******************************************************************************
+ *
+ * Normalizer for rotate count.
+ *
+ ******************************************************************************/
 
 inline
 int NormalizeRotateCount( int count, int max_rotate)
 {
-  /* Normalizer for rotate count */
   z = _aplmod_SxS_( count, max_rotate);
   return( z);
 }
