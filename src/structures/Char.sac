@@ -5,99 +5,125 @@ export all;
 
 #include "Templates.mac"
 
-external bool isalpha  (char C);
-    #pragma linksign[ 0, 1]
-    #pragma linkobj "src/Char/ctype.o"
-    #pragma linkname "SACisalpha"
-external bool isupper  (char C);
-    #pragma linksign[ 0, 1]
-    #pragma linkobj "src/Char/ctype.o"
-    #pragma linkname "SACisupper"
-external bool islower  (char C); 
-    #pragma linksign[ 0, 1]
-    #pragma linkobj "src/Char/ctype.o"
-    #pragma linkname "SACislower"
-external bool isdigit  (char C); 
-    #pragma linksign[ 0, 1]
-    #pragma linkobj "src/Char/ctype.o"
-    #pragma linkname "SACisdigit"
+/******************************************************************************
+ *
+ * These functions test characters of being in a specific range.
+ * E.g. in the range of digits, letters, or lower case letters.
+ *
+ ******************************************************************************/
+
+external bool isalpha( char C);
+  #pragma linksign[ 0, 1]
+  #pragma linkobj "src/Char/ctype.o"
+  #pragma linkname "SACisalpha"
+
+external bool isupper( char C);
+  #pragma linksign[ 0, 1]
+  #pragma linkobj "src/Char/ctype.o"
+  #pragma linkname "SACisupper"
+
+external bool islower( char C); 
+  #pragma linksign[ 0, 1]
+  #pragma linkobj "src/Char/ctype.o"
+  #pragma linkname "SACislower"
+
+external bool isdigit( char C); 
+  #pragma linksign[ 0, 1]
+  #pragma linkobj "src/Char/ctype.o"
+  #pragma linkname "SACisdigit"
+
 external bool isxdigit (char C);
-    #pragma linksign[ 0, 1]
-    #pragma linkobj "src/Char/ctype.o"
-    #pragma linkname "SACisxdigit"
-external bool isspace  (char C); 
-    #pragma linksign[ 0, 1]
-    #pragma linkobj "src/Char/ctype.o"
-    #pragma linkname "SACisspace"
-external bool ispunct  (char C); 
-    #pragma linksign[ 0, 1]
-    #pragma linkobj "src/Char/ctype.o"
-    #pragma linkname "SACispunct"
-external bool isalnum  (char C); 
-    #pragma linksign[ 0, 1]
-    #pragma linkobj "src/Char/ctype.o"
-    #pragma linkname "SACisalnum"
-external bool isprint  (char C); 
-    #pragma linksign[ 0, 1]
-    #pragma linkobj "src/Char/ctype.o"
-    #pragma linkname "SACisprint"
-external bool isgraph  (char C); 
-    #pragma linksign[ 0, 1]
-    #pragma linkobj "src/Char/ctype.o"
-    #pragma linkname "SACisgraph"
-external bool iscntrl  (char C); 
-    #pragma linksign[ 0, 1]
-    #pragma linkobj "src/Char/ctype.o"
-    #pragma linkname "SACiscntrl"
+  #pragma linksign[ 0, 1]
+  #pragma linkobj "src/Char/ctype.o"
+  #pragma linkname "SACisxdigit"
 
-    /* The above functions test characters of being in a specific range,
-       e.g. in the range of digits, letters, or lower case letters. */
+external bool isspace( char C); 
+  #pragma linksign[ 0, 1]
+  #pragma linkobj "src/Char/ctype.o"
+  #pragma linkname "SACisspace"
 
+external bool ispunct( char C); 
+  #pragma linksign[ 0, 1]
+  #pragma linkobj "src/Char/ctype.o"
+  #pragma linkname "SACispunct"
 
-external bool isascii (int N); 
-    #pragma linksign[ 0, 1]
-    #pragma linkobj "src/Char/ctype.o"
-    #pragma linkname "SACisascii"
-external char toascii (int N); 
-    #pragma linksign[ 0, 1]
-    #pragma linkobj "src/Char/ctype.o"
-    #pragma linkname "SACtoascii"
+external bool isalnum( char C); 
+  #pragma linksign[ 0, 1]
+  #pragma linkobj "src/Char/ctype.o"
+  #pragma linkname "SACisalnum"
 
-    /* These functions test an integer value for being in the range of the
-       ASCII character set or convert an integer value into an ASCII
-       character, respectively. */
+external bool isprint( char C); 
+  #pragma linksign[ 0, 1]
+  #pragma linkobj "src/Char/ctype.o"
+  #pragma linkname "SACisprint"
 
+external bool isgraph( char C); 
+  #pragma linksign[ 0, 1]
+  #pragma linkobj "src/Char/ctype.o"
+  #pragma linkname "SACisgraph"
 
-external char tolower (char C);
-    #pragma linksign[ 0, 1]
-    #pragma linkobj "src/Char/ctype.o"
-    #pragma linkname "SACtolower"
-external char toupper (char C);
-    #pragma linksign[ 0, 1]
-    #pragma linkobj "src/Char/ctype.o"
-    #pragma linkname "SACtoupper"
+external bool iscntrl( char C); 
+  #pragma linksign[ 0, 1]
+  #pragma linkobj "src/Char/ctype.o"
+  #pragma linkname "SACiscntrl"
 
-    /* These functions convert upper case letters into lower case letters
-       and vice versa. */
+/******************************************************************************
+ *
+ * These functions test an integer value for being in the range of the ASCII
+ * character set or convert an integer value into an ASCII character,
+ * respectively.
+ *
+ ******************************************************************************/
 
-#define TOCHAR_S( typ, postfix, zval, oval)          \
-inline char tochar( typ a)                           \
-{                                                    \
-  return _toc_S_ (a);                                \
+external bool isascii( int N); 
+  #pragma linksign[ 0, 1]
+  #pragma linkobj "src/Char/ctype.o"
+  #pragma linkname "SACisascii"
+
+external char toascii( int N);
+  #pragma linksign[ 0, 1]
+  #pragma linkobj "src/Char/ctype.o"
+  #pragma linkname "SACtoascii"
+
+/******************************************************************************
+ *
+ * These functions convert upper case letters into lower case letters
+ * and vice versa.
+ *
+ ******************************************************************************/
+
+external char tolower( char C);
+  #pragma linksign[ 0, 1]
+  #pragma linkobj "src/Char/ctype.o"
+  #pragma linkname "SACtolower"
+
+external char toupper( char C);
+  #pragma linksign[ 0, 1]
+  #pragma linkobj "src/Char/ctype.o"
+  #pragma linkname "SACtoupper"
+
+/******************************************************************************
+ *
+ * These functions convert numerical values into a char (byte) value.
+ *
+ ******************************************************************************/
+
+#define TOCHAR_S( typ, postfix, zval, oval)                                    \
+inline                                                                         \
+char tochar( typ a)                                                            \
+{                                                                              \
+  return _toc_S_( a);                                                          \
 }
 
-#define TOCHAR_A( typ, postfix, zval, oval)          \
-inline char[*] tochar( typ[+] a)                     \
-{                                                    \
-  res = with {                                       \
-          ( . <= iv <= . ) : _toc_S_( a[iv] );       \
-        } : genarray( shape(a), ' ' );               \
-                                                     \
-  return( res);                                      \
+#define TOCHAR_A( typ, postfix, zval, oval)                                    \
+inline                                                                         \
+char[dim:shp] tochar( typ[dim:shp] a) | dim > 0                                \
+{                                                                              \
+  res = with {                                                                 \
+          (  . <= iv <= . ) : _toc_S_( a[iv]);                                 \
+        } : genarray( shp, ' ');                                               \
+  return( res);                                                                \
 }
 
-/**
- * These functions convert numerical values into a char (byte) value
- */
 BUILT_IN( TOCHAR_S)
 BUILT_IN( TOCHAR_A)
