@@ -1,7 +1,6 @@
 module ArrayArith;
 
 import ScalarArith: all;
-import ArrayBasics: {shape,sel};
 export all;
 
 #include "Templates.mac"
@@ -38,30 +37,33 @@ export all;
 
 #define MAP_BIN_AxA( name, op, a, b)                                           \
 inline                                                                         \
-b[dim:shp] name( a[dim:shp] A, a[dim:shp] B) | dim > 0                         \
+b[d:shp] name( a[d:shp] A, a[d:shp] B) | d > 0                                 \
 {                                                                              \
   res = with {                                                                 \
-          ( . <= iv <= . ) : op( _sel_VxA_(iv, A), _sel_VxA_(iv, B));          \
+          (_mul_SxV_( 0, shp) <= iv < shp)                                     \
+            : op( _sel_VxA_( iv, A), _sel_VxA_( iv, B));                       \
         } : genarray( shp, op( one( A), one( B)));                             \
   return( res);                                                                \
 }
 
 #define MAP_BIN_AxS( name, op, a, b)                                           \
 inline                                                                         \
-b[dim:shp] name( a[dim:shp] A, a B)                                            \
+b[d:shp] name( a[d:shp] A, a B)                                                \
 {                                                                              \
   res = with {                                                                 \
-          ( . <= iv <= . ) : op( _sel_VxA_(iv, A), B);                         \
+          (_mul_SxV_( 0, shp) <= iv < shp)                                     \
+            : op( _sel_VxA_( iv, A), B);                                       \
         } : genarray( shp, op( one( A), one( B)));                             \
   return( res);                                                                \
 }
 
 #define MAP_BIN_SxA( name, op, a, b)                                           \
 inline                                                                         \
-b[dim:shp] name( a A, a[dim:shp] B)                                            \
+b[d:shp] name( a A, a[d:shp] B)                                                \
 {                                                                              \
   res = with {                                                                 \
-          ( . <= iv <= . ) : op( A, _sel_VxA_(iv, B));                         \
+          (_mul_SxV_( 0, shp) <= iv < shp)                                     \
+            : op( A, _sel_VxA_( iv, B));                                       \
         } : genarray( shp, op( one( A), one( B)));                             \
   return( res);                                                                \
 }
@@ -70,7 +72,7 @@ b[dim:shp] name( a A, a[dim:shp] B)                                            \
 inline                                                                         \
 int[n] (name)( int[n] A, int[n] B)                                             \
 {                                                                              \
-  res = _##op##_VxV_(A, B);                                                    \
+  res = _##op##_VxV_( A, B);                                                   \
   return( res);                                                                \
 }
 
@@ -78,7 +80,7 @@ int[n] (name)( int[n] A, int[n] B)                                             \
 inline                                                                         \
 int[n] (name)( int A, int[n] B)                                                \
 {                                                                              \
-  res = _##op##_SxV_(A, B);                                                    \
+  res = _##op##_SxV_( A, B);                                                   \
   return( res);                                                                \
 }
 
@@ -86,9 +88,10 @@ int[n] (name)( int A, int[n] B)                                                \
 inline                                                                         \
 int[n] (name)( int[n] A, int B)                                                \
 {                                                                              \
-  res = _##op##_VxS_(A, B);                                                    \
+  res = _##op##_VxS_( A, B);                                                   \
   return( res);                                                                \
 }
+
 
 /******************************************************************************
  *
@@ -98,11 +101,12 @@ int[n] (name)( int[n] A, int B)                                                \
 
 #define MAP_MON_AxA( name, op, a, b)                                           \
 inline                                                                         \
-b[dim:shp] name( a[dim:shp] A)                                                 \
+b[d:shp] name( a[d:shp] A)                                                     \
 {                                                                              \
   res = with {                                                                 \
-          ( . <= iv <= . ) : op( _sel_VxA_(iv,A) );                            \
-        } : genarray( shp, op(zero(A)) );                                      \
+          (_mul_SxV_( 0, shp) <= iv < shp)                                     \
+            : op( _sel_VxA_(iv, A));                                           \
+        } : genarray( shp, op( zero( A)));                                     \
   return( res);                                                                \
 }
 
@@ -156,6 +160,7 @@ MAP_INT_OPS( AxS, typ)
 
 INT_NUM( INT_OPS_A)
 
+
 /******************************************************************************
  *
  * RelOPS on arrays (see Templates.mac for details)
@@ -169,6 +174,7 @@ MAP_REL_OPS( AxS, typ)
 
 BUILT_IN( REL_OPS_A)
 
+
 /******************************************************************************
  *
  * LogOPS on scalars (see Templates.mac for details)
@@ -179,6 +185,7 @@ MAP_LOG_OPS( AxA)
 MAP_LOG_OPS( SxA)
 MAP_LOG_OPS( AxS)
 
+
 /******************************************************************************
  *
  * ConvOPS on scalars (see Templates.mac for details)
@@ -187,34 +194,13 @@ MAP_LOG_OPS( AxS)
 
 #define BOOL_CONV_OP_A( type, postfix, zero, one)                              \
 MAP_BOOL_CONV_OP( AxA, type)
+
 NUM( BOOL_CONV_OP_A)
 BOOL( BOOL_CONV_OP_A)
+
+//------------------------------------------------------------------------------
 
 #define NUM_CONV_OPS_A( type, postfix, zero, one)                              \
 MAP_NUM_CONV_OPS( AxA, type)
 
 BUILT_IN( NUM_CONV_OPS_A)
-
-/******************************************************************************
- *
- * Reduction operations
- *
- ******************************************************************************/
-
-inline
-bool any( bool[dim:shp] a)
-{
-  res = with {
-          (0*shp <= iv < shp) : a[iv];
-        } : fold( |, false);
-  return( res);
-}
-
-inline
-bool all( bool[dim:shp] a)
-{
-  res = with {
-          (0*shp <= iv < shp) : a[iv];
-        } : fold( &, true);
-  return( res);
-}

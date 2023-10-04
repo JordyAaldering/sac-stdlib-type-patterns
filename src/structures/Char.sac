@@ -117,7 +117,7 @@ char tochar( typ a)                                                            \
 
 #define TOCHAR_A( typ, postfix, zval, oval)                                    \
 inline                                                                         \
-char[dim:shp] tochar( typ[dim:shp] a) | dim > 0                                \
+char[d:shp] tochar( typ[d:shp] a) | d > 0                                      \
 {                                                                              \
   res = with {                                                                 \
           (  . <= iv <= . ) : _toc_S_( a[iv]);                                 \

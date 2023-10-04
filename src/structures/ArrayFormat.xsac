@@ -59,11 +59,11 @@ char[.] formatrow( int[vlen] wid, int[vlen] m)
  *
  ******************************************************************************/
 
-int[dim:shp] pmtl( int[dim:shp] y)
+int[d:shp] pmtl( int[d:shp] y)
 {
   // Avoid 10 log 0!
-  z = 1 + toi( log10( max(2.0, tod( y))));
-  return( z);
+  res = 1 + toi( log10( max(2.0, tod( y))));
+  return( res);
 }
 
 /******************************************************************************
@@ -75,10 +75,10 @@ int[dim:shp] pmtl( int[dim:shp] y)
 inline
 int[n] maxsl1(int[n,m] y)
 {
-  z = with {
-        ([0] <= iv < [n]) : sel( iv, y); 
-      } : fold( max, minint ());
-  return( z);
+  res = with {
+          ([0] <= iv < [n]) : sel( iv, y);
+        } : fold( max, minint());
+  return( res);
 }
 
 /******************************************************************************
@@ -90,10 +90,10 @@ int[n] maxsl1(int[n,m] y)
 inline
 int[n] minsl1(int[n,m] y)
 {
-  z = with {
-        ([0] <= iv < [n]) : sel( iv, y); 
-      } : fold( min, maxint ());
-  return(z);
+  res = with {
+          ([0] <= iv < [n]) : sel( iv, y);
+        } : fold( min, maxint());
+  return( res);
 }
 
 /******************************************************************************
@@ -253,7 +253,7 @@ char[.] OverflowCheck(char[n] txt, int wid)
  ******************************************************************************/
 
 inline
-char[dim:shp] format(char[dim:shp] y)
+char[d:shp] format(char[d:shp] y)
 {
   return( y);
 }
@@ -278,7 +278,7 @@ char[1] format(bool y)
  ******************************************************************************/
 
 inline
-char[+] format(bool[dim:shp] y) | dim > 0
+char[+] format(bool[d:shp] y) | d > 0
 {
   z = with {
         (. <= iv <= .) : sel( iv, y) ? ['1', ' '] : ['0', ' '];
@@ -318,7 +318,7 @@ char[+] format(bool[+] y, int precision)
 
 /******************************************************************************
  *
- * Defined-width and precision format on boolean scalar 
+ * Defined-width and precision format on boolean scalar
  * w[0] is maximum legal result width. If result is wider than this,
  *      the result will be filled with asterixs. ('*')
  * w[1] is the number of significant digits to be printed.
@@ -341,7 +341,7 @@ char[+] format(bool[+] y, int[2] w)
 {
   z = format( tod( y), w);
   return( z);
-} 
+}
 
 /******************************************************************************
  *
@@ -376,7 +376,7 @@ char[.] format(int y)
  while ((cury != 0) && (i >= 0)) {
         nexty = cury /10; /* truncate toward zero */
         dig = abs(_sub_SxS_(cury,(nexty *10)));
-        z = modarray( z, [i], sel( [dig], 
+        z = modarray( z, [i], sel( [dig],
 		['0','1','2','3','4','5','6','7','8','9']));
         cury = nexty;
 	i = _sub_SxS_(i,1);
@@ -393,13 +393,13 @@ char[.] format(long y)
  z = tochar(sprintf("%ld",y));
  return( z);
 }
-     
+
 char[+] format(int[+] y)
 { /* Default format on integer non-scalar */
   /* Refer to UTThorn.dws <thint> for APL model of this */
 
-  shpm = [prod(drop([_sub_SxS_(0,1)], 
-		shape(y)))] ++ 
+  shpm = [prod(drop([_sub_SxS_(0,1)],
+		shape(y)))] ++
 		take([_sub_SxS_(0,1)], shape(y));
   if ( 0 == prod( shpm)) {
 	z = genarray(shape(y), ' ');
@@ -418,7 +418,7 @@ char[+] format(int[+] y)
         (. <= iv <= .) : formatrow( widths, sel (iv, m));
         } : genarray(take([1],shape(m)), zdef);
 
-  shpz = drop([_sub_SxS_(0,1)], shape(y)) 
+  shpz = drop([_sub_SxS_(0,1)], shape(y))
 		++ take([_sub_SxS_(0,1)], shape(z));
   z = reshape(shpz, z);
  }
@@ -495,7 +495,7 @@ char[+] format(float[+] y)
   precision = 15;
   z = format( tod( y), precision);
   return( z);
-} 
+}
 
 /******************************************************************************
  *
@@ -551,7 +551,7 @@ char[+] format(float[+] y, int[2] w)
 {
   z = format( tod( y), w);
   return( z);
-} 
+}
 
 /******************************************************************************
  *
@@ -616,7 +616,7 @@ char[.] format(double y, int precision)
  ******************************************************************************/
 
 DOINL
-char[+] format(double[dim:shp] y, int precision) | dim > 0
+char[+] format(double[d:shp] y, int precision) | d > 0
 {
   rows = prod( drop( [-1], shp));
   cols = take( [-1], [1] ++ shp)[0];
@@ -630,7 +630,7 @@ char[+] format(double[dim:shp] y, int precision) | dim > 0
   // Format each array element
   fry = with {
 	        (. <= iv <= .) {
-		        el = ScalarFormatter( ravely[iv], precision);  
+		        el = ScalarFormatter( ravely[iv], precision);
             el = PadWithBlanks( [wid], el);
 	        } : el;
         } : genarray( shape( ravely), defcell);
@@ -658,13 +658,13 @@ char[+] format(double[dim:shp] y, int precision) | dim > 0
       } : genarray( [rows], defcell);
   z = reshape( shpz, z);
   return( z);
-} 
+}
 
 /******************************************************************************
  *
  * Formatting for a double scalar
  *
- *   This is temporary, pending use of the Burger/Dybvig algorithm 
+ *   This is temporary, pending use of the Burger/Dybvig algorithm
  *   w[0] is maximum legal result width. If result is wider than this,
  *        the result will be filled with asterixs. ('*')
  *   w[1] is the number of significant digits to be printed.
@@ -690,7 +690,7 @@ char[.] format(double y, int[2] w)
  ******************************************************************************/
 
 DOINL
-char[+] format(double[dim:shp] y, int[2] w) | dim > 0
+char[+] format(double[d:shp] y, int[2] w) | d > 0
 {
   defcell = genarray( [w[[0]]], ' ');
   z = with {
@@ -738,7 +738,7 @@ char[.] format(type y, int[2] w)			                                         \
 {							                                                                 \
   z = format( toi( y), w);					                                           \
   return( z);						                                                       \
-}							
+}
 
 #ifdef NEEDSTYPECONVERSIONS
 
