@@ -1,6 +1,5 @@
 module Char;
 
-use ArrayBasics: {shape, sel};
 export all;
 
 #include "Templates.mac"
@@ -22,12 +21,12 @@ external bool isupper( char C);
   #pragma linkobj "src/Char/ctype.o"
   #pragma linkname "SACisupper"
 
-external bool islower( char C); 
+external bool islower( char C);
   #pragma linksign[ 0, 1]
   #pragma linkobj "src/Char/ctype.o"
   #pragma linkname "SACislower"
 
-external bool isdigit( char C); 
+external bool isdigit( char C);
   #pragma linksign[ 0, 1]
   #pragma linkobj "src/Char/ctype.o"
   #pragma linkname "SACisdigit"
@@ -37,32 +36,32 @@ external bool isxdigit (char C);
   #pragma linkobj "src/Char/ctype.o"
   #pragma linkname "SACisxdigit"
 
-external bool isspace( char C); 
+external bool isspace( char C);
   #pragma linksign[ 0, 1]
   #pragma linkobj "src/Char/ctype.o"
   #pragma linkname "SACisspace"
 
-external bool ispunct( char C); 
+external bool ispunct( char C);
   #pragma linksign[ 0, 1]
   #pragma linkobj "src/Char/ctype.o"
   #pragma linkname "SACispunct"
 
-external bool isalnum( char C); 
+external bool isalnum( char C);
   #pragma linksign[ 0, 1]
   #pragma linkobj "src/Char/ctype.o"
   #pragma linkname "SACisalnum"
 
-external bool isprint( char C); 
+external bool isprint( char C);
   #pragma linksign[ 0, 1]
   #pragma linkobj "src/Char/ctype.o"
   #pragma linkname "SACisprint"
 
-external bool isgraph( char C); 
+external bool isgraph( char C);
   #pragma linksign[ 0, 1]
   #pragma linkobj "src/Char/ctype.o"
   #pragma linkname "SACisgraph"
 
-external bool iscntrl( char C); 
+external bool iscntrl( char C);
   #pragma linksign[ 0, 1]
   #pragma linkobj "src/Char/ctype.o"
   #pragma linkname "SACiscntrl"
@@ -75,7 +74,7 @@ external bool iscntrl( char C);
  *
  ******************************************************************************/
 
-external bool isascii( int N); 
+external bool isascii( int N);
   #pragma linksign[ 0, 1]
   #pragma linkobj "src/Char/ctype.o"
   #pragma linkname "SACisascii"
@@ -112,15 +111,17 @@ external char toupper( char C);
 inline                                                                         \
 char tochar( typ a)                                                            \
 {                                                                              \
-  return _toc_S_( a);                                                          \
+  res = _toc_S_( a);                                                           \
+  return( res);                                                                \
 }
 
 #define TOCHAR_A( typ, postfix, zval, oval)                                    \
 inline                                                                         \
-char[d:shp] tochar( typ[d:shp] a) | d > 0                                      \
+char[d:shp] tochar( typ[d:shp] a)                                              \
 {                                                                              \
   res = with {                                                                 \
-          (  . <= iv <= . ) : _toc_S_( a[iv]);                                 \
+          (_mul_SxV_( 0, shp) <= iv < shp)                                     \
+            : _toc_S_( _sel_VxA_( iv, a));                                     \
         } : genarray( shp, ' ');                                               \
   return( res);                                                                \
 }

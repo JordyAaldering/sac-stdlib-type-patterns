@@ -33,24 +33,23 @@ export {format};
 inline
 char[.] formatrow( int[vlen] wid, int[vlen] m)
 {
-  z = genarray( [(sum( wid + 1) - 1)], ' ');
+  res = genarray( [(sum( wid + 1) - 1)], ' ');
   // Can't use WL because widths may differ
   sink = 0;
-  for( i = 0; i < vlen; i++) {
+  for( i = 0; i < vlen; i = i + 1) {
     curm = sel( [i], m);
     curw = sel( [i], wid);
     curz = format( curm, [curw, 1]);
     lim  = sel( [0], shape (curz));
 
-    for( src = 0; src < lim; src++) {
-      z = modarray( z, src + sink, sel( [src], curz));
+    for( src = 0; src < lim; src = src + 1) {
+      res = modarray( res, src + sink, sel( [src], curz));
     }
 
     // Inter-element blank
-    sink++;
-    sink = sink + sel( [i], wid);
+    sink = sink + 1 + sel( [i], wid);
   }
-  return( z);
+  return( res);
 }
 
 /******************************************************************************
@@ -105,8 +104,8 @@ int[n] minsl1(int[n,m] y)
 inline
 char[.] PadWithBlanks( int[1] wid, char[.] el)
 {
-  z = take( wid, el ++ genarray( wid, ' '));
-  return( z);
+  res = take( wid, el ++ genarray( wid, ' '));
+  return( res);
 }
 
 /******************************************************************************
@@ -118,18 +117,18 @@ char[.] PadWithBlanks( int[1] wid, char[.] el)
 char[.] alignrow(char[.,.] fry, int[1] iv, int[cols] widths, int[.] lodp,
                  int[.] lodpmax, int zcols)
 {
-  z = genarray( [zcols], ' ');
+  res = genarray( [zcols], ' ');
   zci = 0;
-  for( ci = 0; ci < cols; ci++) {
+  for( ci = 0; ci < cols; ci = ci + 1) {
     fi = ci + cols * iv[0];           // Source item index
     sc = lodp[[fi]] - lodpmax[[ci]];  // Shift count to align decimal
     sefe = thcharsto( [' ',' '], fry[[fi]]);
     sz = sefe + abs( sc);
     zit = PadWithBlanks( [sz], rotate( [-sc], fry[[fi]]));
-    z, junk = thrnAppend(z, zci, zit);
+    res, junk = thrnAppend(res, zci, zit);
     zci = zci + widths[ci] + 1;
   }
-  return(z);
+  return(res);
 }
 
 /******************************************************************************
@@ -143,14 +142,14 @@ char[.] alignrow(char[.,.] fry, int[1] iv, int[cols] widths, int[.] lodp,
 inline
 int thcharsto(char[n] ch, char[lim] fry) | n > 1
 {
-  z = lim;
-  for( i = 0; i < lim; i++) {
+  res = lim;
+  for( i = 0; i < lim; i = i + 1) {
     if ((fry[[i]] == ch[[0]]) || (fry[[i]] == ch[[1]])) {
-      z = i;
+      res = i;
       i = lim;
     }
   }
-  return( z);
+  return( res);
 }
 
 /******************************************************************************
@@ -163,9 +162,9 @@ int thcharsto(char[n] ch, char[lim] fry) | n > 1
 
 char[.] ScalarFormatter(double y, int precision)
 {
-  z = String::tochar( String::sprintf( "%.*g", precision, y));
-  z = KillPlusSign( z);
-  return( z);
+  res = String::tochar( String::sprintf( "%.*g", precision, y));
+  res = KillPlusSign( res);
+  return( res);
 }
 
 /******************************************************************************
@@ -179,8 +178,8 @@ char[.] ScalarFormatter(double y, int precision)
 inline
 char[.], int ScalarFormatterPad(double y, int precision)
 {
- z = ScalarFormatter( y, precision);
- shpz = shape(z)[0];
+ res = ScalarFormatter( y, precision);
+ shpz = shape(res)[0];
 
 #ifdef DEBUGME
   // We expect worst-case format to be:   "-1.234e-308 "
@@ -193,8 +192,8 @@ char[.], int ScalarFormatterPad(double y, int precision)
 #endif
 
   // Avoid strange bugs in calls from WLs
-  z = PadWithBlanks( [precision + 7], z);
-  return( z, shpz);
+  res = PadWithBlanks( [precision + 7], res);
+  return( res, shpz);
 }
 
 /******************************************************************************
@@ -207,13 +206,13 @@ char[.], int ScalarFormatterPad(double y, int precision)
 inline
 char[.] KillPlusSign(char[n] y)
 {
-  z = y;
-  for( sink = 1, src = 1; src < n; src++) {
-    z[sink] = y[src];
-    sink =  (z[sink] != '+') ? sink + 1 : sink;
+  res = y;
+  for( sink = 1, src = 1; src < n; src = src + 1) {
+    res[sink] = y[src];
+    sink =  (res[sink] != '+') ? sink + 1 : sink;
   }
-  z = take( [sink], z);
-  return( z);
+  res = take( [sink], res);
+  return( res);
 }
 
 /******************************************************************************
@@ -225,12 +224,12 @@ char[.] KillPlusSign(char[n] y)
 inline
 char[.], int thrnAppend(char[.] vec, int sink, char[n] el)
 {
-  z = vec;
-  for( src = 0; src < n; src++) {
-    z[[sink]] = el[[src]];
-    sink++;
+  res = vec;
+  for( src = 0; src < n; src = src + 1) {
+    res[[sink]] = el[[src]];
+    sink = sink + 1;
   }
-  return( z, sink);
+  return( res, sink);
 }
 
 /******************************************************************************
@@ -242,8 +241,8 @@ char[.], int thrnAppend(char[.] vec, int sink, char[n] el)
 inline
 char[.] OverflowCheck(char[n] txt, int wid)
 {
-  z = (wid < n) ? genarray( [wid], '*') : txt;
-  return( z);
+  res = (wid < n) ? genarray( [wid], '*') : txt;
+  return( res);
 }
 
 /******************************************************************************
@@ -267,8 +266,8 @@ char[d:shp] format(char[d:shp] y)
 inline
 char[1] format(bool y)
 {
-  z = y ? '1' : '0';
-  return( [z]);
+  res = y ? '1' : '0';
+  return( [res]);
 }
 
 /******************************************************************************
@@ -278,18 +277,18 @@ char[1] format(bool y)
  ******************************************************************************/
 
 inline
-char[+] format(bool[d:shp] y) | d > 0
+char[+] format(bool[d:shp] y)
 {
-  z = with {
+  res = with {
         (. <= iv <= .) : sel( iv, y) ? ['1', ' '] : ['0', ' '];
       } : genarray( shp);
-  zs = drop( [_sub_SxS_(0,2)], shape( z));
-  zs = zs ++ [prod( take( [_sub_SxS_(0,2)], shape( z)))];
-  z = reshape( zs, z);
-  lastcol = genarray( [dim(z)], 0);
-  lastcol = modarray( lastcol, _sub_SxS_( dim( z), 1), _sub_SxS_( 0, 1));
-  z = drop( lastcol, z);
-  return( z);
+  zs = drop( [_sub_SxS_(0,2)], shape( res));
+  zs = zs ++ [prod( take( [_sub_SxS_(0,2)], shape( res)))];
+  res = reshape( zs, res);
+  lastcol = genarray( [dim(res)], 0);
+  lastcol = modarray( lastcol, _sub_SxS_( dim( res), 1), _sub_SxS_( 0, 1));
+  res = drop( lastcol, res);
+  return( res);
 }
 
 /******************************************************************************
@@ -300,8 +299,8 @@ char[+] format(bool[d:shp] y) | d > 0
 
 char[.] format(bool y, int precision)
 {
-  z = format( tod( y), precision);
-  return( z);
+  res = format( tod( y), precision);
+  return( res);
 }
 
 /******************************************************************************
@@ -312,8 +311,8 @@ char[.] format(bool y, int precision)
 
 char[+] format(bool[+] y, int precision)
 {
-  z = format( tod( y), precision);
-  return( z);
+  res = format( tod( y), precision);
+  return( res);
 }
 
 /******************************************************************************
@@ -327,8 +326,8 @@ char[+] format(bool[+] y, int precision)
 
 char[.] format(bool y, int[2] w)
 {
-  z = format( tod( y), w);
-  return( z);
+  res = format( tod( y), w);
+  return( res);
 }
 
 /******************************************************************************
@@ -339,8 +338,8 @@ char[.] format(bool y, int[2] w)
 
 char[+] format(bool[+] y, int[2] w)
 {
-  z = format( tod( y), w);
-  return( z);
+  res = format( tod( y), w);
+  return( res);
 }
 
 /******************************************************************************
@@ -359,7 +358,7 @@ char[+] format(bool[+] y, int[2] w)
 
 char[.] format(int y)
 {
- z = tochar(sprintf("%d",y));
+ res = tochar(sprintf("%d",y));
 
 #ifdef PEDANTIC
  /* This can be discarded, I think. */
@@ -367,31 +366,29 @@ char[.] format(int y)
  w = w + toi(y < 0);
  /* Primitive integer scalar formatter, because sprintf is useless */
  /* See model DthornInt in WS UTThornInt.dws */
- z = genarray([w], ' ');
- z = modarray( z, [_sub_SxS_(w, 1)], '0'); /* Handle format 0 */
+ res = genarray([w], ' ');
+ res = modarray( res, [_sub_SxS_(w, 1)], '0'); /* Handle format 0 */
  sig = y < 0;
   /* We format all numbers as negative, to avoid integer overflow on (-2)*31  */
  cury = sig ? y : _sub_SxS_(0,y);
- i = _sub_SxS_(w,1);
- while ((cury != 0) && (i >= 0)) {
+ for (i = _sub_SxS_( w, 1); (cury != 0) && (i >= 0); i--) {
         nexty = cury /10; /* truncate toward zero */
         dig = abs(_sub_SxS_(cury,(nexty *10)));
-        z = modarray( z, [i], sel( [dig],
+        res = modarray( res, [i], sel( [dig],
 		['0','1','2','3','4','5','6','7','8','9']));
         cury = nexty;
-	i = _sub_SxS_(i,1);
   }
   i = max(i,0);
-  z = modarray( z, [i], sig && (i >= 0) ? '-' : sel([i], z));
+  res = modarray( res, [i], sig && (i >= 0) ? '-' : sel([i], res));
 #endif // PEDANTIC
 
- return( z);
+ return( res);
 }
 
 char[.] format(long y)
 { /* Default format on long scalar */
- z = tochar(sprintf("%ld",y));
- return( z);
+ res = tochar(sprintf("%ld",y));
+ return( res);
 }
 
 char[+] format(int[+] y)
@@ -402,7 +399,7 @@ char[+] format(int[+] y)
 		shape(y)))] ++
 		take([_sub_SxS_(0,1)], shape(y));
   if ( 0 == prod( shpm)) {
-	z = genarray(shape(y), ' ');
+	res = genarray(shape(y), ' ');
   } else {
   m = reshape(shpm,y);
   widths = pmtl(maxsl1(ArrayArith::abs(m)));
@@ -414,15 +411,15 @@ char[+] format(int[+] y)
   zcols = sum(widths + 1)-1;
   zdef = genarray([zcols], ' ');
 
-  z = with{
+  res = with{
         (. <= iv <= .) : formatrow( widths, sel (iv, m));
         } : genarray(take([1],shape(m)), zdef);
 
   shpz = drop([_sub_SxS_(0,1)], shape(y))
-		++ take([_sub_SxS_(0,1)], shape(z));
-  z = reshape(shpz, z);
+		++ take([_sub_SxS_(0,1)], shape(res));
+  res = reshape(shpz, res);
  }
-  return(z);
+  return(res);
 }
 
 /******************************************************************************
@@ -433,8 +430,8 @@ char[+] format(int[+] y)
 
 char[.] format(int y, int precision)
 {
-  z = format( tod( y), precision);
-  return( z);
+  res = format( tod( y), precision);
+  return( res);
 }
 
 /******************************************************************************
@@ -445,8 +442,8 @@ char[.] format(int y, int precision)
 
 char[+] format(int[+] y, int precision)
 {
-  z = format( tod( y), precision);
-  return( z);
+  res = format( tod( y), precision);
+  return( res);
 }
 
 /******************************************************************************
@@ -461,9 +458,9 @@ char[+] format(int[+] y, int precision)
 
 char[.] format(int y, int[2] w)
 {
-  z = String::tochar( String::sprintf( "%*.*d", w[[0]], w[[1]], y));
-  z = OverflowCheck( z, w[[0]]);
-  return( z);
+  res = String::tochar( String::sprintf( "%*.*d", w[[0]], w[[1]], y));
+  res = OverflowCheck( res, w[[0]]);
+  return( res);
 }
 
 /******************************************************************************
@@ -493,8 +490,8 @@ char[.] format(float y)
 char[+] format(float[+] y)
 {
   precision = 15;
-  z = format( tod( y), precision);
-  return( z);
+  res = format( tod( y), precision);
+  return( res);
 }
 
 /******************************************************************************
@@ -505,8 +502,8 @@ char[+] format(float[+] y)
 
 char[.] format(float y, int precision)
 {
-  z = format( tod( y), precision);
-  return( z);
+  res = format( tod( y), precision);
+  return( res);
 }
 
 /******************************************************************************
@@ -517,8 +514,8 @@ char[.] format(float y, int precision)
 
 char[+] format(float[+] y, int precision)
 {
-  z = format( tod( y), precision);
-  return( z);
+  res = format( tod( y), precision);
+  return( res);
 }
 
 /******************************************************************************
@@ -533,8 +530,8 @@ char[+] format(float[+] y, int precision)
 
 char[.] format(float y, int[2] w)
 {
-  z = format( tod( y), w);
-  return( z);
+  res = format( tod( y), w);
+  return( res);
 }
 
 /******************************************************************************
@@ -549,8 +546,8 @@ char[.] format(float y, int[2] w)
 
 char[+] format(float[+] y, int[2] w)
 {
-  z = format( tod( y), w);
-  return( z);
+  res = format( tod( y), w);
+  return( res);
 }
 
 /******************************************************************************
@@ -573,8 +570,8 @@ DOINL
 char[.] format(double y)
 {
   precision = 15;
-  z = format( y, precision);
-  return( z);
+  res = format( y, precision);
+  return( res);
 }
 
 /******************************************************************************
@@ -589,8 +586,8 @@ DOINL
 char[+] format(double[+] y)
 {
   precision = 15;
-  z = format( y, precision);
-  return( z);
+  res = format( y, precision);
+  return( res);
 }
 
 /******************************************************************************
@@ -602,9 +599,9 @@ char[+] format(double[+] y)
 DOINL
 char[.] format(double y, int precision)
 {
-  z = ScalarFormatter( y, precision);
-  z = PadWithBlanks( [precision + 7], z);
-  return( z);
+  res = ScalarFormatter( y, precision);
+  res = PadWithBlanks( [precision + 7], res);
+  return( res);
 }
 
 /******************************************************************************
@@ -616,7 +613,7 @@ char[.] format(double y, int precision)
  ******************************************************************************/
 
 DOINL
-char[+] format(double[d:shp] y, int precision) | d > 0
+char[+] format(double[d:shp] y, int precision)
 {
   rows = prod( drop( [-1], shp));
   cols = take( [-1], [1] ++ shp)[0];
@@ -653,11 +650,11 @@ char[+] format(double[d:shp] y, int precision) | d > 0
   shpz = drop( [-1], shape(y)) ++ [zcols];
   defcell = genarray( [zcols], ' ');
 
-  z = with{
+  res = with{
         (. <= iv <= .) : alignrow( fry, iv, widths, lodp, lodpmax, zcols);
       } : genarray( [rows], defcell);
-  z = reshape( shpz, z);
-  return( z);
+  res = reshape( shpz, res);
+  return( res);
 }
 
 /******************************************************************************
@@ -674,9 +671,11 @@ char[+] format(double[d:shp] y, int precision) | d > 0
 DOINL
 char[.] format(double y, int[2] w)
 {
-  z = String::tochar( String::sprintf( "%*.*g", w[[0]], w[[1]], y));
-  z = OverflowCheck( z, w[[0]]);
-  return( z);
+  w0 = _sel_VxA_( [0], w);
+  w1 = _sel_VxA_( [1], w);
+  res = String::tochar( String::sprintf( "%*.*g", w0, w1, y));
+  res = OverflowCheck( res, w0);
+  return( res);
 }
 
 /******************************************************************************
@@ -690,15 +689,16 @@ char[.] format(double y, int[2] w)
  ******************************************************************************/
 
 DOINL
-char[+] format(double[d:shp] y, int[2] w) | d > 0
+char[+] format(double[d:shp] y, int[2] w)
 {
-  defcell = genarray( [w[[0]]], ' ');
-  z = with {
-        ( . <= iv <= . ) : format( y[iv], w);
+  defcell = genarray( [_sel_VxA_( [0], w)], ' ');
+  res = with {
+        (_mul_SxV_( 0, shp) <= iv < shp)
+          : format( _sel_VxA_( iv, y), w);
       } : genarray( shp, defcell);
-  zshp = drop( [-2], shape( z)) ++ [prod( take( [-2], shape( z)))];
-  z = reshape( zshp, z);
-  return( z);
+  zshp = drop( [-2], shape( res)) ++ [prod( take( [-2], shape( res)))];
+  res = reshape( zshp, res);
+  return( res);
 }
 
 /******************************************************************************
@@ -712,32 +712,32 @@ char[+] format(double[d:shp] y, int[2] w) | d > 0
 #define FORMAT_INT_SUBTYPES(type)			                                         \
 char[.] format(type y)					                                               \
 {							                                                                 \
-  z = format( toi( y));					                                               \
-  return( z);						                                                       \
+  res = format( toi( y));					                                             \
+  return( res);						                                                     \
 }							                                                                 \
      							                                                             \
 char[+] format(type[+] y)				                                               \
 {							                                                                 \
-  z = format( toi( y));					                                               \
-  return( z);	  				                                                       \
+  res = format( toi( y));					                                             \
+  return( res);	  				                                                     \
 }							                                                                 \
 							                                                                 \
 char[.] format(type y, int precision)	                                         \
 { 							                                                               \
-  z = format( toi( y), precision);	                                           \
-  return( z);						                                                       \
+  res = format( toi( y), precision);	                                         \
+  return( res);						                                                     \
 }							                                                                 \
 							                                                                 \
 char[+] format(type[+] y, int precision)	                                     \
 {							                                                                 \
-  z = format( toi( y), precision);				                                     \
-  return( z);  					                                                       \
+  res = format( toi( y), precision);				                                   \
+  return( res);  					                                                     \
 }							                                                                 \
 							                                                                 \
 char[.] format(type y, int[2] w)			                                         \
 {							                                                                 \
-  z = format( toi( y), w);					                                           \
-  return( z);						                                                       \
+  res = format( toi( y), w);					                                         \
+  return( res);						                                                     \
 }
 
 #ifdef NEEDSTYPECONVERSIONS
