@@ -1,6 +1,7 @@
 module ArrayArith;
 
-import ScalarArith: all;
+import ScalarArith: {zero,one};
+
 export all;
 
 #include "Templates.mac"
@@ -37,7 +38,7 @@ export all;
 
 #define MAP_BIN_AxA( name, op, a, b)                                           \
 inline                                                                         \
-b[d:shp] name( a[d:shp] A, a[d:shp] B) | d > 0                                 \
+b[d:shp] name( a[d:shp] A, a[d:shp] B)                                         \
 {                                                                              \
   res = with {                                                                 \
           (_mul_SxV_( 0, shp) <= iv < shp)                                     \
@@ -105,13 +106,14 @@ b[d:shp] name( a[d:shp] A)                                                     \
 {                                                                              \
   res = with {                                                                 \
           (_mul_SxV_( 0, shp) <= iv < shp)                                     \
-            : op( _sel_VxA_(iv, A));                                           \
+            : op( _sel_VxA_( iv, A));                                          \
         } : genarray( shp, op( zero( A)));                                     \
   return( res);                                                                \
 }
 
 #define MAP_MON_SxA( name, op, a, b)
 #define MAP_MON_AxS( name, op, a, b)
+
 
 /******************************************************************************
  *

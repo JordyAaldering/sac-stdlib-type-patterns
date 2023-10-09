@@ -1,6 +1,7 @@
 module ArrayBasics;
 
-use ScalarArith: {zero};
+use ScalarArith: {++,--};
+
 export all;
 
 #include "Templates.mac"
@@ -76,7 +77,7 @@ inline
 bool IsSameShape( int[n] shapeA, int[m] shapeB)
 {
   res = _eq_( n, m);
-  for (i = 0; _and_( res, _lt_( i, n)); i = _add_SxS_( i, 1)) {
+  for (i = 0; _and_( res, _lt_( i, n)); i++) {
     sx = _sel_( [i], shapeA);
     sy = _sel_( [i], shapeB);
     res = _and_( res, _eq_( sx, sy));
@@ -92,8 +93,8 @@ bool IsSameShape( int[n] shapeA, int[m] shapeB)
  * @brief computes the product of a shape vector
  *        The important thing that is MISSING(!!!) here is check for
  *        overflow. For example:
- *          - last-axis reduce genarray( [256,256,256,256,0],0)
- *          - genarray( genarray([32],2), 1)
+ *          - last-axis reduce genarray( [256,256,256,256,0], 0)
+ *          - genarray( genarray([32], 2), 1)
  *
  *        This is where security bugs start!
  *
@@ -103,7 +104,7 @@ inline
 int xrhoshape( int[n] shp)
 {
   res = with {
-          ([0] <= iv < [n]) : shp[iv];
+          ([0] <= iv < [n]) : shp[ iv];
         } : fold( _mul_SxV_, 1);
   return( res);
 }
