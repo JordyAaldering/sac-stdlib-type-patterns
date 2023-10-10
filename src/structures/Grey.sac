@@ -1,72 +1,83 @@
 module Grey;
 
-use Array: {min, max};
-import ScalarArith: {tod, toi};
+#define OVERLOADS toi,tod,dim,shape,sel,reshape,+,-
+use Array: all except {OVERLOADS};
+import Array: {OVERLOADS};
 
 export all;
 
 typedef int grey;
 
 inline
-grey newGrey( int g)
+int toi( grey g)
 {
-  g = max( min( g, 255), 0);
-  return( (grey)g);
+  res = (int)g;
+  return( res);
 }
 
 inline
-grey newGrey( double g)
+double tod( grey g)
 {
-  i = toi( g);
-  i = max( min( i, 255), 0);
-  return( (grey)i);
+  res = tod( (int)g);
+  return( res);
 }
 
 inline
-int[*] toi( grey g)
+grey newGrey( int i)
 {
-  return( (int[*])g);
+  i = clamp( i, 0, 255);
+  res = (grey)i;
+  return( res);
 }
 
 inline
-double[*] tod( grey g)
+grey newGrey( double d)
 {
-  return( tod( (int[*])g));
-}
-
-inline
-grey[*] sel( int[.] idx, grey[*] a)
-{
-  res = Array::sel( idx, ((int[*])a));
-  return( (grey[*])res);
+  d = clamp( d, 0d, 255d);
+  res = (grey)toi( d);
+  return( res);
 }
 
 inline
 int dim( grey[*] a)
 {
-  return( Array::dim( (int[*])a));
+  res = dim( (int[*])a);
+  return( res);
 }
 
 inline
 int[.] shape( grey[*] a)
 {
-  return( Array::shape( (int[*])a));
+  res = shape( (int[*])a);
+  return( res);
 }
 
 inline
-grey[*] reshape( int[.] shp, grey[*] a)
+grey[*] sel( int[.] idx, grey[*] a)
 {
-  return( (grey[*])_reshape_VxA_( shp, (int[*])a));
+  v = ((int[*])a)[idx];
+  res = (grey[*])v;
+  return( res);
+}
+
+inline
+grey[d:shp] reshape( int[d] shp, grey[*] a)
+{
+  v = reshape( shp, (int[*])a);
+  res = (grey[*])v;
+  return( res);
 }
 
 inline
 grey +( grey g1, grey g2)
 {
-  return( newGrey( toi( g1) ScalarArith::+ toi( g2)));
+  res = newGrey( toi( g1) + toi( g2));
+  return( res);
 }
 
 inline
 grey -( grey g1, grey g2)
 {
-  return( newGrey( toi( g1) ScalarArith::- toi( g2)));
+  res = newGrey( toi( g1) - toi( g2));
+  return( res);
 }

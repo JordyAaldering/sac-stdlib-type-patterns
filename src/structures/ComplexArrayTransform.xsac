@@ -11,23 +11,24 @@ export all;
 
 #include "UDTtemplates.mac"
 
-
-
-/********************************************************************************
+/******************************************************************************
  *
  * Structural OPS
  *
- ********************************************************************************/
+ ******************************************************************************/
+
+complex
+sum(complex[d:shp] c)
+{
+	res = with {
+            (0 ArrayArith::* shp <= iv < shp) : c[iv];
+         } : fold( ComplexArrayArith::+, ComplexBasics::toc( 0, 0));
+   return( res);
+}
 
 TAKE( complex)
 
 DROP( complex)
-
-complex
-sum(complex[*] in)
-{
-	return(with{(0 ArrayArith::* shape(in) <= iv <= shape(in)) : in[iv];} : fold( ComplexArrayArith::+, ComplexBasics::toc(0,0) ));
-}
 
 TILE( complex)
 
@@ -38,4 +39,3 @@ REVERSE( complex)
 SHIFT( complex)
 
 ROTATE( complex)
-

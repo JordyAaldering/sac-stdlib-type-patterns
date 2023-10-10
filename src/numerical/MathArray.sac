@@ -1,97 +1,82 @@
 module MathArray;
 
 use ScalarArith: {zero};
-use ArrayBasics: all;
 import Math: all;
+
 export all;
 
-
-
-/*****************************************************************************
+/******************************************************************************
  *
- *   This module exports the following functions:
+ * This module exports the following functions:
  *
- *
- *
- * float[+]  exp( float[+]  A);
+ * float[+] exp( float[+] A);
  * double[+] exp( double[+] A);
  *
- * float[+]  log( float[+]  A);
+ * float[+] log( float[+] A);
  * double[+] log( double[+] A);
  *
- * float[+]  log10( float[+]  A);
+ * float[+] log10( float[+] A);
  * double[+] log10( double[+] A);
  *
- * float[+]  fabs( float[+]  A);
+ * float[+] fabs( float[+] A);
  * double[+] fabs( double[+] A);
  *
- * float[+]  sqrt( float[+]  A);
+ * float[+] sqrt( float[+] A);
  * double[+] sqrt( double[+] A);
  *
- * float[+]  pow( float[+]  A, float e);
+ * float[+] pow( float[+] A, float e);
  * double[+] pow( double[+] A, double e);
  *
- * float[+]  floor( float[+]  A);
+ * float[+] floor( float[+] A);
  * double[+] floor( double[+] A);
  *
- *****************************************************************************/
+ ******************************************************************************/
 
+/******************************************************************************
+ *
+ * Definition of code templates.
+ *
+ ******************************************************************************/
 
-/*****************************************************************************
- *
- *   Definition of code templates.
- *
- *****************************************************************************/
- 
-/*
- * Operator array template.
- */
- 
-#define OP_A_TEMPLATE(op, restype, argtype)                 \
-inline restype[+] op (argtype[+] A)                         \
-{                                                           \
-  argtype array_elem;                                       \
-                                                            \
-  result = with {                                           \
-             ( . <= iv <= . )                               \
-             {                                              \
-               array_elem = A[iv];                          \
-             } : op( array_elem );                          \
-           } : genarray( shape(A), zero(A) );               \
-                                                            \
-  return(result);                                           \
+#define OP_A_TEMPLATE(op, restype, argtype)                                    \
+inline                                                                         \
+restype[d:shp] op( argtype[d:shp] A)                                           \
+{                                                                              \
+  res = with {                                                                 \
+          (_mul_SxV_( 0, shp) <= iv < shp)                                     \
+            : op( _sel_VxA_( iv, A));                                          \
+        } : genarray( shp, zero( A));                                          \
+  return( res);                                                                \
 }
 
-#define OP_AS_TEMPLATE(op, restype, argtype)                \
-inline restype[+] op (argtype[+] A, argtype S)              \
-{                                                           \
-  argtype array_elem;                                       \
-                                                            \
-  result = with {                                           \
-             ( . <= iv <= . )                               \
-             {                                              \
-               array_elem = A[iv];                          \
-             } : op( array_elem, S );                       \
-           } : genarray( shape(A), zero(A) );               \
-                                                            \
-  return(result);                                           \
+#define OP_AS_TEMPLATE(op, restype, argtype)                                   \
+inline                                                                         \
+restype[d:shp] op( argtype[d:shp] A, argtype S)                                \
+{                                                                              \
+  res = with {                                                                 \
+          (_mul_SxV_( 0, shp) <= iv < shp)                                     \
+            : op( _sel_VxA_( iv, A), S);                                       \
+        } : genarray( shp, zero( A));                                          \
+  return( res);                                                                \
 }
 
-/*****************************************************************************
- *
- *   Definition of meta templates.
- *
- *****************************************************************************/
 
-#define ALL_TYPES_1(template, arg1)                     \
-template(arg1, float, float)                            \
-template(arg1, double, double)
+/******************************************************************************
+ *
+ * Definition of meta templates.
+ *
+ ******************************************************************************/
 
-/*****************************************************************************
+#define ALL_TYPES_1( template, arg1)                                           \
+template( arg1, float, float)                                                  \
+template( arg1, double, double)
+
+
+/******************************************************************************
  *
- *   Definition of SAC standard module MathArray.
+ * Definition of SAC standard module MathArray.
  *
- *****************************************************************************/
+ ******************************************************************************/
 
 ALL_TYPES_1( OP_A_TEMPLATE, log)
 ALL_TYPES_1( OP_A_TEMPLATE, log2)
@@ -102,5 +87,3 @@ ALL_TYPES_1( OP_A_TEMPLATE, sqrt)
 ALL_TYPES_1( OP_A_TEMPLATE, floor)
 
 ALL_TYPES_1( OP_AS_TEMPLATE, pow)
-
-

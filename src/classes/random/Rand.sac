@@ -1,89 +1,87 @@
 class Rand;
 
-    /*
-     *  Class Rand provides a multiplicative congruential pseudo-random number 
-     *  generator  with period 2**32.
-     *
-     *  Unfortunately, its spectral properties leave a great deal to be
-     *  desired.  The classes Random and Rand48 provide much better,
-     *  though more elaborate, pseudo-random number generators.
-     *
-     *  The low bits of the numbers generated are not very random;
-     *  use  the  middle  bits.  In particular the lowest bit 
-     *  alternates between 0 and 1.
-     */
-
+/******************************************************************************
+ *
+ * Class Rand provides a multiplicative congruential pseudo-random number
+ * generator with period 2**32.
+ *
+ * Unfortunately, its spectral properties leave a great deal to be desired.
+ * The classes Random and Rand48 provide much better, though more elaborate,
+ * pseudo-random number generators.
+ *
+ * The low bits of the numbers generated are not very random; use the middle
+ * bits. In particular the lowest bit alternates between 0 and 1.
+ *
+ ******************************************************************************/
 
 external classtype;
+
+use Array: {*};
 
 export all;
 
 objdef Rand RandomGen = randGen();
 
+/******************************************************************************
+ *
+ * Initialize RandomGen to produce a new sequence of pseudo-random numbers.
+ *
+ ******************************************************************************/
+
 external Rand randGen();
-    #pragma linksign [0]
-    #pragma linkname "create_RandGen"
-    #pragma linkobj  "src/Rand/Rand.o"
-    
-external void srandom(uint SEED);
-    #pragma effect Rand::RandomGen
-    #pragma linkname "srand"
-    #pragma linkobj  "src/Rand/Rand.o"
+  #pragma linksign [0]
+  #pragma linkname "create_RandGen"
+  #pragma linkobj  "src/Rand/Rand.o"
 
-    /*
-     * Initialize RandomGen to produce a new sequence of pseudo-random
-     * numbers.
-     */
+external void srandom( uint seed);
+  #pragma effect Rand::RandomGen
+  #pragma linkname "srand"
+  #pragma linkobj  "src/Rand/Rand.o"
 
 
-external int random(int MIN, int MAX);
-    #pragma linksign [0,1,2]
-    #pragma effect Rand::RandomGen
-    #pragma linkname "SACrand"
-    #pragma linkobj  "src/Rand/Rand.o"
+/******************************************************************************
+ *
+ * Use RandomGen to generate a new pseudo-random value in the range MIN to MAX.
+ *
+ ******************************************************************************/
 
-    /*
-     * Use RandomGen to generate a new pseudo-random integer in the range
-     * MIN to MAX.
-     */
+external int random( int min, int max);
+  #pragma linksign [0,1,2]
+  #pragma effect Rand::RandomGen
+  #pragma linkname "SACrand"
+  #pragma linkobj  "src/Rand/Rand.o"
 
 external int rand();
-    #pragma linksign [0]
-    #pragma effect Rand::RandomGen
-    #pragma linkname "SACcrand"
-    #pragma linkobj  "src/Rand/Rand.o"
+  #pragma linksign [0]
+  #pragma effect Rand::RandomGen
+  #pragma linkname "SACcrand"
+  #pragma linkobj  "src/Rand/Rand.o"
 
-    /*
-     * Use RandomGen to generate a new pseudo-random integer in the range
-     * MIN to MAX.
-     */
+external double random( double min, double max);
+  #pragma linksign [0,1,2]
+  #pragma effect Rand::RandomGen
+  #pragma linkname "SACdrand"
+  #pragma linkobj  "src/Rand/Rand.o"
 
-external double random(double MIN, double MAX);
-    #pragma linksign [0,1,2]
-    #pragma effect Rand::RandomGen
-    #pragma linkname "SACdrand"
-    #pragma linkobj  "src/Rand/Rand.o"
 
-    /*
-     * Use RandomGen to generate a new pseudo-random double precision
-     * floating-point number in the interval [MIN, MAX).
-     */
+/******************************************************************************
+ *
+ * Use RandomGen to generate a new pseudo-random value in the range MIN to MAX.
+ *
+ ******************************************************************************/
 
-int[*] random( int[.] shp, int MIN, int MAX)
+int[d:shp] random( int[d] shp, int min, int max)
 {
   res = with {
-          ( . <= iv <= . ) : random( MIN, MAX );
-        } : genarray( shp, 0 );
-
+          (0*shp <= iv < shp) : random( min, max);
+        } : genarray( shp, 0);
   return( res);
 }
 
-double[*] random( int[.] shp, double MIN, double MAX)
+double[d:shp] random( int[d] shp, double min, double max)
 {
   res = with {
-          ( . <= iv <= . ) : random( MIN, MAX );
-        } : genarray( shp, 0d );
-
+          (0*shp <= iv < shp) : random( min, max);
+        } : genarray( shp, 0d);
   return( res);
 }
-

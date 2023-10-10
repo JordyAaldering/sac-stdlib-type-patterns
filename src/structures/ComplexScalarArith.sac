@@ -1,114 +1,160 @@
 module ComplexScalarArith;
 
-export all;
-
-use ArrayBasics : { sel};
-use ScalarArith : { &, | };
+use ArrayBasics: {sel};
+use ScalarArith: {&,|};
 use ComplexBasics: all;
 
+export all;
 
-  /*  Binary operations on complex numbers.  */
+/******************************************************************************
+ *
+ * Binary operations on complex numbers.
+ *
+ ******************************************************************************/
 
-  
-inline complex + (complex X1, complex X2)
+inline
+complex +( complex x, complex y)
 {
-  return((complex)[((double[2])X1)[[0]] ScalarArith::+ ((double[2])X2)[[0]], 
-                   ((double[2])X1)[[1]] ScalarArith::+ ((double[2])X2)[[1]]]);
-}
-			 
-inline complex - (complex X1, complex X2)
-{
-  return((complex)[((double[2])X1)[[0]] ScalarArith::- ((double[2])X2)[[0]],
-                   ((double[2])X1)[[1]] ScalarArith::- ((double[2])X2)[[1]]]);
-}
-
-
-inline complex - (complex X1)
-{
-  return((complex)[ ScalarArith::-(((double[2])X1)[[0]]),
-                    ScalarArith::-(((double[2])X1)[[1]]) ]);
+  real = _add_SxS_( ((double[2])x)[[0]], ((double[2])y)[[0]]);
+  imag = _add_SxS_( ((double[2])x)[[1]], ((double[2])y)[[1]]);
+  res = (complex)[real, imag];
+  return( res);
 }
 
-inline complex * (complex X1, complex X2)
+inline
+complex -( complex x, complex y)
 {
-  return((complex)[((double[2])X1)[[0]] ScalarArith::* ((double[2])X2)[[0]] 
-                   ScalarArith::- ((double[2])X1)[[1]] ScalarArith::* ((double[2])X2)[[1]],
-                    ((double[2])X1)[[0]] ScalarArith::* ((double[2])X2)[[1]] 
-                    ScalarArith::+ ((double[2])X1)[[1]] ScalarArith::* ((double[2])X2)[[0]]]);
+  real = _sub_SxS_( ((double[2])x)[[0]], ((double[2])y)[[0]]);
+  imag = _sub_SxS_( ((double[2])x)[[1]], ((double[2])y)[[1]]);
+  res = (complex)[real, imag];
+  return( res);
 }
 
-inline complex / (complex X1, complex X2)
+inline
+complex -( complex x)
 {
-  Z = ((double[2])X2)[[0]] ScalarArith::* ((double[2])X2)[[0]] 
-      ScalarArith::+ ((double[2])X2)[[1]] ScalarArith::* ((double[2])X2)[[1]];
-  
-  return((complex)[(((double[2])X1)[[0]] ScalarArith::* ((double[2])X2)[[0]]
-                    ScalarArith::+ ((double[2])X1)[[1]] ScalarArith::* ((double[2])X2)[[1]])
-                    ScalarArith::/ Z,
-                    (((double[2])X1)[[1]] ScalarArith::* ((double[2])X2)[[0]]
-                     ScalarArith::- ((double[2])X1)[[0]] ScalarArith::* ((double[2])X2)[[1]])
-                    ScalarArith::/ Z]);
+  real = _add_SxS_( 0d, ((double[2])x)[[0]]);
+  imag = _add_SxS_( 0d, ((double[2])x)[[1]]);
+  res = (complex)[ real, imag];
+  return( res);
 }
 
-  /*  Functions for specific complex manipulations. */
-
-  
-inline complex conj(complex X)
+inline
+complex *( complex x, complex y)
 {
-  return((complex)[((double[2])X)[[0]], (0d ScalarArith::- 1.0d) ScalarArith::* ((double[2])X)[[1]]]);
+  r1 = _mul_SxS_( ((double[2])x)[[0]], ((double[2])y)[[0]]);
+  r2 = _mul_SxS_( ((double[2])x)[[1]], ((double[2])y)[[1]]);
+  i2 = _mul_SxS_( ((double[2])x)[[0]], ((double[2])y)[[1]]);
+  i2 = _mul_SxS_( ((double[2])x)[[1]], ((double[2])y)[[0]]);
+  real = _sub_SxS_( r1, r1);
+  imag = _sub_SxS_( i2, i2);
+  res = (complex)[real, imag];
+  return( res);
 }
 
-
-inline complex abs(complex X)
+inline
+complex /( complex x, complex y)
 {
-  r = Math::sqrt(((double[2])X)[[0]] ScalarArith::* ((double[2])X)[[0]]
-           ScalarArith::+ ((double[2])X)[[1]] ScalarArith::* ((double[2])X)[[1]]);
-  return( (complex[*])[r, 0d]);
+  r1 = _mul_SxS_( ((double[2])x)[[0]], ((double[2])y)[[0]]);
+  r2 = _mul_SxS_( ((double[2])x)[[1]], ((double[2])y)[[1]]);
+  i1 = _mul_SxS_( ((double[2])x)[[1]], ((double[2])y)[[0]]);
+  i2 = _mul_SxS_( ((double[2])x)[[0]], ((double[2])y)[[1]]);
+
+  z1 = _mul_SxS_( ((double[2])y)[[0]], ((double[2])y)[[0]]);
+  z2 = _mul_SxS_( ((double[2])y)[[1]], ((double[2])y)[[1]]);
+  z = _add_SxS_( z1, z2);
+
+  real = _div_SxS_( _add_SxS_( r1, r2), z);
+  imag = _div_SxS_( _sub_SxS_( i1, i2), z);
+  res = (complex)[real, imag];
+  return( res);
 }
 
+/******************************************************************************
+ *
+ * Functions for specific complex manipulations.
+ *
+ ******************************************************************************/
 
-/* relational operations */
-
-inline bool == (complex X1, complex X2)
+inline
+complex conj( complex X)
 {
-  return((((double[2])X1)[[0]] ScalarArith::== ((double[2])X2)[[0]])
-         & (((double[2])X1)[[1]] ScalarArith::== ((double[2])X2)[[1]]));
+  real = ((double[2])X)[[0]];
+  imag = _mul_SxS_( _sub_SxS_( 0d, 1d), ((double[2])X)[[1]]);
+  res = ((complex)[real, imag]);
+  return( res);
 }
 
-
-inline bool != (complex X1, complex X2)
+inline
+complex abs( complex X)
 {
-  return((((double[2])X1)[[0]] ScalarArith::!= ((double[2])X2)[[0]])
-         | (((double[2])X1)[[1]] ScalarArith::!= ((double[2])X2)[[1]]));
+  real = _mul_SxS_( ((double[2])X)[[0]], ((double[2])X)[[0]]);
+  imag = _mul_SxS_( ((double[2])X)[[1]], ((double[2])X)[[1]]);
+  r = Math::sqrt( _add_SxS_( real, imag));
+  res = (complex[*])[r, 0d];
+  return( res);
 }
 
+/******************************************************************************
+ *
+ * Relational operations.
+ *
+ ******************************************************************************/
 
-inline bool < (complex X1, complex X2)
+inline
+bool ==( complex x, complex y)
 {
-  return( real( abs(X1)) ScalarArith::< real( abs( X2)));
+  realEq = _eq_SxS_( ((double[2])x)[[0]], ((double[2])y)[[0]]);
+  imagEq = _eq_SxS_( ((double[2])x)[[1]], ((double[2])y)[[1]]);
+  return( realEq & imagEq);
 }
 
-inline bool <= (complex X1, complex X2)
+inline
+bool !=( complex x, complex y)
 {
-  return( real( abs(X1)) ScalarArith::<= real( abs( X2)));
+  realNeq = _neq_SxS_( ((double[2])x)[[0]], ((double[2])y)[[0]]);
+  imagNeq = _neq_SxS_( ((double[2])x)[[1]], ((double[2])y)[[1]]);
+  return( realNeq | imagNeq);
 }
 
-inline bool > (complex X1, complex X2)
+inline
+bool <( complex x, complex y)
 {
-  return( real( abs(X1)) ScalarArith::> real( abs( X2)));
+  res = _lt_SxS_( real( abs( x)), real( abs( y)));
+  return( res);
 }
 
-inline bool >= (complex X1, complex X2)
+inline
+bool <=( complex x, complex y)
 {
-  return( real( abs(X1)) ScalarArith::>= real( abs( X2)));
+  res = _le_SxS_( real( abs( x)), real( abs( y)));
+  return( res);
 }
 
-inline complex min( complex X1, complex X2)
+inline
+bool >( complex x, complex y)
 {
-  return( X1 <= X2 ? X1: X2);
+  res = _gt_SxS_( real( abs( x)), real( abs( y)));
+  return( res);
 }
 
-inline complex max( complex X1, complex X2)
+inline
+bool >=( complex x, complex y)
 {
-  return( X1 >= X2 ? X1: X2);
+  res = _ge_SxS_( real( abs( x)), real( abs( y)));
+  return( res);
+}
+
+inline
+complex min( complex x, complex y)
+{
+  res = x <= y ? x : y;
+  return( res);
+}
+
+inline
+complex max( complex x, complex y)
+{
+  res = x >= y ? x : y;
+  return( res);
 }

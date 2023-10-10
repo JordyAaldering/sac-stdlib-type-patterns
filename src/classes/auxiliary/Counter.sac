@@ -1,46 +1,35 @@
-/** <!-- ****************************************************************** -->
- * @file Counter.sac
- *
- * @brief A simple class to maintain a global counter
- *
- * @date $Id$
- ******************************************************************************/
 class Counter;
 
 classtype int;
 
-use ScalarArith : {+};
+use ScalarArith: {+};
 
 export all;
 
-/** <!-- ****************************************************************** -->
- * @brief Creates a new counter with initial value 0.
- * 
- * @return created counter object
+/******************************************************************************
+ *
+ * Creates a new counter with initial value 0.
+ *
  ******************************************************************************/
 Counter newCounter()
 {
   return( to_Counter( 0));
 }
 
-/** <!-- ****************************************************************** -->
- * @brief Creates a new counter with initial value v.
- * 
- * @param v initial value for new counter
- * 
- * @return created counter object
+/******************************************************************************
+ *
+ * Creates a new counter with initial value v.
+ *
  ******************************************************************************/
 Counter newCounter( int v)
 {
   return( to_Counter( v));
 }
 
-/** <!-- ****************************************************************** -->
- * @brief Returns the current value of the counter
- * 
- * @param cnt counter object
- * 
- * @return counter object's value
+/******************************************************************************
+ *
+ * Returns the current value of the counter
+ *
  ******************************************************************************/
 int valueOf( Counter &cnt)
 {
@@ -49,10 +38,10 @@ int valueOf( Counter &cnt)
   return( val);
 }
 
-/** <!-- ****************************************************************** -->
- * @brief Increments the counter by one.
- * 
- * @param cnt the counter object to update
+/******************************************************************************
+ *
+ * Increments the counter by one.
+ *
  ******************************************************************************/
 void increment( Counter &cnt)
 {
@@ -60,10 +49,10 @@ void increment( Counter &cnt)
   cnt = to_Counter( val + 1);
 }
 
-/** <!-- ****************************************************************** -->
- * @brief Increments the counter by the value of the second argument.
+/******************************************************************************
  *
- * @param cnt the counter object to update
+ * Increments the counter by the given value.
+ *
  ******************************************************************************/
 void incrementBy( Counter &cnt, int x)
 {
@@ -71,13 +60,10 @@ void incrementBy( Counter &cnt, int x)
   cnt = to_Counter( val + x);
 }
 
-/** <!-- ****************************************************************** -->
- * @brief Returns the current value of the counter object and
- *        increments the counter object by one
- * 
- * @param cnt counter object to inspect and modify
- * 
- * @return value of counter object before updating
+/******************************************************************************
+ *
+ * Returns the current value of the counter object and increments the counter.
+ *
  ******************************************************************************/
 int next( Counter &cnt)
 {

@@ -1,13 +1,11 @@
 module ComplexMath;
 
+#define OVERLOADS +,-,*,/
+use Complex: all except {OVERLOADS};
+import Complex: {OVERLOADS};
+import Array: {OVERLOADS};
+
 export all;
-
-use ComplexBasics: all;
-use ComplexScalarArith: all;
-
-use ArrayBasics : { sel };
-
-
 
 /*
  *  The following function definitions are based on
@@ -15,157 +13,163 @@ use ArrayBasics : { sel };
  *  Bronstein/Semendjajew: Taschenbuch der Mathematik, page 512ff
  */
 
+/*  Trigonometric functions on complex numbers.  */
 
-
-  /*  Trigonometric functions on complex numbers.  */
-
-
-inline complex sin(complex X)
+inline
+complex sin( complex c)
 {
-  return((complex)[Math::sin(((double[2])X)[[0]]) ScalarArith::* Math::cosh(((double[2])X)[[1]]),
-                   Math::cos(((double[2])X)[[0]]) ScalarArith::* Math::sinh(((double[2])X)[[1]])]);
+  r, i = tod( c);
+  r2 = Math::sin( r) * Math::cosh( i);
+  i2 = Math::cos( r) * Math::sinh( i);
+  c = toc( r2, i2);
+  return( c);
 }
 
-
-inline complex cos(complex X)
+inline
+complex cos( complex c)
 {
-  return((complex)[Math::cos(((double[2])X)[[0]]) ScalarArith::* Math::cosh(((double[2])X)[[1]]), 
-                   (0d ScalarArith::- 1.0d) ScalarArith::* Math::sin(((double[2])X)[[0]]) 
-                         ScalarArith::* Math::sinh(((double[2])X)[[1]])]);
+  r, i = tod( c);
+  r2 = Math::cos( r) * Math::cosh( i);
+  i2 = -1d * Math::sin( r) * Math::sinh( i);
+  c = toc( r2, i2);
+  return( c);
 }
 
-
-inline complex tan(complex X)
+inline
+complex tan( complex c)
 {
-  Z = Math::cos(2.0d ScalarArith::*((double[2])X)[[0]]) ScalarArith::+ Math::cosh(2.0d ScalarArith::* ((double[2])X)[[1]]);
-  
-  return((complex)[Math::sin(2d ScalarArith::*((double[2])X)[[0]])  ScalarArith::/ Z, 
-                   Math::sinh(2d ScalarArith::*((double[2])X)[[1]])  ScalarArith::/ Z]);
+  r, i = tod( c);
+  z = Math::cos( 2d * r) + Math::cosh( 2d * i);
+  r2 = Math::sin( 2d * r) / z;
+  i2 = Math::sinh( 2d * i) / z;
+  c = toc( r2, i2);
+  return( c);
 }
 
-
-inline complex asin(complex X)
+inline
+complex asin( complex c)
 {
-  return(toc(ScalarArith::-(1d)) * i() * log(i() * X + sqrt(toc(1,0) - X * X)));
+  c = toc(-(1d)) * i() * log(i() * c + sqrt(toc(1,0) - c * c));
+  return( c);
 }
 
-
-inline complex acos(complex X)
+inline
+complex acos( complex c)
 {
-  return(toc(ScalarArith::-(1d)) * i() * log(X + sqrt(X * X - toc(1,0))));
+  c = toc(-(1d)) * i() * log(c + sqrt(c * c - toc(1,0)));
+  return( c);
 }
 
-
-inline complex atan(complex X)
+inline
+complex atan( complex c)
 {
-  return((toc(1.0d) / (toc(2.0d) * i())) * log((toc(1,0) + i() * X) / (toc(1,0) - i() * X)));
+  c = (toc(1.0d) / (toc(2.0d) * i())) * log((toc(1,0) + i() * c) / (toc(1,0) - i() * c));
+  return( c);
 }
 
+/* Hyperbolic functions on complex numbers.  */
 
-
-  /* Hyperbolic functions on complex numbers.  */
-
-
-inline complex sinh(complex X)
+inline
+complex sinh( complex c)
 {
-  return((complex)[Math::sinh(((double[2])X)[[0]]) ScalarArith::* Math::cos(((double[2])X)[[1]]),
-                   Math::cosh(((double[2])X)[[0]]) ScalarArith::* Math::sin(((double[2])X)[[1]])]);
+  r, i = tod( c);
+  r2 = Math::sinh( r) * Math::cos( i);
+  i2 = Math::cosh( r) * Math::sin( i);
+  c = toc( r2, i2);
+  return( c);
 }
 
-
-inline complex cosh(complex X)
+inline
+complex cosh( complex c)
 {
-  return((complex)[Math::cosh(((double[2])X)[[0]]) ScalarArith::* Math::cos(((double[2])X)[[1]]),
-                   Math::sinh(((double[2])X)[[0]]) ScalarArith::* Math::sin(((double[2])X)[[1]])]);
+  r, i = tod( c);
+  r2 = Math::cosh( r) * Math::cos( i);
+  i2 = Math::sinh( r) * Math::sin( i);
+  c = toc( r2, i2);
+  return( c);
 }
 
-
-inline complex tanh(complex X)
+inline
+complex tanh( complex c)
 {
-  return(sinh(X) / cosh(X));
+  c = sinh( c) / cosh( c);
+  return( c);
 }
 
-
-inline complex asinh(complex X)
+inline
+complex asinh( complex c)
 {
-  return( log(X + sqrt(X * X + toc(1,0))));
+  c = log( c + sqrt( c * c + toc( 1d)));
+  return( c);
 }
 
-
-inline complex acosh(complex X)
+inline
+complex acosh( complex c)
 {
-  return(log(X + sqrt(X * X - toc(1,0))));
+  c = log( c + sqrt( c * c - toc( 1d)));
+  return( c);
 }
 
-
-inline complex atanh(complex X)
+inline
+complex atanh( complex c)
 {
-  return(toc(0.5d) * log((toc(1,0) + X) / (toc(1,0) - X)));
+  one = toc( 1d);
+  c = toc( 0.5d) * log( (one + c) / (one - c));
+  return( c);
 }
 
+/* Exponential and logarithmic functions on complex numbers.  */
 
-
-
-
-  /* Exponential and logarithmic functions on complex numbers.  */
-
-
-inline complex exp(complex X)
+inline
+complex exp( complex c)
 {
-  return((complex)[Math::exp(((double[2])X)[[0]]) ScalarArith::* Math::cos(((double[2])X)[[1]]),
-                   Math::exp(((double[2])X)[[0]]) ScalarArith::* Math::sin(((double[2])X)[[1]])]);
+  r, i = tod( c);
+  r2 = Math::exp( r) * Math::cos( i);
+  i2 = Math::exp( r) * Math::sin( i);
+  c = toc( r2, i2);
+  return( c);
 }
 
-
-inline complex log(complex X)
+inline
+complex log( complex c)
 {
-  return((complex)[0.5d
-                   ScalarArith::* Math::log(((double[2])X)[[0]] ScalarArith::* ((double[2])X)[[0]]
-                          ScalarArith::+ ((double[2])X)[[1]] ScalarArith::* ((double[2])X)[[1]]),
-                   Math::atan(((double[2])X)[[1]] ScalarArith::/ ((double[2])X)[[0]])]);
+  r, i = tod( c);
+  r2 = 0.5d * Math::log( r * r + i * i);
+  i2 = Math::atan( i / r);
+  c = toc( r2, i2);
+  return( c);
 }
 
+/* Power functions on complex numbers.  */
 
-
-
-  /* Power functions on complex numbers.  */
-
-
-inline complex pow(complex BASE, complex EXPON)
+inline
+complex pow(complex base, complex expon)
 {
-  return(exp(EXPON * log(BASE)));
+  c = exp( expon * log( base));
+  return( c);
 }
 
-
-inline complex pow(complex BASE, double  EXPON)
+inline
+complex pow(complex base, double  expon)
 {
-  return(exp(toc( EXPON) * log(BASE)));
+  c = exp( toc( expon) * log( base));
+  return( c);
 }
 
-
-inline complex pow(double  BASE, complex EXPON)
+inline
+complex pow(double  base, complex expon)
 {
-  return(exp(EXPON * toc( Math::log(BASE))));
+  c = exp( expon * toc( Math::log( base)));
+  return( c);
 }
 
-
-inline complex sqrt(complex X)
+inline
+complex sqrt( complex c)
 {
-  return((complex)[Math::sqrt(0.5d ScalarArith::* 
-                   (((double[2])X)[[0]] 
-                    ScalarArith::+ Math::sqrt(((double[2])X)[[0]] ScalarArith::* ((double[2])X)[[0]]
-                            ScalarArith::+ ((double[2])X)[[1]] ScalarArith::* ((double[2])X)[[1]]))),
-                   Math::sqrt(0.5d ScalarArith::* 
-		    ((0d ScalarArith::- 1.0d) ScalarArith::* ((double[2])X)[[0]]
-                     ScalarArith::+ Math::sqrt(((double[2])X)[[0]] 
-                              ScalarArith::* ((double[2])X)[[0]]
-                            ScalarArith::+ ((double[2])X)[[1]]
-                              ScalarArith::* ((double[2])X)[[1]])))]);
+  r, i = tod( c);
+  z = Math::sqrt( r * r + i * i);
+  r2 = Math::sqrt( 0.5d * (z + r));
+  i2 = Math::sqrt( 0.5d * (z - r));
+  c = toc( r2, i2);
+  return( c);
 }
-
-
-
-
-
-
-

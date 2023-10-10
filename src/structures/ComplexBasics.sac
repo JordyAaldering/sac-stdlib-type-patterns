@@ -1,190 +1,244 @@
 module ComplexBasics;
 
-export all;
+#define OVERLOADS toi,tof,tod,zero,one
+use Array: all except {OVERLOADS};
+import Array: {OVERLOADS};
 
-use ArrayBasics: { sel};
-use Math:  { atan2};
+export all;
 
 typedef double[2] complex;
 
+/******************************************************************************
+ *
+ * Functions for composing and decomposing of complex numbers.
+ *
+ ******************************************************************************/
 
-/*  Functions for composing and decomposing of complex numbers.  */
-
-
-inline double real(complex CPX)
+inline
+double real( complex c)
 {
-  return(((double[2])CPX)[[0]]);
+  res = ((double[2])c)[0];
+  return( res);
 }
 
-
-inline double imag(complex CPX)
+inline
+double imag( complex c)
 {
-  return(((double[2])CPX)[[1]]);
+  res = ((double[2])c)[1];
+  return( res);
 }
 
-/*  
- *  Simple conversion functions between complex, real and integer
- *  numbers.
- */
+/******************************************************************************
+ *
+ * Simple conversion functions between complex, real and integer numbers.
+ *
+ ******************************************************************************/
 
-
-inline  complex toc(int    REAL, int    IMAG)
+inline
+complex toc( int real, int imag)
 {
-  return((complex)[ScalarArith::tod(REAL), ScalarArith::tod(IMAG)]);
+  res = (complex)[ScalarArith::tod(real), ScalarArith::tod(imag)];
+  return( res);
 }
 
-
-inline  complex toc(float  REAL, float  IMAG)
+inline
+complex toc( float real, float imag)
 {
-  return((complex)[ScalarArith::tod(REAL), ScalarArith::tod(IMAG)]);
+  res = (complex)[ScalarArith::tod(real), ScalarArith::tod(imag)];
+  return( res);
 }
 
-
-inline  complex toc(double REAL, double IMAG)
+inline
+complex toc( double real, double imag)
 {
-  return((complex)[REAL, IMAG]);
+  res = (complex)[real, imag];
+  return( res);
 }
 
-
-inline complex toc(double[2] COMP) 
+inline
+complex toc( double[2] a)
 {
-  return((complex)COMP);
-
+  res = (complex)a;
+  return( res);
 }
 
-
-inline  complex toc(int    REAL)
+inline
+complex toc( int real)
 {
-  return((complex)[ScalarArith::tod(REAL), 0.0d]);
+  res = (complex)[ScalarArith::tod(real), 0d];
+  return( res);
 }
 
-
-inline  complex toc(float  REAL)
+inline
+complex toc( float real)
 {
-  return((complex)[ScalarArith::tod(REAL), 0.0d]);
+  res = (complex)[ScalarArith::tod(real), 0d];
+  return( res);
 }
 
-
-inline complex toc(double REAL)
+inline
+complex toc( double real)
 {
-  return((complex)[REAL, 0.0d]);
+  res = (complex)[real, 0d];
+  return( res);
 }
 
+/******************************************************************************
+ *
+ * Extract real and imag part from c complex number.
+ *
+ ******************************************************************************/
 
-
-
-/* Extract real and imag part from a complex number. */
-
-inline  int,    int    toi(complex C)
+inline
+int, int toi( complex c)
 {
-  return(ScalarArith::toi(real(C)), ScalarArith::toi(imag(C)));
+  r = ScalarArith::toi( real( c));
+  i = ScalarArith::toi( imag( c));
+  return( r, i);
 }
 
-
-inline  float , float  tof(complex C)
+inline
+float, float tof( complex c)
 {
-  return(ScalarArith::tof(real(C)), ScalarArith::tof(imag(C)));
+  r = ScalarArith::tof( real( c));
+  i = ScalarArith::tof( imag( c));
+  return( r, i);
 }
 
-
-inline  double, double tod(complex C)
+inline
+double, double tod( complex c)
 {
-  return(real(C), imag(C));
+  r = real( c);
+  i = imag( c);
+  return( r, i);
 }
 
-inline  double[2] todv(complex C)
+inline
+double[2] todv( complex c)
 {
-  return([real(C), imag(C)]);
+  res = [real( c), imag( c)];
+  return( res);
 }
 
-inline String::string tos(complex c)
+inline
+String::string tos( complex c)
 {
-  real, imag = tod(c);
-  str = String::sprintf("%f + %fi\n", real, imag);
-  return(str);
+  r, i = tod( c);
+  res = String::sprintf( "%f + %fi\n", r, i);
+  return( res);
 }
 
-inline int, int ptoi(complex C)
+inline
+int, int ptoi( complex c)
 {
-  r,t = ptof(C);
-  return(ScalarArith::toi(r), ScalarArith::toi(t));
+  x, y = ptof( c);
+  r = ScalarArith::toi( x);
+  i = ScalarArith::toi( y);
+  return( r, i);
 }
 
-inline float, float ptof(complex C)
+inline
+float, float ptof( complex c)
 {
-  x,y = tof(C);
-  return(Math::sqrt(ScalarArith::tof(norm(C))), Math::atan2(x,y));
+  x, y = tof( c);
+  r = Math::sqrt( ScalarArith::tof( norm( c)));
+  i = Math::atan2( x, y);
+  return( r, i);
 }
 
-inline double, double ptod(complex C)
+inline
+double, double ptod( complex c)
 {
-  return(Math::sqrt(norm(C)), Math::atan2(real(C),imag(C)));
+  r = Math::sqrt( norm( c));
+  i = Math::atan2( real( c), imag( c));
+  return( r, i);
 }
 
+/******************************************************************************
+ *
+ * Functions for composing and decomposing of complex numbers using polar
+ * coordinates.
+ *
+ ******************************************************************************/
 
-
-  /*  Functions for composing and decomposing of complex numbers
-      using polar coordinates.  */
-
-
-inline complex polar(double MAG, double ANGLE)
+inline
+complex polar( double mag, double angle)
 {
-  return((complex)[MAG ScalarArith::* Math::cos(ANGLE), MAG ScalarArith::* Math::sin(ANGLE)]);
+  r = _mul_SxS_( mag, Math::cos( angle));
+  i = _mul_SxS_( mag, Math::sin( angle));
+  res = (complex)[r, i];
+  return( res);
 }
 
-    
-inline complex polar(double MAG)
+inline
+complex polar( double mag)
 {
-  return((complex)[MAG, 0.0d]);
+  res = (complex)[mag, 0d];
+  return( res);
 }
 
-    
-inline double normSq(complex CPX)
+inline
+double normSq( complex c)
 {
-  return(  ((double[2])CPX)[[0]] ScalarArith::* ((double[2])CPX)[[0]] 
-         ScalarArith::+ ((double[2])CPX)[[1]] ScalarArith::* ((double[2])CPX)[[1]]);
+  x = _mul_SxS_( ((double[2])c)[[0]], ((double[2])c)[[0]]);
+  y = _mul_SxS_( ((double[2])c)[[1]], ((double[2])c)[[1]]);
+  res = _add_SxS_( x, y);
+  return( res);
 }
 
-inline double norm( complex CPX)
+inline
+double norm( complex c)
 {
-  return( Math::sqrt( normSq( CPX)));
+  res = Math::sqrt( normSq( c));
+  return( res);
 }
 
-inline double arg(complex CPX)
+inline
+double arg( complex c)
 {
-  return(atan2(((double[2])CPX)[[0]], ((double[2])CPX)[[1]]));
+  res = Math::atan2( ((double[2])c)[[0]], ((double[2])c)[[1]]);
+  return( res);
 }
 
+/******************************************************************************
+ *
+ * Complex constants.
+ *
+ ******************************************************************************/
 
-
-/*  Complex constants.  */
-
-
-inline complex i()
+inline
+complex i()
 {
-  return( toc( 0,1));
+  res = toc( 0, 1);
+  return( res);
 }
 
-inline complex zero()
+inline
+complex zero()
 {
-  return( toc( 0,0));
+  res = toc( 0, 0);
+  return( res);
 }
 
-inline complex zero( complex[*] a)
+inline
+complex zero( complex[*] c)
 {
   /* Provided for compatibility with UDT macro mechanism */
-  return( toc( 0,0));
+  res = toc( 0, 0);
+  return( res);
 }
 
-inline complex one()
+inline
+complex one()
 {
-  return( toc( 1,0));
+  res = toc( 1, 0);
+  return( res);
 }
 
-inline complex one( complex[*] a)
+inline
+complex one( complex[*] c)
 {
   /* Provided for compatibility with UDT macro mechanism */
-  return( toc( 1,0));
+  res = toc( 1, 0);
+  return( res);
 }
-
-
