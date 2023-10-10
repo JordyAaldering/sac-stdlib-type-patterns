@@ -50,21 +50,21 @@ BUILT_IN( ONE)
 
 #define MAP_BIN_SxS( name, op, a, b)                                           \
 inline                                                                         \
-b name(a A, a B)                                                               \
+b name( a A, a B)                                                              \
 {                                                                              \
   return( op( A, B));                                                          \
 }
 
 #define MAP_MON_SxS( name, op, a, b)                                           \
 inline                                                                         \
-b name(a A)                                                                    \
+b name( a A)                                                                   \
 {                                                                              \
   return( op( A));                                                             \
 }
 
 #define MAP_UNA_S( name, op, a, b)                                             \
 inline                                                                         \
-a name(a A)                                                                    \
+a name( a A)                                                                   \
 {                                                                              \
   return( op( A, one( A)));                                                    \
 }
@@ -149,6 +149,8 @@ MAP_BOOL_CONV_OP( SxS, type)
 
 NUM( BOOL_CONV_OP_S)
 BOOL( BOOL_CONV_OP_S)
+
+//------------------------------------------------------------------------------
 
 #define NUM_CONV_OPS_S( type, postfix, zero, one)                              \
 MAP_NUM_CONV_OPS( SxS, type)

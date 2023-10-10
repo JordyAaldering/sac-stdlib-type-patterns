@@ -107,12 +107,12 @@ int signum( int y)
  * @brief takes a number of elements from the array, given a shape vector.
  *
  * @remark take supports overtake
- *         E.g., take([5], [2, 3]) =
+ *         E.g., take( [5], [2, 3]) =
  *           [2, 3, 0, 0, 0]
  *
  * @remark take supports short v, padding the missing elements
  *         with corresponding elements from shp.
- *         E.g., take([3], genarray([2,2], 42)) =
+ *         E.g., take( [3], genarray( [2,2], 42)) =
  *           [[42, 42]
  *            [42, 42]
  *            [0,  0]]

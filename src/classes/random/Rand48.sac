@@ -1,72 +1,74 @@
 class Rand48;
 
-
-    /*
-     *  Class Rand48 provides a pseudo-random number generator which uses the
-     *  linear congruential algorithm and  48-bit  integer 
-     *  arithmetic.
-     */
-
+/******************************************************************************
+ *
+ * Class Rand48 provides a pseudo-random number generator which uses the
+ * linear congruential algorithm and 48-bit integer arithmetic.
+ *
+ ******************************************************************************/
 
 external classtype;
+
+use Array: {*};
 
 export all;
 
 objdef Rand48 RandomGen = randGen();
 
+/******************************************************************************
+ *
+ * Initialize RandomGen to produce a new sequence of pseudo-random numbers.
+ *
+ ******************************************************************************/
+
 external Rand48 randGen();
-    #pragma linksign [0]
-    #pragma linkname "create_Rand48Gen"
-    #pragma linkobj  "src/Rand48/Rand48.o"
+  #pragma linksign [0]
+  #pragma linkname "create_Rand48Gen"
+  #pragma linkobj "src/Rand48/Rand48.o"
+
+external void srandom( long seed);
+  #pragma effect Rand48::RandomGen
+  #pragma linkname "srand48"
+  #pragma linkobj "src/Rand48/Rand48.o"
 
 
-external void srandom(long SEED);
-    #pragma effect Rand48::RandomGen
-    #pragma linkname "srand48"
-    #pragma linkobj  "src/Rand48/Rand48.o"
+/******************************************************************************
+ *
+ * Use RandomGen to generate a new pseudo-random value in the range MIN to MAX.
+ *
+ ******************************************************************************/
 
-    /*
-     * Initialize RandomGen to produce a new sequence of pseudo-random
-     * numbers.
-     */
+external int random( int min, int max);
+  #pragma linksign [0,1,2]
+  #pragma effect Rand48::RandomGen
+  #pragma linkname "SACrand48"
+  #pragma linkobj "src/Rand48/Rand48.o"
 
-
-external int random(int MIN, int MAX);
-    #pragma linksign [0,1,2]
-    #pragma effect Rand48::RandomGen
-    #pragma linkname "SACrand48"
-    #pragma linkobj  "src/Rand48/Rand48.o"
-
-    /*
-     * Use RandomGen to generate a new pseudo-random integer in the range
-     * MIN to MAX.
-     */
+external double random( double min, double max);
+  #pragma linksign [0,1,2]
+  #pragma effect Rand48::RandomGen
+  #pragma linkname "SACdrand48"
+  #pragma linkobj "src/Rand48/Rand48.o"
 
 
-external double random(double MIN, double MAX);
-    #pragma linksign [0,1,2]
-    #pragma effect Rand48::RandomGen
-    #pragma linkname "SACdrand48"
-    #pragma linkobj  "src/Rand48/Rand48.o"
+/******************************************************************************
+ *
+ * Use RandomGen to generate a new pseudo-random value in the range MIN to MAX.
+ *
+ ******************************************************************************/
 
-    /*
-     * Use RandomGen to generate a new pseudo-random double precision
-     * floating-point number in the interval [MIN, MAX).
-     */
-
-int[*] random( int[.] shp, int MIN, int MAX)
+int[d:shp] random( int[d] shp, int min, int max)
 {
   res = with {
-          ( . <= iv <= . ) : random( MIN, MAX );
-        } : genarray( shp, 0 );
+          (0*shp <= iv < shp) : random( min, max);
+        } : genarray( shp, 0);
   return( res);
 }
 
-double[*] random( int[.] shp, double MIN, double MAX)
+double[d:shp] random( int[d] shp, double min, double max)
 {
   res = with {
-          ( . <= iv <= . ) : random( MIN, MAX );
-        } : genarray( shp, 0d );
+          (0*shp <= iv < shp) : random( min, max);
+        } : genarray( shp, 0d);
   return( res);
 }
-

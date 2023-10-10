@@ -1,6 +1,7 @@
 module ArrayArith;
 
-import ScalarArith: {zero,one};
+import ScalarArith: all;
+import ArrayBasics: {shape,sel};
 
 export all;
 
@@ -38,34 +39,34 @@ export all;
 
 #define MAP_BIN_AxA( name, op, a, b)                                           \
 inline                                                                         \
-b[d:shp] name( a[d:shp] A, a[d:shp] B)                                         \
+b[+] name( a[+] A, a[+] B)                                               \
 {                                                                              \
   res = with {                                                                 \
-          (_mul_SxV_( 0, shp) <= iv < shp)                                     \
+          ( . <= iv <= . )                                                     \
             : op( _sel_VxA_( iv, A), _sel_VxA_( iv, B));                       \
-        } : genarray( shp, op( one( A), one( B)));                             \
+        } : genarray( shape( A), op( one( A), one( B)));                       \
   return( res);                                                                \
 }
 
 #define MAP_BIN_AxS( name, op, a, b)                                           \
 inline                                                                         \
-b[d:shp] name( a[d:shp] A, a B)                                                \
+b[+] name( a[+] A, a B)                                                        \
 {                                                                              \
   res = with {                                                                 \
-          (_mul_SxV_( 0, shp) <= iv < shp)                                     \
+          ( . <= iv <= . )                                                     \
             : op( _sel_VxA_( iv, A), B);                                       \
-        } : genarray( shp, op( one( A), one( B)));                             \
+        } : genarray( shape( A), op( one( A), one( B)));                       \
   return( res);                                                                \
 }
 
 #define MAP_BIN_SxA( name, op, a, b)                                           \
 inline                                                                         \
-b[d:shp] name( a A, a[d:shp] B)                                                \
+b[+] name( a A, a[+] B)                                                        \
 {                                                                              \
   res = with {                                                                 \
-          (_mul_SxV_( 0, shp) <= iv < shp)                                     \
+          ( . <= iv <= . )                                                     \
             : op( A, _sel_VxA_( iv, B));                                       \
-        } : genarray( shp, op( one( A), one( B)));                             \
+        } : genarray( shape( B), op( one( A), one( B)));                       \
   return( res);                                                                \
 }
 
@@ -102,17 +103,63 @@ int[n] (name)( int[n] A, int B)                                                \
 
 #define MAP_MON_AxA( name, op, a, b)                                           \
 inline                                                                         \
-b[d:shp] name( a[d:shp] A)                                                     \
+b[+] name( a[+] A)                                                             \
 {                                                                              \
   res = with {                                                                 \
-          (_mul_SxV_( 0, shp) <= iv < shp)                                     \
+          ( . <= iv <= . )                                                     \
             : op( _sel_VxA_( iv, A));                                          \
-        } : genarray( shp, op( zero( A)));                                     \
+        } : genarray( shape( A), op( zero( A)));                               \
   return( res);                                                                \
 }
 
 #define MAP_MON_SxA( name, op, a, b)
 #define MAP_MON_AxS( name, op, a, b)
+
+
+/******************************************************************************
+ *
+ * Clamp array between minimal and maximal value
+ *
+ ******************************************************************************/
+
+#define CLAMP_SxSxS( typ, postfix, zval, oval)                                 \
+inline                                                                         \
+typ clamp( typ v, typ minv, typ maxv)                                          \
+{                                                                              \
+  res = min( max( v, minv), maxv);                                             \
+  return( res);                                                                \
+}
+
+#define CLAMP_AxSxS( typ, postfix, zval, oval)                                 \
+inline                                                                         \
+typ[d:shp] clamp( typ[d:shp] v, typ minv, typ maxv)                            \
+{                                                                              \
+  res = with {                                                                 \
+          (_mul_SxV_( 0, shp) <= iv < shp)                                     \
+            : min( max( _sel_VxA_( iv, v), minv),                              \
+                   maxv);                                                      \
+        } : genarray( shp, zval);                                              \
+  return( res);                                                                \
+}
+
+#define CLAMP_AxAxA( typ, postfix, zval, oval)                                 \
+inline                                                                         \
+typ[d:shp] clamp( typ[d:shp] v, typ[d:shp] minv, typ[d:shp] maxv)              \
+{                                                                              \
+  res = with {                                                                 \
+          (_mul_SxV_( 0, shp) <= iv < shp)                                     \
+            : min( max( _sel_VxA_( iv, v), _sel_VxA_( iv, minv)),              \
+                   _sel_VxA_( iv, maxv));                                      \
+        } : genarray( shp, zval);                                              \
+  return( res);                                                                \
+}
+
+#define CLAMP( typ, postfix, zval, oval)                                       \
+CLAMP_SxSxS( typ, postfix, zval, oval)                                         \
+CLAMP_AxSxS( typ, postfix, zval, oval)                                         \
+CLAMP_AxAxA( typ, postfix, zval, oval)
+
+NUM( CLAMP)
 
 
 /******************************************************************************
@@ -206,3 +253,29 @@ BOOL( BOOL_CONV_OP_A)
 MAP_NUM_CONV_OPS( AxA, type)
 
 BUILT_IN( NUM_CONV_OPS_A)
+
+
+/******************************************************************************
+ *
+ * Reduction operations
+ *
+ ******************************************************************************/
+
+inline
+bool any( bool[d:shp] a)
+{
+  res = with {
+          (_mul_SxV_( 0, shp) <= iv < shp) : a[ iv];
+        } : fold( |, false);
+  return( res);
+}
+
+
+inline
+bool all( bool[d:shp] a)
+{
+  res = with {
+          (_mul_SxV_( 0, shp) <= iv < shp) : a[ iv];
+        } : fold( &, true);
+  return( res);
+}
