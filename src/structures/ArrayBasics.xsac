@@ -1,6 +1,6 @@
 module ArrayBasics;
 
-use ScalarArith: {++,--};
+use ScalarArith: {++,--,&};
 
 export all;
 
@@ -74,14 +74,10 @@ BUILT_IN( RESHAPE)
  ******************************************************************************/
 
 inline
-bool IsSameShape( int[n] shapeA, int[m] shapeB)
+bool IsSameShape( int[n] shpA, int[m] shpB)
 {
-  res = _eq_( n, m);
-  for (i = 0; _and_( res, _lt_( i, n)); i++) {
-    sx = _sel_( [i], shapeA);
-    sy = _sel_( [i], shapeB);
-    res = _and_( res, _eq_( sx, sy));
-  }
+  res = _and_SxS_( _eq_SxS_( n, m),
+                   _all_V_( _eq_VxV_ shpA, shpB));
   return( res);
 }
 

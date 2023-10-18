@@ -39,34 +39,34 @@ export all;
 
 #define MAP_BIN_AxA( name, op, a, b)                                           \
 inline                                                                         \
-b[+] name( a[+] A, a[+] B)                                               \
+b[d:shp] name( a[d:shp] A, a[d:shp] B)                                         \
 {                                                                              \
   res = with {                                                                 \
-          ( . <= iv <= . )                                                     \
+          (_mul_SxV_( 0, shp) <= iv < shp)                                     \
             : op( _sel_VxA_( iv, A), _sel_VxA_( iv, B));                       \
-        } : genarray( shape( A), op( one( A), one( B)));                       \
+        } : genarray( shp, op( one( A), one( B)));                             \
   return( res);                                                                \
 }
 
 #define MAP_BIN_AxS( name, op, a, b)                                           \
 inline                                                                         \
-b[+] name( a[+] A, a B)                                                        \
+b[d:shp] name( a[d:shp] A, a B)                                                \
 {                                                                              \
   res = with {                                                                 \
-          ( . <= iv <= . )                                                     \
+          (_mul_SxV_( 0, shp) <= iv < shp)                                     \
             : op( _sel_VxA_( iv, A), B);                                       \
-        } : genarray( shape( A), op( one( A), one( B)));                       \
+        } : genarray( shp, op( one( A), one( B)));                             \
   return( res);                                                                \
 }
 
 #define MAP_BIN_SxA( name, op, a, b)                                           \
 inline                                                                         \
-b[+] name( a A, a[+] B)                                                        \
+b[d:shp] name( a A, a[d:shp] B)                                                \
 {                                                                              \
   res = with {                                                                 \
-          ( . <= iv <= . )                                                     \
+          (_mul_SxV_( 0, shp) <= iv < shp)                                     \
             : op( A, _sel_VxA_( iv, B));                                       \
-        } : genarray( shape( B), op( one( A), one( B)));                       \
+        } : genarray( shp, op( one( A), one( B)));                             \
   return( res);                                                                \
 }
 
@@ -103,12 +103,12 @@ int[n] (name)( int[n] A, int B)                                                \
 
 #define MAP_MON_AxA( name, op, a, b)                                           \
 inline                                                                         \
-b[+] name( a[+] A)                                                             \
+b[d:shp] name( a[d:shp] A)                                                     \
 {                                                                              \
   res = with {                                                                 \
-          ( . <= iv <= . )                                                     \
+          (_mul_SxV_( 0, shp) <= iv < shp)                                     \
             : op( _sel_VxA_( iv, A));                                          \
-        } : genarray( shape( A), op( zero( A)));                               \
+        } : genarray( shp, op( zero( A)));                                     \
   return( res);                                                                \
 }
 

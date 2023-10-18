@@ -2,7 +2,7 @@ module ComplexArrayArith;
 
 import ComplexBasics: all;
 import ComplexScalarArith: all;
-import ComplexArrayBasics: {shape,sel};
+import ComplexArrayBasics: all;
 
 export all;
 
