@@ -2,6 +2,50 @@ module Constants;
 
 export all;
 
+external int minint();
+  #pragma linksign[0]
+  #pragma linkobj "src/Constants/minint.o"
+
+external int maxint();
+  #pragma linksign[0]
+  #pragma linkobj "src/Constants/maxint.o"
+
+external long minlong();
+  #pragma linksign[0]
+  #pragma linkobj "src/Constants/minmax.o"
+
+external long maxlong();
+  #pragma linksign[0]
+  #pragma linkobj "src/Constants/minmax.o"
+
+external float minfloat();
+  #pragma linksign[0]
+  #pragma linkobj "src/Constants/minfloat.o"
+
+external float maxfloat();
+  #pragma linksign[0]
+  #pragma linkobj "src/Constants/maxfloat.o"
+
+external double mindouble();
+  #pragma linksign[0]
+  #pragma linkobj "src/Constants/mindouble.o"
+
+external double tinydouble();
+  #pragma linksign[0]
+  #pragma linkobj "src/Constants/tinydouble.o"
+
+external double maxdouble();
+  #pragma linksign[0]
+  #pragma linkobj "src/Constants/maxdouble.o"
+
+external double epidouble();
+  #pragma linksign[0]
+  #pragma linkobj "src/Constants/epidouble.o"
+
+external int randmax();
+  #pragma linksign[0]
+  #pragma linkobj "src/Constants/randmax.o"
+
 #ifdef FULLTYPES
 
 external byte minbyte();
@@ -69,47 +113,3 @@ external ulonglong maxulonglong();
   #pragma linkobj "src/Constants/minmax.o"
 
 #endif /* FULLTYPES */
-
-external int minint();
-  #pragma linksign[0]
-  #pragma linkobj "src/Constants/minint.o"
-
-external int maxint();
-  #pragma linksign[0]
-  #pragma linkobj "src/Constants/maxint.o"
-
-external long minlong();
-  #pragma linksign[0]
-  #pragma linkobj "src/Constants/minmax.o"
-
-external long maxlong();
-  #pragma linksign[0]
-  #pragma linkobj "src/Constants/minmax.o"
-
-external float minfloat();
-  #pragma linksign[0]
-  #pragma linkobj "src/Constants/minfloat.o"
-
-external float maxfloat();
-  #pragma linksign[0]
-  #pragma linkobj "src/Constants/maxfloat.o"
-
-external double mindouble();
-  #pragma linksign[0]
-  #pragma linkobj "src/Constants/mindouble.o"
-
-external double tinydouble();
-  #pragma linksign[0]
-  #pragma linkobj "src/Constants/tinydouble.o"
-
-external double maxdouble();
-  #pragma linksign[0]
-  #pragma linkobj "src/Constants/maxdouble.o"
-
-external double epidouble();
-  #pragma linksign[0]
-  #pragma linkobj "src/Constants/epidouble.o"
-
-external int randmax();
-  #pragma linksign[0]
-  #pragma linkobj "src/Constants/randmax.o"
