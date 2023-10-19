@@ -1,99 +1,136 @@
-/*****************************************************************************
+/******************************************************************************
  *
- * file:   Hiding.sac
+ * This module is for hiding type information.
+ * It is commonly used for static inputs and is intentioned for benchmarking.
  *
- * description:
+ * Some functions take a single argument and hide the value, shape or
+ * dimensionality information of the input. Others in addition take an
+ * integer. This allows for calls to inlined kernel functions in a loop
+ * where where the call must be repeated N times for benchmarking.
  *
- *   This module is for hiding type information.
- *   It is commonly used for static inputs and is intentioned for benchmarking.
+ * Here is an example:
+ *   for (i = 0; i < N; i++) {
+ *     res[i] = kernel( hideValue( ip1, i), hideValue( ip2, i), ...);
+ *   }
  *
- *   Some functions take a single argument and hide the value, shape or 
- *   dimensionality information of the input. Others in addition take an
- *   integer. This allows for calls to inlined kernel functions in a loop 
- *   where where the call must be repeated N times for benchmarking.
- *   Here is an example:
- *      for( i=0 ; i < N ; i}}) {
- *        res[[i]] = kernel( hideValue( ip1, i), hideValue( ip2, i), ...);
- *      }
- *   The above code computes kernel N times even if kernel is inlined.
+ * The above code computes kernel N times even if kernel is inlined.
  *
- *****************************************************************************/
-
+ ******************************************************************************/
 module Hiding;
 
 export all;
 
 use Array: all;
 
-/*
+/******************************************************************************
+ *
+ * Hide value.
+ *
  * AKV -> AKS
  * AKS -> AKS
  * AKD -> AKD
  * AUD -> AUD
  * SCALAR -> SCALAR
- */
-#define HIDEVALUE( TYPE)                                  \
-inline                                                    \
-TYPE[*] hideValue( TYPE[*] in)                            \
-{                                                         \
-  return( _hideValue_SxA_( 0, in));                       \
-}                                                         \
-inline                                                    \
-TYPE[*] hideValue( int i, TYPE[*] in)                     \
-{                                                         \
-  return( _hideValue_SxA_( i, in));                       \
-}                                                         
+ *
+ ******************************************************************************/
+#define HIDEVALUE_A( typ)                                                      \
+inline                                                                         \
+typ[*] hideValue( typ[*] in)                                                   \
+{                                                                              \
+  res = _hideValue_SxA_( 0, in);                                               \
+  return( res);                                                                \
+}
+
+#define HIDEVALUE_SxA( typ)                                                    \
+inline                                                                         \
+typ[*] hideValue( int i, typ[*] in)                                            \
+{                                                                              \
+  res = _hideValue_SxA_( i, in);                                               \
+  return( res);                                                                \
+}
+
+#define HIDEVALUE( typ)                                                        \
+HIDEVALUE_A( typ)                                                              \
+HIDEVALUE_SxA( typ)
+
 HIDEVALUE( int)
 HIDEVALUE( char)
 HIDEVALUE( float)
 HIDEVALUE( double)
 HIDEVALUE( bool)
 
-/*
+
+/******************************************************************************
+ *
+ * Hide shape.
+ *
  * AKV -> AKD
  * AKS -> AKD
  * AKD -> AKD
  * AUD -> AUD
  * SCALAR -> SCALAR
- */
-#define HIDESHAPE( TYPE)                               \
-inline                                                 \
-TYPE[*] hideShape( TYPE[*] in)                         \
-{                                                      \
-  return( _hideShape_SxA_( 0, in));                    \
-}                                                      \
-inline                                                 \
-TYPE[*] hideShape( int i, TYPE[*] in)                  \
-{                                                      \
-  return( _hideShape_SxA_( i, in));                    \
+ *
+ ******************************************************************************/
+#define HIDESHAPE_A( typ)                                                      \
+inline                                                                         \
+typ[*] hideShape( typ[*] in)                                                   \
+{                                                                              \
+  res = _hideShape_SxA_( 0, in);                                               \
+  return( res);                                                                \
 }
+
+#define HIDESHAPE_SxA( typ)                                                    \
+inline                                                                         \
+typ[*] hideShape( int i, typ[*] in)                                            \
+{                                                                              \
+  res = _hideShape_SxA_( i, in);                                               \
+  return( res);                                                                \
+}
+
+#define HIDESHAPE( typ)                                                        \
+HIDESHAPE_A( typ)                                                              \
+HIDESHAPE_SxA( typ)
+
 HIDESHAPE( int)
 HIDESHAPE( char)
 HIDESHAPE( float)
 HIDESHAPE( double)
 HIDESHAPE( bool)
 
-/*
+
+/******************************************************************************
+ *
+ * Hide dimensionality.
+ *
  * AKV -> AUD
  * AKS -> AUD
  * AKD -> AUD
  * AUD -> AUD
  * SCALAR -> AUD
- */
-#define HIDEDIMENSIONALITY( TYPE)                      \
-inline                                                 \
-TYPE[*] hideDimensionality( TYPE[*] in)                \
-{                                                      \
-  return( _hideDim_SxA_( 0, in));                      \
-}                                                      \
-inline                                                 \
-TYPE[*] hideDimensionality( int i, TYPE[*] in)         \
-{                                                      \
-  return( _hideDim_SxA_( i, in));                      \
+ *
+ ******************************************************************************/
+#define HIDEDIM_A( typ)                                                        \
+inline                                                                         \
+typ[*] hideDimensionality( typ[*] in)                                          \
+{                                                                              \
+  res = _hideDim_SxA_( 0, in);                                                 \
+  return( res);                                                                \
 }
-HIDEDIMENSIONALITY( int)
-HIDEDIMENSIONALITY( char)
-HIDEDIMENSIONALITY( float)
-HIDEDIMENSIONALITY( double)
-HIDEDIMENSIONALITY( bool)
 
+#define HIDEDIM_SxA( typ)                                                      \
+inline                                                                         \
+typ[*] hideDimensionality( int i, typ[*] in)                                   \
+{                                                                              \
+  res = _hideDim_SxA_( i, in);                                                 \
+  return( res);                                                                \
+}
+
+#define HIDEDIM( typ)                                                          \
+HIDEDIM_A( typ)                                                                \
+HIDEDIM_SxA( typ)
+
+HIDEDIM( int)
+HIDEDIM( char)
+HIDEDIM( float)
+HIDEDIM( double)
+HIDEDIM( bool)

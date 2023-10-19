@@ -2,32 +2,43 @@ class Indent;
 
 classtype int;
 
-export all;
 use StdIO: all;
 use Structures: all;
 
+export all;
+
 objdef Indent indent = to_Indent( 0);
 
-Indent newIndent( int value)
+Indent newIndent( int val)
 {
-  return( to_Indent( value));
+  i = to_Indent( val);
+  return( i);
 }
 
-int getIndent( )
-{
-  return( getIndent( indent));
-}
-
-int getIndent( Indent & i)
+int getIndent( Indent &i)
 {
   val = from_Indent( i);
   i = to_Indent( val);
   return( val);
 }
 
-void setIndent( Indent & i, int val)
+int getIndent()
+{
+  val = getIndent( indent);
+  return( val);
+}
+
+void setIndent( Indent &i, int val)
 {
   i = to_Indent( val);
+}
+
+void doIndent( Indent &i, string pattern)
+{
+  shp = [strlen( pattern) * getIndent( i)];
+  val = genarray( [getIndent( i)], tochar( pattern));
+  indents = reshape( shp, val);
+  printf( to_string( indents));
 }
 
 void doIndent( string pattern)
@@ -35,24 +46,16 @@ void doIndent( string pattern)
   doIndent( indent, pattern);
 }
 
-void doIndent( Indent & i, string pattern)
-{
-  indents = reshape( [strlen( pattern) * getIndent( i)],
-                    genarray( [getIndent( i)], tochar(pattern)));
-  printf( to_string( indents));
-}
-
-
-void incIndent(  Indent & i)
+void incIndent( Indent &i)
 {
   val = from_Indent( i);
-  i = to_Indent( val+1);
+  i = to_Indent( val + 1);
 }
 
-void incIndent(  Indent & i, int offset)
+void incIndent( Indent &i, int offset)
 {
   val = from_Indent( i);
-  i = to_Indent( val+offset);
+  i = to_Indent( val + offset);
 }
 
 void incIndent()
@@ -60,20 +63,19 @@ void incIndent()
   incIndent( indent);
 }
 
-void decIndent(  Indent & i)
+void decIndent( Indent &i)
 {
   val = from_Indent( i);
-  i = to_Indent( val-1);
+  i = to_Indent( val - 1);
 }
 
-void decIndent(  Indent & i, int offset)
+void decIndent( Indent &i, int offset)
 {
   val = from_Indent( i);
-  i = to_Indent( val-offset);
+  i = to_Indent( val - offset);
 }
 
 void decIndent()
 {
   decIndent( indent);
 }
-

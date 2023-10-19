@@ -26,7 +26,7 @@ void SACbinfReadDoubleArray( SAC_ND_PARAM_out( array_nt, double), int fd, int di
     /*  yyin = stream; */
   given_dim = dim;
   given_shp = shp;
-  for( i = 0, size = 1; i < dim; i++) {
+  for (i = 0, size = 1; i < dim; i++) {
     size *= shp[i];
     SAC_ND_A_DESC_SHAPE( ret_nt, i) = shp[i];
   }

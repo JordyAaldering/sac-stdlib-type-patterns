@@ -20,7 +20,7 @@ void FibreScanIntArray( SAC_ND_PARAM_out( array_nt, int), FILE *stream)
   int SAC_ND_A_MIRROR_DIM( ret_nt) = dims;
   SAC_ND_ALLOC__DESC( ret_nt, dims)
   SAC_ND_SET__RC( ret_nt, 1)
-  for( i = 0; i < dims; i++) {
+  for (i = 0; i < dims; i++) {
     SAC_ND_A_DESC_SHAPE( ret_nt, i) = shape[i];
   }
   SAC_ND_A_DESC_SIZE( ret_nt) = size;
@@ -45,7 +45,7 @@ void FibreScanIntArrayStr( SAC_ND_PARAM_out( array_nt, int), char *stream)
   int SAC_ND_A_MIRROR_DIM( ret_nt) = dims;
   SAC_ND_ALLOC__DESC( ret_nt, dims)
   SAC_ND_SET__RC( ret_nt, 1)
-  for( i = 0; i < dims; i++) {
+  for (i = 0; i < dims; i++) {
     SAC_ND_A_DESC_SHAPE( ret_nt, i) = shape[i];
   }
   SAC_ND_A_DESC_SIZE( ret_nt) = size;

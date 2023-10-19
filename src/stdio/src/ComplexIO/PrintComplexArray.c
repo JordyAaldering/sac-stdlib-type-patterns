@@ -75,7 +75,7 @@ void PrintArr(FILE *stream, int typeflag, string format, int dim, int * shp, voi
    * to be expected behind *a!
    */
 
-  if( dim == 0) {
+  if (dim == 0) {
     switch(typeflag) {
       case COMPLEX:
         fprintf(stream, format, (*((complex *)a))[0], (*((complex *)a))[1]);
@@ -110,14 +110,14 @@ void PrintArr(FILE *stream, int typeflag, string format, int dim, int * shp, voi
 
           #ifdef SAC_BACKEND_DISTMEM
             if (is_distr) {
-               fprintf(stream, format, 
+               fprintf(stream, format,
                   *(SAC_DISTMEM_ELEM_POINTER(arr_offset, int, elems_first_nodes, Index2Offset(dim,shp,index))));
             } else {
           #endif /* defined(SAC_BACKEND_DISTMEM) */
 
           switch(typeflag) {
           case COMPLEX:
-            fprintf(stream, format, 
+            fprintf(stream, format,
 	    	(((complex *)a)[Index2Offset(dim,shp,index)])[0], (((complex *)a)[Index2Offset(dim,shp,index)])[1]);
             break;
           }
@@ -127,7 +127,7 @@ void PrintArr(FILE *stream, int typeflag, string format, int dim, int * shp, voi
           #endif /* defined(SAC_BACKEND_DISTMEM) */
 
           index[n]++;
-        }        
+        }
 
         if (dim%2 == 1) {
           index[n] = 0;
@@ -137,7 +137,7 @@ void PrintArr(FILE *stream, int typeflag, string format, int dim, int * shp, voi
         else {
           fprintf(stream, "| ");
         }
-  
+
         while(( n>0) && (index[n]>=(shp[n]-1))) {
           index[n]=0;
           n -= 2;
@@ -152,7 +152,7 @@ void PrintArr(FILE *stream, int typeflag, string format, int dim, int * shp, voi
           n=dim-1;
           space=" ";
         }
-      } while( n>0);
+      } while (n>0);
 
       fprintf(stream, "\n");
 

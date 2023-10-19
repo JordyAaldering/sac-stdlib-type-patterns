@@ -1,7 +1,9 @@
 module ArrayTransform;
 
-use ArrayBasics: {shape,sel,genarray};
-use ArrayArith: {<,>,&,|,+,-,*,abs,zero,min,max};
+
+use ScalarArith: { zero };
+use ArrayBasics: {shape,sel};
+use ArrayArith: {<,>,&,|,+,-,*,abs,min,max};
 import Constants: all;
 
 export all;
@@ -84,9 +86,9 @@ int NormalizeRotateCount( int count, int max_rotate)
 inline
 int signum( int y)
 {
-  if( _eq_SxS_( 0, y)) {
+  if (_eq_SxS_( 0, y)) {
     res = 0;
-  } else if( _lt_SxS_( 0, y)) {
+  } else if (_lt_SxS_( 0, y)) {
     res = 1;
   } else {
     res = _sub_SxS_( 0, 1);
@@ -131,7 +133,7 @@ typ[+] take( int[vlen] sv, typ[d:shp] array)                                   \
   /* Pad take count for Bernecky's extended take */                            \
   /* See APL model in function Take in apex test suite UTTakeDrop */           \
   /* for-loop should get unrolled */                                           \
-  for( i = 0; _lt_SxS_( i, vlen); i = _add_SxS_( i, 1)) {                      \
+  for (i = 0; _lt_SxS_( i, vlen); i = _add_SxS_( i, 1)) {                      \
     vel = _sel_VxA_( [i], sv);                                                 \
     shpel = _sel_VxA_( [i], shp);                                              \
     vext  = _idx_modarray_AxSxS_( vext,  i,  vel);                             \
@@ -174,7 +176,7 @@ typ[*] drop( int[vlen] sv, typ[d:shp] array)                                   \
   offset = zr;                                                                 \
   /* Pad drop count */                                                         \
   vext = zr;                                                                   \
-  for( i = 0; _lt_SxS_( i, vlen); i = _add_SxS_( i, 1)) {                      \
+  for (i = 0; _lt_SxS_( i, vlen); i = _add_SxS_( i, 1)) {                      \
     el     = _sel_VxA_( [i], sv);                                              \
     shpel  = _sel_VxA_( [i], shp);                                             \
     vext   = _idx_modarray_AxSxS_( vext,  i,  el);                             \
@@ -201,10 +203,11 @@ BUILT_IN( DROP)
 
 #define TILE( typ, postfix, zval, oval)                                        \
 inline                                                                         \
-typ[d:shp] tile( int[d] shp, int[.] idx, typ[*] array)                         \
+typ[d:shp] tile( int[d] shp, int[.] idx, typ[*] A)                             \
 {                                                                              \
   res = with {                                                                 \
-          ( . <= iv <= . ) : _sel_VxA_( _add_VxV_( idx, iv), array);           \
+          (_mul_SxV_( 0, shp) <= iv < shp)                                     \
+            : _sel_VxA_( _add_VxV_( idx, iv), A);                              \
         } : genarray( shp, zval);                                              \
   return( res);                                                                \
 }
@@ -229,10 +232,12 @@ typ[z,d:shp] ++( typ[n,d:shp] x, typ[m,d:shp] y)                               \
   shpz = _cat_VxV_( [z], shp);                                                 \
   offset = _cat_VxV_( [n], _mul_SxV_( 0, shp));                                \
   res = with {                                                                 \
-          (_mul_SxV_( 0, shpx) <= iv < shpx) : x[ iv];                         \
+          (_mul_SxV_( 0, shpx) <= iv < shpx)                                   \
+            : _sel_VxA_( iv, x);                                               \
         } : genarray( shpz, zval);                                             \
   res = with {                                                                 \
-          (offset <= iv < shpz) : y[ iv - offset];                             \
+          (offset <= iv < shpz)                                                \
+            : _sel_VxA_( _sub_VxV_( iv, offset), y);                           \
         } : modarray( res);                                                    \
   return( res);                                                                \
 }
@@ -246,7 +251,8 @@ typ[z,d:shp] ++( typ[n,d:shp] x, typ y)                                        \
   shpz = _cat_VxV_( [z], shp);                                                 \
   offset = _cat_VxV_( [n], _mul_SxV_( 0, shp));                                \
   res = with {                                                                 \
-          (_mul_SxV_( 0, shpx) <= iv < shpx) : x[ iv];                         \
+          (_mul_SxV_( 0, shpx) <= iv < shpx)                                   \
+            : _sel_VxA_( iv, x);                                               \
         } : genarray( shpz, zval);                                             \
   res = with {                                                                 \
           (offset <= iv < shpz) : y;                                           \
@@ -263,7 +269,8 @@ typ[z,d:shp] ++( typ x, typ[m,d:shp] y)                                        \
   shpz = _cat_VxV_( [z], shp);                                                 \
   offset = _cat_VxV_( [m], _mul_SxV_( 0, shp));                                \
   res = with {                                                                 \
-          (_mul_SxV_( 0, shpy) <= iv < shpy) : y[ iv];                         \
+          (_mul_SxV_( 0, shpy) <= iv < shpy)                                   \
+            : _sel_VxA_( iv, y);                                               \
         } : genarray( shpz, zval);                                             \
   res = with {                                                                 \
           (offset <= iv < shpz) : x;                                           \
@@ -275,7 +282,6 @@ typ[z,d:shp] ++( typ x, typ[m,d:shp] y)                                        \
 inline                                                                         \
 typ[2] ++( typ x, typ y)                                                       \
 {                                                                              \
-  /* Scalar-Scalar catenate, first axis  */                                    \
   res = [x, y];                                                                \
   return( res);                                                                \
 }
@@ -307,10 +313,12 @@ typ[d:shp,z] catenate( typ[d:shp,n] x, typ[d:shp,m] y)                         \
   shpz = _cat_VxV_( shp, [z]);                                                 \
   offset = _cat_VxV_( _mul_SxV_( 0, shp), [n]);                                \
   res = with {                                                                 \
-          (_mul_SxV_( 0, shpx) <= iv < shpx) : x[ iv];                         \
+          (_mul_SxV_( 0, shpx) <= iv < shpx)                                   \
+            : _sel_VxA_( iv, x);                                               \
         } : genarray( shpz, zval);                                             \
   res = with {                                                                 \
-          (offset <= iv < shpz) : y[ iv - offset];                             \
+          (offset <= iv < shpz)                                                \
+            : _sel_VxA_( _sub_VxV_( iv, offset), y);                           \
         } : modarray( res);                                                    \
   return( res);                                                                \
 }
@@ -324,7 +332,8 @@ typ[d:shp,z] catenate( typ[d:shp,n] x, typ y)                                  \
   shpz = _cat_VxV_( shp, [z]);                                                 \
   offset = _cat_VxV_( _mul_SxV_( 0, shp), [n]);                                \
   res = with {                                                                 \
-          (_mul_SxV_( 0, shpx) <= iv < shpx) : x[ iv];                         \
+          (_mul_SxV_( 0, shpx) <= iv < shpx)                                   \
+            : _sel_VxA_( iv, x);                                               \
         } : genarray( shpz, zval);                                             \
   res = with {                                                                 \
           (offset <= iv < shpz) : y;                                           \
@@ -341,7 +350,8 @@ typ[d:shp,z] catenate( typ x, typ[d:shp,m] y)                                  \
   shpz = _cat_VxV_( shp, [z]);                                                 \
   offset = _cat_VxV_( _mul_SxV_( 0, shp), [m]);                                \
   res = with {                                                                 \
-          (offset <= iv < shpz) : y[ iv - offset];                             \
+          (offset <= iv < shpz)                                                \
+            : _sel_VxA_( _sub_VxV_( iv, offset), y);                           \
         } : genarray( shpz, zval);                                             \
   res = with {                                                                 \
           (_mul_SxV_( 0, shpy) <= iv < offset) : x;                            \
@@ -368,7 +378,7 @@ BUILT_IN( CATENATE)
 
 /******************************************************************************
  *
- * @fn <a>[n,d:shp] reverse( <a>[n,d:shp] array)
+ * @fn <a>[n,d:shp] reverse( <a>[n,d:shp] A)
  *
  * @brief first-axis reverse.
  *
@@ -376,13 +386,13 @@ BUILT_IN( CATENATE)
 
 #define REVERSE( typ, postfix, zval, oval)                                     \
 inline                                                                         \
-typ[n,d:shp] reverse( typ[n,d:shp] array)                                      \
+typ[n,d:shp] reverse( typ[n,d:shp] A)                                          \
 {                                                                              \
   maxidx0 = _sub_SxS_( n, 1);                                                  \
   res = with {                                                                 \
           ([0] <= [i] <= [maxidx0])                                            \
-            : array[[ _sub_SxS_( maxidx0, i)]];                                \
-        } : modarray( array);                                                  \
+            : _sel_VxA_( [_sub_SxS_( maxidx0, i)], A);                         \
+        } : modarray( A);                                                      \
   return( res);                                                                \
 }
 
@@ -391,7 +401,7 @@ BUILT_IN( REVERSE)
 
 /******************************************************************************
  *
- * @fn <a>[+] reverse( int axis, <a>[+] arr_a)
+ * @fn <a>[+] reverse( int axis, <a>[+] A)
  *
  * @brief reverse on specified axis: 0 is leading axis, dim-1 is trailing axis.
  *
@@ -399,7 +409,7 @@ BUILT_IN( REVERSE)
 
 #define REVERSEAXIS( typ, postfix, zval, oval)                                 \
 inline                                                                         \
-typ[d:shp] reverse( int axis, typ[d:shp] array)                                \
+typ[d:shp] reverse( int axis, typ[d:shp] A)                                    \
 {                                                                              \
   shpel = _sel_VxA_( [axis], shp);                                             \
   offset = _sub_SxS_( shpel, 1);                                               \
@@ -407,8 +417,8 @@ typ[d:shp] reverse( int axis, typ[d:shp] array)                                \
           (_mul_SxV_( 0, shp) <= iv < shp) {                                   \
             ivel = _sel_VxA_( [ axis], iv);                                    \
             idx = _modarray_AxVxS_( iv, [ axis], _sub_SxS_( offset, ivel));    \
-          }  : _sel_VxA_( idx, array);                                         \
-        } : modarray( array);                                                  \
+          }  : _sel_VxA_( idx, A);                                             \
+        } : modarray( A);                                                      \
   return( res);                                                                \
 }
 
@@ -479,7 +489,7 @@ typ[d:shp] shift( int dimension, int count, typ boundary, typ[d:shp] array)    \
 inline                                                                         \
 typ[d:shp] shift( int[n] counts, typ boundary, typ[d:shp] array) | n <= d      \
 {                                                                              \
-  for( i = 0; i < n; i = _add_SxS_( i, 1)) {                                   \
+  for (i = 0; i < n; i = _add_SxS_( i, 1)) {                                   \
     offset = counts[[ i]];                                                     \
     array = shift( i, offset, boundary, array);                                \
   }                                                                            \
@@ -551,7 +561,7 @@ typ[d:shp] rotate( int dimension, int count, typ[d:shp] array)                 \
 inline                                                                         \
 typ[d:shp] rotate (int[n] counts,  typ[d:shp] array) | n <= d                  \
 {                                                                              \
-  for( i = 0; i < n; i = _add_SxS_( i, 1)) {                                   \
+  for (i = 0; i < n; i = _add_SxS_( i, 1)) {                                   \
     offset = _sel_VxA_( [i], counts);                                          \
     array = rotate( i, offset, array);                                         \
   }                                                                            \
@@ -673,7 +683,7 @@ ANY
 inline									                                                       \
 bool match( typ[n:shpA] A, typ[m:shpB] B)					                             \
 {									                                                             \
-  if( _eq_SxS_( n, m) && all( _eq_VxV_( shpA, shpB))) {		                     \
+  if (_eq_SxS_( n, m) && all( _eq_VxV_( shpA, shpB))) {		                     \
     res = with {							                                                 \
             (_mul_SxV_( 0, shpA) <= iv < shpA)                                 \
               : _eq_SxS_( _sel_VxA_( iv, A), _sel_VxA_( iv, B));  	           \

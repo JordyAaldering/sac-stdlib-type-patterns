@@ -1,7 +1,6 @@
 module ArrayArith;
 
-import ScalarArith: all;
-import ArrayBasics: {shape,sel};
+use ScalarArith: { zero, one };
 
 export all;
 
@@ -126,7 +125,7 @@ b[d:shp] name( a[d:shp] A)                                                     \
 inline                                                                         \
 typ clamp( typ v, typ minv, typ maxv)                                          \
 {                                                                              \
-  res = min( max( v, minv), maxv);                                             \
+  res = _min_SxS_( _max_SxS_( v, minv), maxv);                                 \
   return( res);                                                                \
 }
 
@@ -136,8 +135,8 @@ typ[d:shp] clamp( typ[d:shp] v, typ minv, typ maxv)                            \
 {                                                                              \
   res = with {                                                                 \
           (_mul_SxV_( 0, shp) <= iv < shp)                                     \
-            : min( max( _sel_VxA_( iv, v), minv),                              \
-                   maxv);                                                      \
+            : _min_SxS_( _max_SxS_( _sel_VxA_( iv, v), minv),                  \
+                         maxv);                                                \
         } : genarray( shp, zval);                                              \
   return( res);                                                                \
 }
@@ -148,8 +147,8 @@ typ[d:shp] clamp( typ[d:shp] v, typ[d:shp] minv, typ[d:shp] maxv)              \
 {                                                                              \
   res = with {                                                                 \
           (_mul_SxV_( 0, shp) <= iv < shp)                                     \
-            : min( max( _sel_VxA_( iv, v), _sel_VxA_( iv, minv)),              \
-                   _sel_VxA_( iv, maxv));                                      \
+            : _min_SxS_( _max_SxS_( _sel_VxA_( iv, v), _sel_VxA_( iv, minv)),  \
+                         _sel_VxA_( iv, maxv));                                \
         } : genarray( shp, zval);                                              \
   return( res);                                                                \
 }
@@ -262,20 +261,21 @@ BUILT_IN( NUM_CONV_OPS_A)
  ******************************************************************************/
 
 inline
-bool any( bool[d:shp] a)
+bool all( bool[d:shp] A)
 {
   res = with {
-          (_mul_SxV_( 0, shp) <= iv < shp) : a[ iv];
-        } : fold( |, false);
+          (_mul_SxV_( 0, shp) <= iv < shp)
+            : _sel_VxA_( iv, A);
+        } : fold( ScalarArith::&, true);
   return( res);
 }
 
-
 inline
-bool all( bool[d:shp] a)
+bool any( bool[d:shp] A)
 {
   res = with {
-          (_mul_SxV_( 0, shp) <= iv < shp) : a[ iv];
-        } : fold( &, true);
+          (_mul_SxV_( 0, shp) <= iv < shp)
+            : _sel_VxA_( iv, A);
+        } : fold( ScalarArith::|, false);
   return( res);
 }

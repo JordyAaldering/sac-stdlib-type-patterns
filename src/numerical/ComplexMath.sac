@@ -7,13 +7,18 @@ import Array: {OVERLOADS};
 
 export all;
 
-/*
- *  The following function definitions are based on
+/******************************************************************************
  *
- *  Bronstein/Semendjajew: Taschenbuch der Mathematik, page 512ff
- */
+ * The following function definitions are based on:
+ * Bronstein/Semendjajew: Taschenbuch der Mathematik, page 512ff.
+ *
+ ******************************************************************************/
 
-/*  Trigonometric functions on complex numbers.  */
+/******************************************************************************
+ *
+ * Trigonometric functions on complex numbers.
+ *
+ ******************************************************************************/
 
 inline
 complex sin( complex c)
@@ -49,25 +54,32 @@ complex tan( complex c)
 inline
 complex asin( complex c)
 {
-  c = toc(-(1d)) * i() * log(i() * c + sqrt(toc(1,0) - c * c));
+  c = toc( -1d) * i() * log( i() * c + sqrt( toc( 1d) - c * c));
   return( c);
 }
 
 inline
 complex acos( complex c)
 {
-  c = toc(-(1d)) * i() * log(c + sqrt(c * c - toc(1,0)));
+  c = toc( -1d) * i() * log( c + sqrt( c * c - toc( 1d)));
   return( c);
 }
 
 inline
 complex atan( complex c)
 {
-  c = (toc(1.0d) / (toc(2.0d) * i())) * log((toc(1,0) + i() * c) / (toc(1,0) - i() * c));
+  one = toc( 1d);
+  a = one / (toc( 2d) * i());
+  b = (one + i() * c) / (one - i() * c);
+  c = a * log( b);
   return( c);
 }
 
-/* Hyperbolic functions on complex numbers.  */
+/******************************************************************************
+ *
+ * Hyperbolic functions on complex numbers.
+ *
+ ******************************************************************************/
 
 inline
 complex sinh( complex c)
@@ -118,7 +130,11 @@ complex atanh( complex c)
   return( c);
 }
 
-/* Exponential and logarithmic functions on complex numbers.  */
+/******************************************************************************
+ *
+ * Exponential and logarithmic functions on complex numbers.
+ *
+ ******************************************************************************/
 
 inline
 complex exp( complex c)
@@ -140,24 +156,28 @@ complex log( complex c)
   return( c);
 }
 
-/* Power functions on complex numbers.  */
+/******************************************************************************
+ *
+ * Power functions on complex numbers.
+ *
+ ******************************************************************************/
 
 inline
-complex pow(complex base, complex expon)
+complex pow( complex base, complex expon)
 {
   c = exp( expon * log( base));
   return( c);
 }
 
 inline
-complex pow(complex base, double  expon)
+complex pow( complex base, double  expon)
 {
   c = exp( toc( expon) * log( base));
   return( c);
 }
 
 inline
-complex pow(double  base, complex expon)
+complex pow( double  base, complex expon)
 {
   c = exp( expon * toc( Math::log( base)));
   return( c);

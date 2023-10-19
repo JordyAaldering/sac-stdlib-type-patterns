@@ -1,7 +1,5 @@
 module Char;
 
-use ArrayBasics: {shape,sel};
-
 export all;
 
 #include "Templates.mac"
@@ -111,19 +109,20 @@ external char toupper( char C);
 
 #define TOCHAR_S( typ, postfix, zval, oval)                                    \
 inline                                                                         \
-char tochar( typ a)                                                            \
+char tochar( typ A)                                                            \
 {                                                                              \
-  res = _toc_S_( a);                                                           \
+  res = _toc_S_( A);                                                           \
   return( res);                                                                \
 }
 
 #define TOCHAR_A( typ, postfix, zval, oval)                                    \
 inline                                                                         \
-char[n,d:shp] tochar( typ[n,d:shp] a)                                          \
+char[d:shp] tochar( typ[d:shp] A)                                              \
 {                                                                              \
   res = with {                                                                 \
-          ( . <= iv <= . ) : _toc_S_( a[ iv]);                                 \
-        } : genarray( shape( a), ' ');                                         \
+          (_mul_SxV_( 0, shp) <= iv < shp)                                     \
+            : _toc_S_( _sel_VxA_( iv, A));                                     \
+        } : genarray( shp, ' ');                                               \
   return( res);                                                                \
 }
 

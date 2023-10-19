@@ -8,7 +8,11 @@ export all;
 
 typedef double[4] quaternion;
 
-// type conversions
+/******************************************************************************
+ *
+ * Type conversions.
+ *
+ ******************************************************************************/
 
 inline
 quaternion[*] toq( double[+] q)
@@ -34,7 +38,11 @@ double[+] tod( quaternion[*] q)
   return( res);
 }
 
-// Array properties
+/******************************************************************************
+ *
+ * Array properties.
+ *
+ ******************************************************************************/
 
 inline
 int dim( quaternion[*] q)
@@ -50,8 +58,6 @@ int[.] shape( quaternion[*] q)
   return( res);
 }
 
-// Array selection
-
 inline
 quaternion[*] sel( int[.] idx, quaternion[*] a)
 {
@@ -60,10 +66,14 @@ quaternion[*] sel( int[.] idx, quaternion[*] a)
   return( res);
 }
 
-// Scalar functions
+/******************************************************************************
+ *
+ * Scalar functions.
+ *
+ ******************************************************************************/
 
 inline
-quaternion[*] +( double a, quaternion[*] b)
+quaternion[d:shp] +( double a, quaternion[d:shp] b)
 {
   v = a + (double[+])b;
   res = (quaternion[*])v;
@@ -71,7 +81,7 @@ quaternion[*] +( double a, quaternion[*] b)
 }
 
 inline
-quaternion[*] +( quaternion[*] a, double b)
+quaternion[d:shp] +( quaternion[d:shp] a, double b)
 {
   v = (double[+])a + b;
   res = (quaternion[*])v;
@@ -79,7 +89,7 @@ quaternion[*] +( quaternion[*] a, double b)
 }
 
 inline
-quaternion[*] +( quaternion[*] a, quaternion[*] b)
+quaternion[d:shp] +( quaternion[d:shp] a, quaternion[d:shp] b)
 {
   v = (double[+])a + (double[+])b;
   res = (quaternion[*])v;

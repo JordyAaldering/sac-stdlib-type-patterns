@@ -4,8 +4,8 @@ export all;
 
 /******************************************************************************
  *
- * The SAC standard module List provides lists of integers as an additional data
- * type offering access functions as usual.
+ * The SAC standard module List provides lists of integers as an additional
+ * data type offering access functions as usual.
  *
  ******************************************************************************/
 

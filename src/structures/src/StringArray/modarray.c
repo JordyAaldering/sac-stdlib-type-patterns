@@ -18,7 +18,7 @@ void SAC_StringArray_modarray( SAC_ND_PARAM_out( arrout_nt, array *),
   SAC_ND_DECL__DESC( str_nt, );
   char *SAC_ND_A_FIELD( str_nt );
 
-  if( SAC_ND_A_RC( arr_nt) > 1 ) {
+  if (SAC_ND_A_RC( arr_nt) > 1 ) {
     SAC_ND_DEC_RC( arr_nt, 1);
     SAC_ND_A_FIELD( arr_nt) = SAC_StringArray_copy( SAC_ND_A_FIELD( arr_nt));
     SAC_ND_ALLOC__DESC( arr_nt, 0);

@@ -15,11 +15,11 @@ extern int FibreScanparse( void);
 #define RETURNnum(token) yylval.cint=atoi(yytext); return(token)
 #define RETURNflt(token) yylval.cfloat=atof(yytext); return(token)
 #define RETURNdbl(token) char* m=index(yytext, 'd');\
-                          if( m != NULL) \
+                          if (m != NULL) \
                             *m='e';\
                           else {\
                             m=index(yytext, 'D');\
-                            if( m != NULL)\
+                            if (m != NULL)\
                               *m='E';\
                           }\
                          yylval.cdbl=atof(yytext); return(token)
@@ -76,7 +76,7 @@ int start_token;
 
 [+-]?[0-9]+[bB]            {
                              yylval.cbyte=(char)strtoll(yytext,(char **)NULL,10);
-			     if(errno==ERANGE){ 
+			     if(errno==ERANGE){
 			       fprintf(stderr, \
 			       "Overflow problems converting %s to byte\n", \
 			       yytext);
@@ -87,7 +87,7 @@ int start_token;
 
 [+-]?[0-9]+[sS]            {
                              yylval.cshort=(short)strtoll(yytext,(char **)NULL,10);
-			     if(errno==ERANGE){ 
+			     if(errno==ERANGE){
 			       fprintf(stderr, \
 			       "Overflow problems converting %s to short\n", \
 			       yytext);
@@ -98,7 +98,7 @@ int start_token;
 
 [+-]?[0-9]+[iI]            {
                              yylval.cint=(int)strtoll(yytext,(char **)NULL,10);
-			     if(errno==ERANGE){ 
+			     if(errno==ERANGE){
 			       fprintf(stderr, \
 			       "Overflow problems converting %s to int\n", \
 			       yytext);
@@ -109,7 +109,7 @@ int start_token;
 
 [+-]?[0-9]+[lL]            {
                              yylval.clong=(long)strtoll(yytext,(char **)NULL,10);
-			     if(errno==ERANGE){ 
+			     if(errno==ERANGE){
 			       fprintf(stderr, \
 			       "Overflow problems converting %s to long\n", \
 			       yytext);
@@ -121,7 +121,7 @@ int start_token;
 [+-]?[0-9]+(ll|LL)         {
                              yylval.clonglong=(long long)
 			       strtoll(yytext,(char **)NULL,10);
-			     if(errno==ERANGE){ 
+			     if(errno==ERANGE){
 			       fprintf(stderr, \
 			       "Overflow problems converting %s to longlong\n", \
 			       yytext);
@@ -133,7 +133,7 @@ int start_token;
 [+-]?[0-9]+(ub|UB)         {
                              yylval.cubyte=(unsigned char)
 			       strtoull(yytext,(char **)NULL,10);
-			     if(errno==ERANGE){ 
+			     if(errno==ERANGE){
 			       fprintf(stderr, \
 			       "Overflow problems converting %s to ubyte\n", \
 			       yytext);
@@ -145,7 +145,7 @@ int start_token;
 [+-]?[0-9]+(us|US)         {
                              yylval.cushort=(unsigned short)
 			       strtoull(yytext,(char **)NULL,10);
-			     if(errno==ERANGE){ 
+			     if(errno==ERANGE){
 			       fprintf(stderr, \
 			       "Overflow problems converting %s to ushort\n", \
 			       yytext);
@@ -157,7 +157,7 @@ int start_token;
 [+-]?[0-9]+(ui|UI)         {
                              yylval.cuint=(unsigned int)
 			       strtoull(yytext,(char **)NULL,10);
-			     if(errno==ERANGE){ 
+			     if(errno==ERANGE){
 			       fprintf(stderr, \
 			       "Overflow problems converting %s to uint\n", \
 			       yytext);
@@ -169,7 +169,7 @@ int start_token;
 [+-]?[0-9]+(ul|UL)         {
                              yylval.culong=(unsigned long)
 			       strtoull(yytext,(char **)NULL,10);
-			     if(errno==ERANGE){ 
+			     if(errno==ERANGE){
 			       fprintf(stderr, \
 			       "Overflow problems converting %s to ulong\n", \
 			       yytext);
@@ -181,7 +181,7 @@ int start_token;
 [+-]?[0-9]+(ull|ULL)         {
                              yylval.culonglong=(unsigned long long)
 			       strtoull(yytext,(char **)NULL,10);
-			     if(errno==ERANGE){ 
+			     if(errno==ERANGE){
 			       fprintf(stderr, \
 			       "Overflow problems converting %s to ulonglong\n", \
 			       yytext);
@@ -205,7 +205,7 @@ void doScan( FILE *stream)
   /* Check if the stream is seekable */
   rewind( stream);
   if(errno!=0) {
-    fprintf(stderr, 
+    fprintf(stderr,
       "The fibre scanner only supports seekable streams. "
       "Try reading the fibre input via a file.\n");
     exit(-1);

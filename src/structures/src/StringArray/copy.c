@@ -13,10 +13,10 @@ array *SAC_StringArray_copy( array *arr)
   char * SAC_ND_A_FIELD( subs_nt);
 
   res = SAC_StringArray_alloc( arr->dim, arr->size);
-  for( i=0; i<arr->dim; i++) {
+  for (i=0; i<arr->dim; i++) {
      res->shp[i] = arr->shp[i];
   }
-  for( i=0; i<arr->size; i++) {
+  for (i=0; i<arr->size; i++) {
     SAC_ND_A_DESC( subs_nt) = arr->descs[i];
     SAC_ND_A_FIELD( subs_nt) = arr->data[i];
     SAC_ND_INC_RC( subs_nt, 1 );
