@@ -11,7 +11,7 @@ void SAC_StringArray_free( array *arr)
   SAC_ND_DECL__DESC( subs_nt, );
   char * SAC_ND_A_FIELD( subs_nt);
 
-  for( i=0; i<arr->size; i++) {
+  for (i=0; i<arr->size; i++) {
     SAC_ND_A_DESC( subs_nt) = arr->descs[i];
     SAC_ND_A_FIELD( subs_nt) = arr->data[i];
     SAC_ND_DEC_RC_FREE( subs_nt, 1 , free );

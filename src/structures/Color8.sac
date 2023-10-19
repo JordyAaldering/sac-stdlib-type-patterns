@@ -204,11 +204,11 @@ color[256] genAlternatingClut( color c1, color c2)
 inline
 color Hsb2Rgb( int h_in, int s_in, int b_in)
 {
-  if( b_in == 0) {
+  if (b_in == 0) {
     res = black();
-  } else if( b_in == 100 && s_in == 0) {
+  } else if (b_in == 100 && s_in == 0) {
     res = white();
-  } else if( s_in == 0) {
+  } else if (s_in == 0) {
     res = newColor( b_in, b_in, b_in);
   } else {
     h = tod( h_in) / 60d;
@@ -218,7 +218,7 @@ color Hsb2Rgb( int h_in, int s_in, int b_in)
     i = toi( h) % 6;
     f = h - tod( i);
 
-    if( ( i % 2) == 0) {
+    if (( i % 2) == 0) {
       f = 1d - f;
     }
 
@@ -229,17 +229,17 @@ color Hsb2Rgb( int h_in, int s_in, int b_in)
     m = toi( m * 255d);
     n = toi( n * 255d);
 
-    if( 0 == i) {
+    if (0 == i) {
       res = newColor( b, n, m);
-    } else if( 1 == i) {
+    } else if (1 == i) {
       res = newColor( n, b, m);
-    } else if( 2 == i) {
+    } else if (2 == i) {
       res = newColor( m, b, n);
-    } else if( 3 == i) {
+    } else if (3 == i) {
       res = newColor( m, n, b);
-    } else if( 4 == i) {
+    } else if (4 == i) {
       res = newColor( n, m, b);
-    } else if( 5 == i) {
+    } else if (5 == i) {
       res = newColor( b, m, n);
     } else {
       res = black();

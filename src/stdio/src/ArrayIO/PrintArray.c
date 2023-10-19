@@ -148,7 +148,7 @@ void PrintArr(FILE *stream, int typeflag, string format, int dim, int * shp, voi
    * to be expected behind *a!
    */
 
-  if( dim == 0) {
+  if (dim == 0) {
     switch(typeflag) {
       case BOOL:
         fprintf(stream, format , ((bool *)a)[0]);
@@ -262,7 +262,7 @@ void PrintArr(FILE *stream, int typeflag, string format, int dim, int * shp, voi
           n=dim-1;
           space=" ";
         }
-      } while( n>0);
+      } while (n>0);
 
       fprintf(stream, "\n");
 

@@ -1,4 +1,5 @@
 class Interval;
+
 external classtype;
 
-export {Interval};
+export { Interval };

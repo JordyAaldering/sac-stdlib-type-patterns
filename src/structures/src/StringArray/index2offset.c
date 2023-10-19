@@ -9,7 +9,7 @@ int SAC_StringArray_index2offset( int dim, int *idx, int *shp)
 
   offset = 0;
   size = 1;
-  for( i=dim - 1; i >= 0; i--) {
+  for (i=dim - 1; i >= 0; i--) {
     offset += size * idx[i];
     size *= shp[i];
   }

@@ -19,12 +19,12 @@ RandLC create_randlc( double x, double a)
   t23 = 1d;
   t46 = 1d;
 
-  for( i = 0; i < 23; i++) {
+  for (i = 0; i < 23; i++) {
     r23 = r23 * 0.5d;
     t23 = t23 * 2d;
   }
 
-  for( i = 0; i < 46; i++) {
+  for (i = 0; i < 46; i++) {
     r46 = r46 * 0.5d;
     t46 = t46 * 2d;
   }

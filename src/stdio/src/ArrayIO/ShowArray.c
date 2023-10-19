@@ -28,7 +28,7 @@ void ShowArr(FILE *stream, int typeflag, string fmt, int dim, int * shp, char *a
   // Introduce new lines at end of ultimate and penultimate dimensions
   int i, element_count;
   int rownum, colnum, planenum;
-  int rownums, colnums, planenums; 
+  int rownums, colnums, planenums;
   int rowoffset = 0;
 
   planenums = 1;
@@ -37,7 +37,7 @@ void ShowArr(FILE *stream, int typeflag, string fmt, int dim, int * shp, char *a
   }
 
 
-  if( 0 == dim) {  // show scalar
+  if (0 == dim) {  // show scalar
         fprintf(stream, fmt, a[0]);
         fprintf(stream, "\n");  // End row with new line
   } else {
@@ -52,7 +52,7 @@ void ShowArr(FILE *stream, int typeflag, string fmt, int dim, int * shp, char *a
 
     if (element_count != 0) {  // no output for empty array
       for ( planenum=0; planenum<planenums; planenum++) {
-       for ( rownum=0; rownum<rownums; rownum++) {  
+       for ( rownum=0; rownum<rownums; rownum++) {
         for ( colnum=0; colnum<colnums; colnum++) { // format one row
             fprintf(stream, fmt, a[rowoffset + colnum]);
         }

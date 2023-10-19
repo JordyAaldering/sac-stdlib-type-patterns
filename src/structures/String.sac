@@ -306,7 +306,7 @@ inline                                                                         \
 string tos( type[n] in, int indent)                                            \
 {                                                                              \
   res = "[\n";                                                                 \
-  for( i = 0; i < n; i++) {                                                    \
+  for (i = 0; i < n; i++) {                                                    \
     res = strcat( res, tos( in[ i], indent + 1));                              \
   }                                                                            \
   res = strcat( res, indent( indent, "]\n"));                                  \
