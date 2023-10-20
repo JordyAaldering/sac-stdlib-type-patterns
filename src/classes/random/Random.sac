@@ -41,7 +41,7 @@ external void srandom( uint SEED);
  ******************************************************************************/
 
 external long random();
-  #pragma linksign [0]
+  #pragma linksign[ 0]
   #pragma effect Random::RandomGen
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<stdlib.h>"
@@ -57,13 +57,13 @@ external long random();
  ******************************************************************************/
 
 external int random( int MIN, int MAX);
-  #pragma linksign [0,1,2]
+  #pragma linksign[ 0,1,2]
   #pragma effect Random::RandomGen
   #pragma linkname "SACrandom"
   #pragma linkobj "src/Random/Random.o"
 
 external double random(double MIN, double MAX);
-  #pragma linksign [0,1,2]
+  #pragma linksign[ 0,1,2]
   #pragma effect Random::RandomGen
   #pragma linkname "SACdrandom"
   #pragma linkobj "src/Random/Random.o"

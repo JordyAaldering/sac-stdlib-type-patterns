@@ -12,57 +12,57 @@ export all;
  ******************************************************************************/
 
 external bool isalpha( char C);
-  #pragma linksign[ 0, 1]
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/Char/ctype.o"
   #pragma linkname "SACisalpha"
 
 external bool isupper( char C);
-  #pragma linksign[ 0, 1]
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/Char/ctype.o"
   #pragma linkname "SACisupper"
 
 external bool islower( char C);
-  #pragma linksign[ 0, 1]
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/Char/ctype.o"
   #pragma linkname "SACislower"
 
 external bool isdigit( char C);
-  #pragma linksign[ 0, 1]
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/Char/ctype.o"
   #pragma linkname "SACisdigit"
 
 external bool isxdigit (char C);
-  #pragma linksign[ 0, 1]
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/Char/ctype.o"
   #pragma linkname "SACisxdigit"
 
 external bool isspace( char C);
-  #pragma linksign[ 0, 1]
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/Char/ctype.o"
   #pragma linkname "SACisspace"
 
 external bool ispunct( char C);
-  #pragma linksign[ 0, 1]
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/Char/ctype.o"
   #pragma linkname "SACispunct"
 
 external bool isalnum( char C);
-  #pragma linksign[ 0, 1]
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/Char/ctype.o"
   #pragma linkname "SACisalnum"
 
 external bool isprint( char C);
-  #pragma linksign[ 0, 1]
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/Char/ctype.o"
   #pragma linkname "SACisprint"
 
 external bool isgraph( char C);
-  #pragma linksign[ 0, 1]
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/Char/ctype.o"
   #pragma linkname "SACisgraph"
 
 external bool iscntrl( char C);
-  #pragma linksign[ 0, 1]
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/Char/ctype.o"
   #pragma linkname "SACiscntrl"
 
@@ -75,12 +75,12 @@ external bool iscntrl( char C);
  ******************************************************************************/
 
 external bool isascii( int N);
-  #pragma linksign[ 0, 1]
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/Char/ctype.o"
   #pragma linkname "SACisascii"
 
 external char toascii( int N);
-  #pragma linksign[ 0, 1]
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/Char/ctype.o"
   #pragma linkname "SACtoascii"
 
@@ -92,12 +92,12 @@ external char toascii( int N);
  ******************************************************************************/
 
 external char tolower( char C);
-  #pragma linksign[ 0, 1]
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/Char/ctype.o"
   #pragma linkname "SACtolower"
 
 external char toupper( char C);
-  #pragma linksign[ 0, 1]
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/Char/ctype.o"
   #pragma linkname "SACtoupper"
 

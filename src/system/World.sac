@@ -14,7 +14,7 @@ objdef World TheWorld = create_TheWorld();
  *  outside the functional framework of a SAC program.
  *
  *  In order to allow concurrent access to unrelated parts of the
- *  execution environment, some other predefined global objects are 
+ *  execution environment, some other predefined global objects are
  *  derived from world upon program start. These represent disjoint
  *  partitions of the execution environment or outside world.
  *
@@ -27,6 +27,6 @@ objdef World TheWorld = create_TheWorld();
 
 
 external World create_TheWorld();
-    #pragma linksign[0]
-    #pragma linkobj "src/World/World.o"
+  #pragma linksign[ 0]
+  #pragma linkobj "src/World/World.o"
 

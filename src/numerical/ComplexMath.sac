@@ -170,14 +170,14 @@ complex pow( complex base, complex expon)
 }
 
 inline
-complex pow( complex base, double  expon)
+complex pow( complex base, double expon)
 {
   c = exp( toc( expon) * log( base));
   return( c);
 }
 
 inline
-complex pow( double  base, complex expon)
+complex pow( double base, complex expon)
 {
   c = exp( expon * toc( Math::log( base)));
   return( c);

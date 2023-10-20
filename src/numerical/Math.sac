@@ -14,7 +14,7 @@ export all;
  ******************************************************************************/
 
 external double cos( double x);
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif
@@ -23,37 +23,37 @@ external double cos( double x);
 #endif
 
 external double sin( double x);
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif
 
 external double tan( double x);
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif
 
 external double acos( double x);
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif
 
 external double asin( double x);
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif
 
 external double atan( double x);
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif
 
 external double atan2( double x, double y);
-  #pragma linksign [0,1,2]
+  #pragma linksign[ 0,1,2]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif
@@ -66,37 +66,37 @@ external double atan2( double x, double y);
  ******************************************************************************/
 
 external double cosh( double x);
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif
 
 external double sinh( double x);
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif
 
 external double tanh( double x);
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif
 
 external double acosh( double x);
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif
 
 external double asinh( double x);
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif
 
 external double atanh( double x);
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif
@@ -109,61 +109,61 @@ external double atanh( double x);
  ******************************************************************************/
 
 external double exp( double x);
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif
 
 external float expf( float x);
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif
 
 external double, int frexp( double x);
-  #pragma linksign [0,2,1]
+  #pragma linksign[ 0,2,1]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif
 
 external double ldexp( double x, int EXP);
-  #pragma linksign [0,1,2]
+  #pragma linksign[ 0,1,2]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif
 
 external double log( double x);
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif
 
 external double log10( double x);
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif
 
 external double log2( double x);
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif
 
 external double expm1( double x);
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif
 
 external double log1p( double x);
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif
 
 external double, double modf( double x);
-  #pragma linksign [0,2,1]
+  #pragma linksign[ 0,2,1]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif
@@ -176,31 +176,31 @@ external double, double modf( double x);
  ******************************************************************************/
 
 external double pow( double x, double y);
-  #pragma linksign [0,1,2]
+  #pragma linksign[ 0,1,2]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif
 
 external float powf( float x, float y);
-  #pragma linksign [0,1,2]
+  #pragma linksign[ 0,1,2]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif
 
 external double sqrt( double x);
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif
 
 external float sqrtf( float x);
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif
 
 external double cbrt( double x);
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif
@@ -213,25 +213,25 @@ external double cbrt( double x);
  ******************************************************************************/
 
 external double ceil( double x);
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif
 
 external double fabs( double x);
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif
 
 external double floor( double x);
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif
 
 external double fmod( double x, double y);
-  #pragma linksign [0,1,2]
+  #pragma linksign[ 0,1,2]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif
@@ -245,18 +245,18 @@ external double fmod( double x, double y);
 
 /* Check x for infinity */
 external bool isinf( double x);
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/Math/isinf.o"
   #pragma linkname "SAC_MATH_isinf"
 
 /* Check x for being NaN */
 external bool isnan( double x);
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/Math/isnan.o"
   #pragma linkname "SAC_MATH_isnan"
 
 external bool finite( double x);
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/Math/isfinite.o"
   #pragma linkname "SAC_MATH_isfinite"
 
@@ -268,19 +268,19 @@ external bool finite( double x);
  ******************************************************************************/
 
 external double copysign( double x, double y);
-  #pragma linksign [0,1,2]
+  #pragma linksign[ 0,1,2]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif
 
 external double rint( double x);
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif
 
 external double hypot( double x, double y);
-  #pragma linksign [0,1,2]
+  #pragma linksign[ 0,1,2]
 #ifdef HAVE_HEADER_PRAGMA
   #pragma header "<math.h>"
 #endif

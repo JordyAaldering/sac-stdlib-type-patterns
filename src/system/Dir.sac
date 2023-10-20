@@ -8,11 +8,11 @@ use FileSystem : { TheFileSystem };
 
 export all;
 
-external  syserr, Dir opendir( string NAME);
-    #pragma effect TheFileSystem
-    #pragma linksign [0,1,2]
-    #pragma linkobj "src/Dir/opendir.o"
-    #pragma linkname "SACopendir"
+external syserr, Dir opendir( string NAME);
+  #pragma effect TheFileSystem
+  #pragma linksign[ 0,1,2]
+  #pragma linkobj "src/Dir/opendir.o"
+  #pragma linkname "SACopendir"
     /*
      * Open a directory stream using the directory NAME.
      * An error condition and a directory handle are returned.
@@ -21,20 +21,20 @@ external  syserr, Dir opendir( string NAME);
      * before using the directory handle.
      */
 
-external  void closedir( Dir& DIR);
-    #pragma effect TheFileSystem
-    #pragma linksign [1]
-    #pragma linkobj "src/Dir/closedir.o"
-    #pragma linkname "SACclosedir"
+external void closedir( Dir& DIR);
+  #pragma effect TheFileSystem
+  #pragma linksign[ 1]
+  #pragma linkobj "src/Dir/closedir.o"
+  #pragma linkname "SACclosedir"
     /*
      * Close the directory stream DIR.
      */
 
-external  string readdir( Dir& DIR);
-    #pragma effect TheFileSystem
-    #pragma linksign [0,1]
-    #pragma linkobj "src/Dir/readdir.o"
-    #pragma linkname "SACreaddir"
+external string readdir( Dir& DIR);
+  #pragma effect TheFileSystem
+  #pragma linksign[ 0,1]
+  #pragma linkobj "src/Dir/readdir.o"
+  #pragma linkname "SACreaddir"
     /*
      * Read the next entry from the directory stream DIR.
      * Entries for "." and ".." are skipped automatically.
@@ -42,30 +42,30 @@ external  string readdir( Dir& DIR);
      * an empty string is returned.
      */
 
-external  void rewinddir( Dir& DIR);
-    #pragma effect TheFileSystem
-    #pragma linksign [1]
-    #pragma linkobj "src/Dir/rewinddir.o"
-    #pragma linkname "SACrewinddir"
+external void rewinddir( Dir& DIR);
+  #pragma effect TheFileSystem
+  #pragma linksign[ 1]
+  #pragma linkobj "src/Dir/rewinddir.o"
+  #pragma linkname "SACrewinddir"
     /*
      * Reposition the directory stream DIR to the beginning.
      */
 
-external  long telldir( Dir& DIR);
-    #pragma effect TheFileSystem
-    #pragma linksign [0,1]
-    #pragma linkobj "src/Dir/telldir.o"
-    #pragma linkname "SACtelldir"
+external long telldir( Dir& DIR);
+  #pragma effect TheFileSystem
+  #pragma linksign[ 0,1]
+  #pragma linkobj "src/Dir/telldir.o"
+  #pragma linkname "SACtelldir"
     /*
      * Return the current position of the directory stream DIR.
      * On error -1 is returned.
      */
 
-external  void seekdir( Dir& DIR, long POS);
-    #pragma effect TheFileSystem
-    #pragma linksign [1,2]
-    #pragma linkobj "src/Dir/seekdir.o"
-    #pragma linkname "SACseekdir"
+external void seekdir( Dir& DIR, long POS);
+  #pragma effect TheFileSystem
+  #pragma linksign[ 1,2]
+  #pragma linkobj "src/Dir/seekdir.o"
+  #pragma linkname "SACseekdir"
     /*
      * Reposition the directory stream DIR to POS.
      */

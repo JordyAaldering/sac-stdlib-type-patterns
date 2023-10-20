@@ -1,5 +1,6 @@
 module Array;
 
+import Constants: all;
 import ScalarArith: all;
 import ArrayBasics: all;
 import ArrayArith: all;

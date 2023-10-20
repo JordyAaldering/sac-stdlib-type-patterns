@@ -9,35 +9,35 @@ export all;
 objdef CommandLine TheCommandLine = create_TheCommandLine( );
 
   /*
-   *  The global object TheCommandLine of class CommandLine serves as a 
+   *  The global object TheCommandLine of class CommandLine serves as a
    *  representation of the shell command used for starting program execution.
    *  It is derived from the global object TheWorld in
    *  order to represent this part or sub-world of the execution environment.
    */
 
-external  CommandLine create_TheCommandLine( );
-    #pragma effect World::TheWorld
-    #pragma linksign [0]
-    #pragma linkobj  "src/CommandLine/CommandLine.o"
+external CommandLine create_TheCommandLine( );
+  #pragma effect World::TheWorld
+  #pragma linksign[ 0]
+  #pragma linkobj "src/CommandLine/CommandLine.o"
 
 
-external  int argc();
-    #pragma effect TheCommandLine
-    #pragma linkname "SACargc"
-    #pragma linksign [0]
-    #pragma linkobj  "src/CommandLine/CommandLine.o"
+external int argc();
+  #pragma effect TheCommandLine
+  #pragma linkname "SACargc"
+  #pragma linksign[ 0]
+  #pragma linkobj "src/CommandLine/CommandLine.o"
 
-external  string argv();
-    #pragma effect TheCommandLine
-    #pragma linkname "SACargvall"
-    #pragma linksign [0]
-    #pragma linkobj  "src/CommandLine/CommandLine.o"
+external string argv();
+  #pragma effect TheCommandLine
+  #pragma linkname "SACargvall"
+  #pragma linksign[ 0]
+  #pragma linkobj "src/CommandLine/CommandLine.o"
 
-external  string argv(int N);
-    #pragma effect TheCommandLine
-    #pragma linkname "SACargv"
-    #pragma linksign [0,1]
-    #pragma linkobj  "src/CommandLine/CommandLine.o"
+external string argv(int N);
+  #pragma effect TheCommandLine
+  #pragma linkname "SACargv"
+  #pragma linksign[ 0,1]
+  #pragma linkobj "src/CommandLine/CommandLine.o"
 
 
   /* These functions provide access to the shell command by which

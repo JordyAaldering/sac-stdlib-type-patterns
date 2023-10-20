@@ -24,8 +24,8 @@ external stringArray modarray_AxVxS( stringArray labs, int[.] idx, string  str);
   #pragma linkname "SAC_StringArray_modarray"
   #pragma linkobj "src/StringArray/modarray.o"
   #pragma linkobj "src/StringArray/index2offset.o"
-  #pragma refcounting [0,1,2,3]
-  #pragma linksign [1,2,3,4]
+  #pragma refcounting[ 0,1,2,3]
+  #pragma linksign[ 1,2,3,4]
 
 stringArray drop( int[.] v, stringArray array)
 {
@@ -108,11 +108,11 @@ stringArray modarray( stringArray array, int[.] idx, stringArray val)
 }
 
 external string sel_VxA( int[.] idx, stringArray labs);
-    #pragma linkname "SAC_StringArray_sel"
-    #pragma linkobj "src/StringArray/sel.o"
-    #pragma linkobj "src/StringArray/index2offset.o"
-    #pragma refcounting [0,1,2]
-    #pragma linksign [1,2,3]
+  #pragma linkname "SAC_StringArray_sel"
+  #pragma linkobj "src/StringArray/sel.o"
+  #pragma linkobj "src/StringArray/index2offset.o"
+  #pragma refcounting[ 0,1,2]
+  #pragma linksign[ 1,2,3]
 
 stringArray sel( int[.] idx, stringArray array)
 {
@@ -164,21 +164,21 @@ stringArray to_stringArray( string s)
 external int dim( stringArray s);
   #pragma linkname "SAC_StringArray_dim"
   #pragma linkobj "src/StringArray/dim.o"
-  #pragma refcounting [0,1]
-  #pragma linksign [1,2]
+  #pragma refcounting[ 0,1]
+  #pragma linksign[ 1,2]
 
 external int[.] shape( stringArray s);
   #pragma linkname "SAC_StringArray_shape"
   #pragma linkobj "src/StringArray/shape.o"
-  #pragma refcounting [0,1]
-  #pragma linksign [1,2]
+  #pragma refcounting[ 0,1]
+  #pragma linksign[ 1,2]
 
 
 external stringArray stringArrayCreator( int[.] shp, string s);
   #pragma linkname "SAC_StringArray_genarray"
   #pragma linkobj "src/StringArray/genarray.o"
-  #pragma refcounting [0,1,2]
-  #pragma linksign [1,2,3]
+  #pragma refcounting[ 0,1,2]
+  #pragma linksign[ 1,2,3]
 
 stringArray genarray( int[.] shp, stringArray s)
 {

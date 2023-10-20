@@ -9,13 +9,13 @@
  *
  ******************************************************************************/
 
-#define MAP_BIN_AxA( name, op, a, b)                                           \
+#define MAP_BIN_SxA( name, op, a, b)                                           \
 inline                                                                         \
-b[d:shp] name( a[d:shp] A, a[d:shp] B)                                         \
+b[d:shp] name( a A, a[d:shp] B)                                                \
 {                                                                              \
   res = with {                                                                 \
           (_mul_SxV_( 0, shp) <= iv < shp)                                     \
-            : name( A[ iv], B[ iv]);                                           \
+            : name( A, B[ iv]);                                                \
         } : genarray( shp, name( one( A), one( B)));                           \
   return( res);                                                                \
 }
@@ -31,13 +31,13 @@ b[d:shp] name( a[d:shp] A, a B)                                                \
   return( res);                                                                \
 }
 
-#define MAP_BIN_SxA( name, op, a, b)                                           \
+#define MAP_BIN_AxA( name, op, a, b)                                           \
 inline                                                                         \
-b[d:shp] name( a A, a[d:shp] B)                                                \
+b[d:shp] name( a[d:shp] A, a[d:shp] B)                                         \
 {                                                                              \
   res = with {                                                                 \
           (_mul_SxV_( 0, shp) <= iv < shp)                                     \
-            : name( A, B[ iv]);                                                \
+            : name( A[ iv], B[ iv]);                                           \
         } : genarray( shp, name( one( A), one( B)));                           \
   return( res);                                                                \
 }
@@ -47,6 +47,9 @@ b[d:shp] name( a A, a[d:shp] B)                                                \
  * Array-Extensions for monadic ops
  *
  ******************************************************************************/
+
+#define MAP_MON_SxA( name, op, a, b)
+#define MAP_MON_AxS( name, op, a, b)
 
 #define MAP_MON_AxA( name, op, a, b)                                           \
 inline                                                                         \
@@ -59,9 +62,6 @@ b[d:shp] name( a[d:shp] A)                                                     \
   return( res);                                                                \
 }
 
-#define MAP_MON_SxA( name, op, a, b)
-#define MAP_MON_AxS( name, op, a, b)
-
 
 /******************************************************************************
  *
@@ -70,9 +70,9 @@ b[d:shp] name( a[d:shp] A)                                                     \
  ******************************************************************************/
 
 #define ARI_OPS_A( a)                                                          \
-MAP_ARI_OPS( AxA, a)                                                           \
 MAP_ARI_OPS( SxA, a)                                                           \
-MAP_ARI_OPS( AxS, a)
+MAP_ARI_OPS( AxS, a)                                                           \
+MAP_ARI_OPS( AxA, a)
 
 
 /******************************************************************************
@@ -86,14 +86,14 @@ EQ_OPS_A( a)                                                                   \
 COMP_OPS_A( a)
 
 #define EQ_OPS_A( a)                                                           \
-MAP_EQ_OPS( AxA, a)                                                            \
 MAP_EQ_OPS( SxA, a)                                                            \
-MAP_EQ_OPS( AxS, a)
+MAP_EQ_OPS( AxS, a)                                                            \
+MAP_EQ_OPS( AxA, a)
 
 #define COMP_OPS_A( a)                                                         \
-MAP_COMP_OPS( AxA, a)                                                          \
 MAP_COMP_OPS( SxA, a)                                                          \
-MAP_COMP_OPS( AxS, a)
+MAP_COMP_OPS( AxS, a)                                                          \
+MAP_COMP_OPS( AxA, a)
 
 
 /******************************************************************************

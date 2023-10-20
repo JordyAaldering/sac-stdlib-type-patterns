@@ -13,7 +13,7 @@ external RTimer createRTimer( );
 #pragma effect RTClock::TheRTClock
 #pragma linkname "SAC_RTimer_createRTimer"
 #pragma linkobj "src/RTimer/rtimer.o"
-#pragma linksign [1]
+#pragma linksign[ 1]
 #ifdef NEED_LIBRT
   #pragma linkwith "rt"
 #endif
@@ -56,7 +56,7 @@ external void resetRTimer( RTimer &rtimer);
 external int, int getRTimerInts( RTimer &rtimer);
 #pragma linkname "SAC_RTimer_getRTimerInts"
 #pragma linkobj "src/RTimer/rtimer.o"
-#pragma linksign [2,3,1]
+#pragma linksign[ 2,3,1]
 #ifdef NEED_LIBRT
   #pragma linkwith "rt"
 #endif
@@ -64,7 +64,7 @@ external int, int getRTimerInts( RTimer &rtimer);
 external double getRTimerDbl( RTimer &rtimer);
 #pragma linkname "SAC_RTimer_getRTimerDbl"
 #pragma linkobj "src/RTimer/rtimer.o"
-#pragma linksign [0,1]
+#pragma linksign[ 0,1]
 #ifdef NEED_LIBRT
   #pragma linkwith "rt"
 #endif

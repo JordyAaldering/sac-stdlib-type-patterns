@@ -2,12 +2,18 @@ module Color8;
 
 use MathArray: all;
 #define OVERLOADS toi,tod,dim,shape,sel,reshape,+,-,*
-use Array: all except {OVERLOADS};
-import Array: {OVERLOADS};
+use Array: all except { OVERLOADS };
+import Array: { OVERLOADS };
 
-export all except {Weights2Clut,genSteps};
+export all except { Weights2Clut, genSteps };
 
 typedef int[3] color;
+
+/******************************************************************************
+ *
+ * Type conversions.
+ *
+ ******************************************************************************/
 
 inline
 color black()
@@ -96,7 +102,8 @@ int[+] toi( color[*] c)
 inline
 double[3] tod( color c)
 {
-  return( tod( (int[3])c));
+  res = tod( (int[3])c);
+  return( res);
 }
 
 inline
@@ -105,6 +112,12 @@ double[+] tod( color[*] c)
   res = tod( (int[+])c);
   return( res);
 }
+
+/******************************************************************************
+ *
+ * Array properties.
+ *
+ ******************************************************************************/
 
 inline
 int dim( color[*] c)
@@ -129,7 +142,7 @@ color[*] sel( int[.] idx, color[*] c)
 }
 
 inline
-color[*] sel( int idx, color[*] c)
+color[d:shp] sel( int idx, color[.,d:shp] c)
 {
   res = sel( [idx], c);
   return( res);
@@ -143,6 +156,72 @@ color[d:shp] reshape( int[d:shp] shp, color[*] c)
   return( res);
 }
 
+/******************************************************************************
+ *
+ * Overloaded functions.
+ *
+ ******************************************************************************/
+
+inline
+color +( color a, color b)
+{
+  res = newColor( red( a) + red( b),
+                  green( a) + green( b),
+                  blue( a) + blue( b));
+  return( res);
+}
+
+inline
+color[d:shp] +( color[d:shp] a, color[d:shp] b)
+{
+  res = with{
+          (0*shp <= iv < shp) : a[ iv] + b[ iv];
+        } : genarray( shp, black());
+  return( res);
+}
+
+inline
+color -( color a, color b)
+{
+  res = newColor( red( a) - red( b),
+                  green( a) - green( b),
+                  blue( a) - blue( b));
+  return( res);
+}
+
+inline
+color[d:shp] -( color[d:shp] a, color[d:shp] b)
+{
+  res = with{
+          (0*shp <= iv < shp) : a[ iv] - b[ iv];
+        } : genarray( shp, white());
+  return( res);
+}
+
+inline
+color *( color c, double x)
+{
+  res = newColor( toi( tod( red( c)) * x),
+                  toi( tod( green( c)) * x),
+                  toi( tod( blue( c)) * x));
+  return( res);
+}
+
+inline
+color[d:shp] *( color[d:shp] c, double x)
+{
+  res = with{
+          (0*shp <= iv < shp) : c[ iv] * x;
+        } : genarray( shp, white());
+  return( res);
+}
+
+/******************************************************************************
+ *
+ * Color operations.
+ *
+ ******************************************************************************/
+
 inline
 double[256] genSteps( double from, double to)
 {
@@ -153,8 +232,8 @@ double[256] genSteps( double from, double to)
 inline
 color[256] Weights2Clut( double[256] w, color c1, color c2)
 {
-  a = { iv -> w[iv] * tod( (int[3])c1) };
-  b = { iv -> (1d - w[iv]) * tod( (int[3])c2) };
+  a = { iv -> w[ iv] * tod( (int[3])c1) };
+  b = { iv -> (1d - w[ iv]) * tod( (int[3])c2) };
   res = (color[256])toi( a + b);
   return( res);
 }
@@ -190,7 +269,7 @@ color[256] genAlternatingClut( color c1, color c2)
 {
   res = with {
           ( . <= [i] <= . step [2] ) : c1;
-        } : genarray( [256], c2 );
+        } : genarray( [256], c2);
   return( res);
 }
 
@@ -217,13 +296,12 @@ color Hsb2Rgb( int h_in, int s_in, int b_in)
 
     i = toi( h) % 6;
     f = h - tod( i);
-
-    if (( i % 2) == 0) {
+    if ((i % 2) == 0) {
       f = 1d - f;
     }
 
-    m = b * ( 1d - s);
-    n = b * ( 1d - s * f);
+    m = b * (1d - s);
+    n = b * (1d - s * f);
 
     b = toi( b * 255d);
     m = toi( m * 255d);
@@ -245,7 +323,6 @@ color Hsb2Rgb( int h_in, int s_in, int b_in)
       res = black();
     }
   }
-
   return( res);
 }
 
@@ -254,7 +331,7 @@ color[d:shp] Hsb2Rgb( int[d:shp] h_in, int s_in, int b_in)
 {
   res = with {
           (0*shp <= iv < shp)
-            : Hsb2Rgb( h_in[iv], s_in, b_in);
+            : Hsb2Rgb( h_in[ iv], s_in, b_in);
         } : genarray( shp, black());
   return( res);
 }
@@ -264,61 +341,7 @@ color[d:shp] Hsb2Rgb( int[d:shp] h_in, int[d:shp] s_in, int[d:shp] b_in)
 {
   res = with {
           (0*shp <= iv < shp)
-            : Hsb2Rgb( h_in[iv], s_in[iv], b_in[iv]);
+            : Hsb2Rgb( h_in[ iv], s_in[ iv], b_in[ iv]);
         } : genarray( shp, black());
-  return( res);
-}
-
-inline
-color +( color a, color b)
-{
-  res = newColor( red( a)   + red( b),
-                  green( a) + green( b),
-                  blue( a)  + blue( b));
-  return( res);
-}
-
-inline
-color[d:shp] +( color[d:shp] a, color[d:shp] b)
-{
-  res = with{
-          (0*shp <= iv < shp) : a[iv] + b[iv];
-        } : genarray( shp, black());
-  return( res);
-}
-
-inline
-color -( color a, color b)
-{
-  res = newColor( red( a)   - red( b),
-                  green( a) - green( b),
-                  blue( a)  - blue( b));
-  return( res);
-}
-
-inline
-color[d:shp] -( color[d:shp] a, color[d:shp] b)
-{
-  res = with{
-          (0*shp <= iv < shp) : a[iv] -  b[iv];
-        } : genarray( shp, white());
-  return( res);
-}
-
-inline
-color *( color c, double x)
-{
-  res = newColor( toi( tod( red( c))   * x),
-                  toi( tod( green( c)) * x),
-                  toi( tod( blue( c))  * x));
-  return( res);
-}
-
-inline
-color[d:shp] *( color[d:shp] c, double x)
-{
-  res = with{
-          (0*shp <= iv < shp) : c[iv] * x;
-        } : genarray( shp, white());
   return( res);
 }
