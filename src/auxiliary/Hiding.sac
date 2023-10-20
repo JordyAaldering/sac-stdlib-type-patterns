@@ -33,13 +33,6 @@ use Array: all;
  * SCALAR -> SCALAR
  *
  ******************************************************************************/
-#define HIDEVALUE_A( typ)                                                      \
-inline                                                                         \
-typ[*] hideValue( typ[*] in)                                                   \
-{                                                                              \
-  res = _hideValue_SxA_( 0, in);                                               \
-  return( res);                                                                \
-}
 
 #define HIDEVALUE_SxA( typ)                                                    \
 inline                                                                         \
@@ -49,9 +42,17 @@ typ[*] hideValue( int i, typ[*] in)                                            \
   return( res);                                                                \
 }
 
+#define HIDEVALUE_A( typ)                                                      \
+inline                                                                         \
+typ[*] hideValue( typ[*] in)                                                   \
+{                                                                              \
+  res = _hideValue_SxA_( 0, in);                                               \
+  return( res);                                                                \
+}
+
 #define HIDEVALUE( typ)                                                        \
-HIDEVALUE_A( typ)                                                              \
-HIDEVALUE_SxA( typ)
+HIDEVALUE_SxA( typ)                                                            \
+HIDEVALUE_A( typ)
 
 HIDEVALUE( int)
 HIDEVALUE( char)
@@ -71,13 +72,6 @@ HIDEVALUE( bool)
  * SCALAR -> SCALAR
  *
  ******************************************************************************/
-#define HIDESHAPE_A( typ)                                                      \
-inline                                                                         \
-typ[*] hideShape( typ[*] in)                                                   \
-{                                                                              \
-  res = _hideShape_SxA_( 0, in);                                               \
-  return( res);                                                                \
-}
 
 #define HIDESHAPE_SxA( typ)                                                    \
 inline                                                                         \
@@ -87,9 +81,17 @@ typ[*] hideShape( int i, typ[*] in)                                            \
   return( res);                                                                \
 }
 
+#define HIDESHAPE_A( typ)                                                      \
+inline                                                                         \
+typ[*] hideShape( typ[*] in)                                                   \
+{                                                                              \
+  res = _hideShape_SxA_( 0, in);                                               \
+  return( res);                                                                \
+}
+
 #define HIDESHAPE( typ)                                                        \
-HIDESHAPE_A( typ)                                                              \
-HIDESHAPE_SxA( typ)
+HIDESHAPE_SxA( typ)                                                            \
+HIDESHAPE_A( typ)
 
 HIDESHAPE( int)
 HIDESHAPE( char)
@@ -109,13 +111,6 @@ HIDESHAPE( bool)
  * SCALAR -> AUD
  *
  ******************************************************************************/
-#define HIDEDIM_A( typ)                                                        \
-inline                                                                         \
-typ[*] hideDimensionality( typ[*] in)                                          \
-{                                                                              \
-  res = _hideDim_SxA_( 0, in);                                                 \
-  return( res);                                                                \
-}
 
 #define HIDEDIM_SxA( typ)                                                      \
 inline                                                                         \
@@ -125,9 +120,17 @@ typ[*] hideDimensionality( int i, typ[*] in)                                   \
   return( res);                                                                \
 }
 
+#define HIDEDIM_A( typ)                                                        \
+inline                                                                         \
+typ[*] hideDimensionality( typ[*] in)                                          \
+{                                                                              \
+  res = _hideDim_SxA_( 0, in);                                                 \
+  return( res);                                                                \
+}
+
 #define HIDEDIM( typ)                                                          \
-HIDEDIM_A( typ)                                                                \
-HIDEDIM_SxA( typ)
+HIDEDIM_SxA( typ)                                                              \
+HIDEDIM_A( typ)
 
 HIDEDIM( int)
 HIDEDIM( char)

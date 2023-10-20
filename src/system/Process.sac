@@ -12,11 +12,11 @@ export all;
    */
 
 
-external  syserr, File popen(string COMMAND, string MODE);
-    #pragma linkobj "src/Process/process.o"
-    #pragma effect TheFileSystem
-    #pragma linkname "SACpopen"
-    #pragma linksign [0,1,2,3]
+external syserr, File popen(string COMMAND, string MODE);
+  #pragma linkobj "src/Process/process.o"
+  #pragma effect TheFileSystem
+  #pragma linkname "SACpopen"
+  #pragma linksign[ 0,1,2,3]
     /*
      * Open the process COMMAND in mode MODE. The modes supported are identical
      * to the C version of this function. An error condition and a process
@@ -25,20 +25,20 @@ external  syserr, File popen(string COMMAND, string MODE);
      */
 
 
-external  void pclose(File STREAM);
-    #pragma linkobj "src/Process/pclose.o"
-    #pragma effect TheFileSystem
-    #pragma linkname "SACpclose"
+external void pclose(File STREAM);
+  #pragma linkobj "src/Process/pclose.o"
+  #pragma effect TheFileSystem
+  #pragma linkname "SACpclose"
     /*
-     * Close the process stream given by the process handle STREAM. 
+     * Close the process stream given by the process handle STREAM.
      */
 
 
-external  int system(string COMMAND);
-    #pragma linkobj "src/Process/system.o"
-    #pragma effect TheFileSystem
-    #pragma linkname "SACsystem"
-    #pragma linksign [0,1] 
+external int system(string COMMAND);
+  #pragma linkobj "src/Process/system.o"
+  #pragma effect TheFileSystem
+  #pragma linkname "SACsystem"
+  #pragma linksign[ 0,1]
     /*
      * Execute COMMAND by calling:  /bin/sh -c COMMAND
      * and wait until the command has completed execution.

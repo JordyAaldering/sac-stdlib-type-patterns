@@ -27,7 +27,7 @@ external syserr, BinFile binfopen( string NAME, int FLAGS);
   #pragma linkobj "src/BinFile/binfopen.o"
   #pragma effect TheFileSystem
   #pragma linkname "SACbinfopen"
-  #pragma linksign [0,1,2,3]
+  #pragma linksign[ 0,1,2,3]
 
 /******************************************************************************
  *
@@ -39,7 +39,7 @@ external syserr binfclose( BinFile BINSTREAM);
   #pragma linkobj "src/BinFile/binfclose.o"
   #pragma effect TheFileSystem
   #pragma linkname "SACbinfclose"
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
 
 /******************************************************************************
  *
@@ -56,7 +56,7 @@ external syserr binfclose( BinFile BINSTREAM);
 external int O_RDONLY();
   #pragma linkobj "src/BinFile/binfflags.o"
   #pragma linkname "SACbinf_O_RDONLY"
-  #pragma linksign [0]
+  #pragma linksign[ 0]
 
 /******************************************************************************
  *
@@ -67,7 +67,7 @@ external int O_RDONLY();
 external int O_WRONLY();
   #pragma linkobj "src/BinFile/binfflags.o"
   #pragma linkname "SACbinf_O_WRONLY"
-  #pragma linksign [0]
+  #pragma linksign[ 0]
 
 /******************************************************************************
  *
@@ -78,7 +78,7 @@ external int O_WRONLY();
 external int O_RDWR();
   #pragma linkobj "src/BinFile/binfflags.o"
   #pragma linkname "SACbinf_O_RDWR"
-  #pragma linksign [0]
+  #pragma linksign[ 0]
 
 /******************************************************************************
  *
@@ -89,7 +89,7 @@ external int O_RDWR();
 external int O_CREAT();
   #pragma linkobj "src/BinFile/binfflags.o"
   #pragma linkname "SACbinf_O_CREAT"
-  #pragma linksign [0]
+  #pragma linksign[ 0]
 
 /******************************************************************************
  *
@@ -100,7 +100,7 @@ external int O_CREAT();
 external int O_TRUNC();
   #pragma linkobj "src/BinFile/binfflags.o"
   #pragma linkname "SACbinf_O_TRUNC"
-  #pragma linksign [0]
+  #pragma linksign[ 0]
 
 /******************************************************************************
  *
@@ -117,9 +117,9 @@ external int O_TRUNC();
  ******************************************************************************/
 external double[+] binfReadDoubleArray( BinFile &binstream, int DIM,
                                         int[.] SHAPE);
-  #pragma refcounting [0]
+  #pragma refcounting[ 0]
   #pragma linkname "SACbinfReadDoubleArray"
-  #pragma linksign[1,2,3,4]
+  #pragma linksign[ 1,2,3,4]
   #pragma linkobj "src/BinFile/binfReadDblArr.o"
 
 /******************************************************************************

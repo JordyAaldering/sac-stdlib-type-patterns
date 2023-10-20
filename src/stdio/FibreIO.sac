@@ -13,101 +13,101 @@ export all;
  * FibreScan on File
  */
 
-external  int    FibreScanInt( File &stream);
-  #pragma linksign[0,1]
+external int   FibreScanInt( File &stream);
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/FibreIO/ScanInt.o"
   #pragma linkobj "src/FibreIO/lex.FibreScan.o"
   #pragma linkobj "src/FibreIO/FibreScan.tab.o"
 
-external  float  FibreScanFloat( File &stream);
-  #pragma linksign[0,1]
+external float FibreScanFloat( File &stream);
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/FibreIO/ScanFlt.o"
 
-external  double FibreScanDouble( File &stream);
-  #pragma linksign[0,1]
+external double FibreScanDouble( File &stream);
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/FibreIO/ScanDbl.o"
 
-external  int[*]  FibreScanIntArray( File &stream);
-  #pragma refcounting [0]
-  #pragma linksign[1,2]
+external int[*] FibreScanIntArray( File &stream);
+  #pragma refcounting[ 0]
+  #pragma linksign[ 1,2]
   #pragma linkobj "src/FibreIO/ScanIntArr.o"
 
-external  float[*]  FibreScanFloatArray( File &stream);
-  #pragma refcounting [0]
-  #pragma linksign[1,2]
+external float[*] FibreScanFloatArray( File &stream);
+  #pragma refcounting[ 0]
+  #pragma linksign[ 1,2]
   #pragma linkobj "src/FibreIO/ScanFltArr.o"
 
-external  double[*]  FibreScanDoubleArray( File &stream);
-  #pragma refcounting [0]
-  #pragma linksign[1,2]
+external double[*] FibreScanDoubleArray( File &stream);
+  #pragma refcounting[ 0]
+  #pragma linksign[ 1,2]
   #pragma linkobj "src/FibreIO/ScanDblArr.o"
 
-external stringArray  FibreScanStringArray( File &stream);
-  #pragma refcounting [0]
-  #pragma linksign[1,2]
+external stringArray FibreScanStringArray( File &stream);
+  #pragma refcounting[ 0]
+  #pragma linksign[ 1,2]
   #pragma linkobj "src/FibreIO/ScanStringArr.o"
 
 /*****************************************************************
  * FibreScan on TermFile
  */
 
-external  int    FibreScanInt( TermFile &stream);
-  #pragma linksign[0,1]
+external int   FibreScanInt( TermFile &stream);
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/FibreIO/ScanInt.o"
   #pragma linkobj "src/FibreIO/lex.FibreScan.o"
   #pragma linkobj "src/FibreIO/FibreScan.tab.o"
 
-external  float  FibreScanFloat( TermFile &stream);
-  #pragma linksign[0,1]
+external float FibreScanFloat( TermFile &stream);
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/FibreIO/ScanFlt.o"
 
-external  double FibreScanDouble( TermFile &stream);
-  #pragma linksign[0,1]
+external double FibreScanDouble( TermFile &stream);
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/FibreIO/ScanDbl.o"
 
 
-external  int[*]  FibreScanIntArray( TermFile &stream);
-  #pragma refcounting [0]
-  #pragma linksign[1,2]
+external int[*] FibreScanIntArray( TermFile &stream);
+  #pragma refcounting[ 0]
+  #pragma linksign[ 1,2]
   #pragma linkobj "src/FibreIO/ScanIntArr.o"
 
-external  float[*]  FibreScanFloatArray( TermFile &stream);
-  #pragma refcounting [0]
-  #pragma linksign[1,2]
+external float[*] FibreScanFloatArray( TermFile &stream);
+  #pragma refcounting[ 0]
+  #pragma linksign[ 1,2]
   #pragma linkobj "src/FibreIO/ScanFltArr.o"
 
-external  double[*]  FibreScanDoubleArray( TermFile &stream);
-  #pragma refcounting [0]
-  #pragma linksign[1,2]
+external double[*] FibreScanDoubleArray( TermFile &stream);
+  #pragma refcounting[ 0]
+  #pragma linksign[ 1,2]
   #pragma linkobj "src/FibreIO/ScanDblArr.o"
 
-external  stringArray  FibreScanStringArray( TermFile &stream);
-  #pragma refcounting [0]
-  #pragma linksign[1,2]
+external stringArray FibreScanStringArray( TermFile &stream);
+  #pragma refcounting[ 0]
+  #pragma linksign[ 1,2]
   #pragma linkobj "src/FibreIO/ScanStringArr.o"
 
 /*****************************************************************
  * FibreScan on String
  */
 
-external  int[*]  FibreScanIntArrayStr( string stream);
-  #pragma refcounting [0]
-  #pragma linksign[1,2]
+external int[*] FibreScanIntArrayStr( string stream);
+  #pragma refcounting[ 0]
+  #pragma linksign[ 1,2]
   #pragma linkobj "src/FibreIO/ScanIntArr.o"
 
-external  float[*]  FibreScanFloatArrayStr( string stream);
-  #pragma refcounting [0]
-  #pragma linksign[1,2]
+external float[*] FibreScanFloatArrayStr( string stream);
+  #pragma refcounting[ 0]
+  #pragma linksign[ 1,2]
   #pragma linkobj "src/FibreIO/ScanFltArr.o"
 
-external  double[*]  FibreScanDoubleArrayStr( string stream);
-  #pragma refcounting [0]
-  #pragma linksign[1,2]
+external double[*] FibreScanDoubleArrayStr( string stream);
+  #pragma refcounting[ 0]
+  #pragma linksign[ 1,2]
   #pragma linkobj "src/FibreIO/ScanDblArr.o"
 
-external  stringArray  FibreScanStringArrayStr( string stream);
-  #pragma refcounting [0]
-  #pragma linksign[1,2]
+external stringArray FibreScanStringArrayStr( string stream);
+  #pragma refcounting[ 0]
+  #pragma linksign[ 1,2]
   #pragma linkobj "src/FibreIO/ScanStringArr.o"
 
 /*****************************************************************
@@ -313,27 +313,27 @@ inline void FibrePrint( string scaler)
 
 #define LINKSPECS(type, alias)						\
 									\
-external  type  FibreScan##alias( File &stream);			\
-  PRINTME(HASH)pragma linksign[0,1]					\
+external type  FibreScan##alias( File &stream);			\
+  PRINTME(HASH)pragma linksign[ 0,1]					\
   PRINTME(HASH)pragma linkobj "src/FibreIO/ScanOthers.o"		\
 									\
-external  type  FibreScan##alias( TermFile &stream);			\
-  PRINTME(HASH)pragma linksign[0,1]					\
+external type  FibreScan##alias( TermFile &stream);			\
+  PRINTME(HASH)pragma linksign[ 0,1]					\
   PRINTME(HASH)pragma linkobj "src/FibreIO/ScanOthers.o"		\
 									\
-external  type[*]  FibreScan##alias##Array( File &stream);		\
+external type[*]  FibreScan##alias##Array( File &stream);		\
   PRINTME(HASH)pragma refcounting [0]					\
-  PRINTME(HASH)pragma linksign[1,2]					\
+  PRINTME(HASH)pragma linksign[ 1,2]					\
   PRINTME(HASH)pragma linkobj "src/FibreIO/ScanOthersArr.o"             \
 									\
-external  type[*]  FibreScan##alias##Array( TermFile &stream);		\
+external type[*]  FibreScan##alias##Array( TermFile &stream);		\
   PRINTME(HASH)pragma refcounting [0]					\
-  PRINTME(HASH)pragma linksign[1,2]					\
+  PRINTME(HASH)pragma linksign[ 1,2]					\
   PRINTME(HASH)pragma linkobj "src/FibreIO/ScanOthersArr.o"	        \
 									\
-external  type[*]  FibreScan##alias##ArrayStr( string stream);		\
+external type[*]  FibreScan##alias##ArrayStr( string stream);		\
   PRINTME(HASH)pragma refcounting [0]					\
-  PRINTME(HASH)pragma linksign[1,2]					\
+  PRINTME(HASH)pragma linksign[ 1,2]					\
   PRINTME(HASH)pragma linkobj "src/FibreIO/ScanOthersArr.o"	        \
 									\
 external void FibrePrint( File &stream, int DIM, int[+] SHAPE, 		\
@@ -392,13 +392,13 @@ FIBRESCAN(type,alias)							\
 FIBREPRINT(type,formatting)
 
 #ifdef FULLTYPES
-LINKSCANPRINT(byte,Byte,hd)		
-LINKSCANPRINT(short,Short,hd)		
-LINKSCANPRINT(long,Long,ld)		
-LINKSCANPRINT(longlong,Longlong,lld)		
-LINKSCANPRINT(ubyte,Ubyte,hu)		
-LINKSCANPRINT(ushort,Ushort,hu)		
-LINKSCANPRINT(uint,Uint,u)		
-LINKSCANPRINT(ulong,Ulong,lu)		
+LINKSCANPRINT(byte,Byte,hd)
+LINKSCANPRINT(short,Short,hd)
+LINKSCANPRINT(long,Long,ld)
+LINKSCANPRINT(longlong,Longlong,lld)
+LINKSCANPRINT(ubyte,Ubyte,hu)
+LINKSCANPRINT(ushort,Ushort,hu)
+LINKSCANPRINT(uint,Uint,u)
+LINKSCANPRINT(ulong,Ulong,lu)
 LINKSCANPRINT(ulonglong,Ulonglong,llu)
 #endif /* FULLTYPES */

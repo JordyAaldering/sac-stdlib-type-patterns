@@ -14,7 +14,7 @@ external MTClock createTheMTClock( );
 #pragma effect World::TheWorld
 #pragma linkname "SAC_MTClock_createTheMTClock"
 #pragma linkobj "src/MTClock/mtclock.o"
-#pragma linksign [1]
+#pragma linksign[ 1]
 #ifdef NEED_LIBRT
 #pragma linkwith "rt"
 #endif
@@ -24,10 +24,10 @@ external void touch( MTClock& mtclock);
 #pragma linkobj "src/MTClock/mtclock.o"
 
 external long, long gettime();
-#pragma effect  MTClock::TheMTClock  
+#pragma effect MTClock::TheMTClock
 #pragma linkname "SAC_MTClock_gettime"
 #pragma linkobj "src/MTClock/mtclock.o"
-#pragma linksign [1,2]
+#pragma linksign[ 1,2]
 
 
 

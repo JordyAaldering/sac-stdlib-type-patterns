@@ -22,7 +22,7 @@ objdef Rand48 RandomGen = randGen();
  ******************************************************************************/
 
 external Rand48 randGen();
-  #pragma linksign [0]
+  #pragma linksign[ 0]
   #pragma linkname "create_Rand48Gen"
   #pragma linkobj "src/Rand48/Rand48.o"
 
@@ -39,13 +39,13 @@ external void srandom( long seed);
  ******************************************************************************/
 
 external int random( int min, int max);
-  #pragma linksign [0,1,2]
+  #pragma linksign[ 0,1,2]
   #pragma effect Rand48::RandomGen
   #pragma linkname "SACrand48"
   #pragma linkobj "src/Rand48/Rand48.o"
 
 external double random( double min, double max);
-  #pragma linksign [0,1,2]
+  #pragma linksign[ 0,1,2]
   #pragma effect Rand48::RandomGen
   #pragma linkname "SACdrand48"
   #pragma linkobj "src/Rand48/Rand48.o"

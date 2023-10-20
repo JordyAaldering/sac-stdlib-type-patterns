@@ -133,6 +133,14 @@ BUILT_IN( RAVEL)
  *
  ******************************************************************************/
 
+#define SEL_SxA( typ, postfix, zval, oval)                                     \
+inline                                                                         \
+typ[d:shp] sel( int idx, typ[.,d:shp] array)                                   \
+{                                                                              \
+  res = sel( [idx], array);                                                    \
+  return( res);                                                                \
+}
+
 #define SEL_VxA( typ, postfix, zval, oval)                                     \
 inline                                                                         \
 typ[d:shp] sel( int[vlen] idx, typ[vlen:vshp,d:shp] array)                     \
@@ -145,26 +153,11 @@ typ[d:shp] sel( int[vlen] idx, typ[vlen:vshp,d:shp] array)                     \
   return( res);                                                                \
 }
 
-BUILT_IN( SEL_VxA)
+#define SEL( typ, postfix, zval, oval)                                         \
+SEL_SxA( typ, postfix, zval, oval)                                             \
+SEL_VxA( typ, postfix, zval, oval)
 
-
-/******************************************************************************
- *
- * @fn <a>[d:shp] sel( int idx, <a>[.,d:shp] array)
- *
- * @brief generalizes selections for scalar indices.
- *
- ******************************************************************************/
-
-#define SEL_SxA( typ, postfix, zval, oval)                                     \
-inline                                                                         \
-typ[d:shp] sel( int idx, typ[.,d:shp] array)                                   \
-{                                                                              \
-  res = sel( [idx], array);                                                    \
-  return( res);                                                                \
-}
-
-BUILT_IN( SEL_SxA)
+BUILT_IN( SEL)
 
 
 /******************************************************************************

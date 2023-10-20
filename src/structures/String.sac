@@ -20,25 +20,25 @@ external typedef string;
   #pragma linkobj "src/String/copystr.o"
 
 external string to_string( char[.] A, int LENGTH);
-  #pragma linksign [1,2,3]
-  #pragma refcounting [0,1]
+  #pragma linksign[ 1,2,3]
+  #pragma refcounting[ 0,1]
   #pragma linkobj "src/String/tostring.o"
   /* Convert character array to string. */
 
 external string strmod( string S, int P, char C);
-  #pragma linksign [1,2,3,4]
-  #pragma refcounting [0,1]
+  #pragma linksign[ 1,2,3,4]
+  #pragma refcounting[ 0,1]
   #pragma linkobj "src/String/strmod.o"
   /* Change position P of string S to character C. */
 
 external string strins( string S1, int P, string S2);
   #pragma linkobj "src/String/strins.o"
-  #pragma linksign [0,1,2,3]
+  #pragma linksign[ 0,1,2,3]
   /* Insert string S2 into string S1 starting at position P. */
 
 external string strovwt( string S1, int P, string S2);
-  #pragma linksign [1,2,3,4]
-  #pragma refcounting [0,1]
+  #pragma linksign[ 1,2,3,4]
+  #pragma refcounting[ 0,1]
   #pragma linkobj "src/String/strovwt.o"
   /* Overwrite string S2 with string S1 starting at position P. */
 
@@ -49,39 +49,39 @@ external char strsel( string S, int P);
 
 external string strcat( string S1, string S2);
   #pragma linkname "SACstrcat"
-  #pragma linksign [0,1,2]
+  #pragma linksign[ 0,1,2]
   #pragma linkobj "src/String/strcat.o"
   /* Concatenate strings S1 and S2. */
 
 external string +( string S1, string S2);
   #pragma linkname "SACstrcat"
-  #pragma linksign [0,1,2]
+  #pragma linksign[ 0,1,2]
   #pragma linkobj "src/String/strcat.o"
   /* Infix version of strcat. */
 
 external string strncat( string S1, string S2, int N);
   #pragma linkname "SACstrncat"
-  #pragma linksign [0,1,2,3]
+  #pragma linksign[ 0,1,2,3]
   #pragma linkobj "src/String/strncat.o"
   /* Concatenate string S1 and the first N characters of string S2. */
 
 external int strcmp( string S1, string S2);
   #pragma linkname "SACstrcmp"
-  #pragma linksign [0,1,2]
+  #pragma linksign[ 0,1,2]
   #pragma linkobj "src/String/strcmp.o"
   /* Compare strings S1 and S2. Result is negative if S1 < S2, positive if
      S1 > S2 and zero if S1 == S2. */
 
 external int strncmp( string S1, string S2, int N);
   #pragma linkname "SACstrncmp"
-  #pragma linksign [0,1,2,3]
+  #pragma linksign[ 0,1,2,3]
   #pragma linkobj "src/String/strncmp.o"
   /* Compare the first N characters of strings S1 and S2. Result is negative if
      S1 < S2, positive if S1 > S2 and zero if S1 == S2. */
 
 external int strcasecmp( string S1, string S2);
   #pragma linkname "SACstrcasecmp"
-  #pragma linksign [0,1,2]
+  #pragma linksign[ 0,1,2]
   #pragma linkobj "src/String/strcasecmp.o"
   /* Compare strings S1 and S2 while ignoring upper/lower case.
      Result is negative if S1 < S2 alphabetically, positive if S1 > S2
@@ -89,7 +89,7 @@ external int strcasecmp( string S1, string S2);
 
 external int strncasecmp( string S1, string S2, int N);
   #pragma linkname "SACstrncasecmp"
-  #pragma linksign [0,1,2,3]
+  #pragma linksign[ 0,1,2,3]
   #pragma linkobj "src/String/strncasecmp.o"
   /* Compare the first N characters of strings S1 and S2 ignoring case.
      Result is negative if S1 < S2 alphabetically, positive if S1 > S2
@@ -102,32 +102,32 @@ external int strlen( string S);
   /* Return the length of string S. */
 
 external string strtake( string S, int N);
-  #pragma linksign [1,2,3]
-  #pragma refcounting [0,1]
+  #pragma linksign[ 1,2,3]
+  #pragma refcounting[ 0,1]
   #pragma linkobj "src/String/strtake.o"
   /* Return the first N characters of string S. */
 
 external string strdrop( string S, int N);
-  #pragma linksign [0,1,2]
+  #pragma linksign[ 0,1,2]
   #pragma linkobj "src/String/strdrop.o"
   /* Return all but the first N characters of string S. */
 
 external string strext( string S, int FIRST, int LEN);
-  #pragma linksign [0,1,2,3]
+  #pragma linksign[ 0,1,2,3]
   #pragma linkobj "src/String/strext.o"
   /* Extract the substring beginning at character FIRST with length
      LEN from string S. */
 
 external string sprintf( string FORMAT, ...);
   #pragma linkname "SACsprintf"
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/String/sprintf.o"
   /* Generate a string depending on the format string and a variable number of
      arguments similar to the printf and fprintf functions. */
 
 external int, ... sscanf( string S, string FORMAT);
   #pragma linkname "SACsscanf"
-  #pragma linksign [0,1,2]
+  #pragma linksign[ 0,1,2]
   #pragma linkobj "src/String/sscanf.o"
   /* Scan the string S concerning the format string FORMAT. The format string is
      the same as for fscanf. The int result gives the maximum number of
@@ -136,14 +136,14 @@ external int, ... sscanf( string S, string FORMAT);
               supported and may cause runtime errors. Use sscanf_str instead. */
 
 external string sscanf_str( string S, string FORMAT);
-  #pragma linksign [0,1,2]
+  #pragma linksign[ 0,1,2]
   #pragma linkobj "src/String/sscanfstr.o"
   /* Scan the string S concerning the format string FORMAT.
      FORMAT must have exactly one string conversion specifier.
      The scanned substring is returned. */
 
 external int strchr( string S, char C);
-  #pragma linksign [0,1,2]
+  #pragma linksign[ 0,1,2]
   #pragma linkobj "src/String/strchr.o"
   #pragma linkname "SACstrchr"
   /* Return the position of the first occurrence of character C in string S.
@@ -151,28 +151,28 @@ external int strchr( string S, char C);
 
 external int strrchr( string S, char C);
   #pragma linkname "SACstrrchr"
-  #pragma linksign [0,1,2]
+  #pragma linksign[ 0,1,2]
   #pragma linkobj "src/String/strrchr.o"
   /* Return the position of the last occurrence of character C in string S.
      The result is -1 if character C does not occurr at all. */
 
 external int strcspn( string S, string REJECT);
   #pragma linkname "SACstrcspn"
-  #pragma linksign [0,1,2]
+  #pragma linksign[ 0,1,2]
   #pragma linkobj "src/String/strcspn.o"
   /* Return the length of the initial segment of S which consists entirely of
      characters not in REJECT. */
 
 external int strspn( string S, string ACCEPT);
   #pragma linkname "SACstrspn"
-  #pragma linksign [0,1,2]
+  #pragma linksign[ 0,1,2]
   #pragma linkobj "src/String/strspn.o"
   /* Return the length of the initial segment of S which consists entirely of
      characters in ACCEPT. */
 
 external int strstr( string HAYSTACK, string NEEDLE);
   #pragma linkname "SACstrstr"
-  #pragma linksign [0,1,2]
+  #pragma linksign[ 0,1,2]
   #pragma linkobj "src/String/strstr.o"
   /* Find the first occurrence of the string NEEDLE in the string HAYSTACK.
      Return the index to this occurrence. If NEEDLE could not be found then
@@ -180,7 +180,7 @@ external int strstr( string HAYSTACK, string NEEDLE);
 
 external string, string strtok( string S, string SEP);
   #pragma linkname "SACstrtok"
-  #pragma linksign [0,1,2,3]
+  #pragma linksign[ 0,1,2,3]
   #pragma linkobj "src/String/strtok.o"
   /* Split string S into a token and the remainder string using the characters
      from SEP as delimiters. If S starts with characters from SEP then these are
@@ -188,31 +188,31 @@ external string, string strtok( string S, string SEP);
 
 external string chomp( string S);
   #pragma linkname "SACchomp"
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/String/trim.o"
   /* Remove trailing line terminators from S. */
 
 external string rtrim( string S);
   #pragma linkname "SACrtrim"
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/String/trim.o"
   /* Remove trailing whitespace from S. */
 
 external string ltrim( string S);
   #pragma linkname "SACltrim"
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/String/trim.o"
   /* Remove leading whitespace from S. */
 
 external string trim( string S);
   #pragma linkname "SACtrim"
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/String/trim.o"
   /* Remove leading and trailing whitespace from S. */
 
 external int, string strtoi( string S, int BASE);
   #pragma linkname "SACstrtoi"
-  #pragma linksign [0,1,2,3]
+  #pragma linksign[ 0,1,2,3]
   #pragma linkobj "src/String/strtoi.o"
   /* Convert the string S into an integer value. BASE specifies the format and
      must be in the range from 2 to 32. This feature allows for scanning
@@ -221,58 +221,58 @@ external int, string strtoi( string S, int BASE);
 
 external float, string strtof( string S);
   #pragma linkname "SACstrtof"
-  #pragma linksign [0,1,2]
+  #pragma linksign[ 0,1,2]
   #pragma linkobj "src/String/strtof.o"
   /* Convert the string S into a float value. The string result
      contains the remainder of the input string. */
 
 external double, string strtod( string S);
   #pragma linkname "SACstrtod"
-  #pragma linksign [0,1,2]
+  #pragma linksign[ 0,1,2]
   #pragma linkobj "src/String/strtod.o"
   /* Convert the string S into a double value. The string result
      contains the remainder of the input string. */
 
 external int toi( string S);
   #pragma linkname "SACtoi"
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/String/strtoi.o"
   /* Convert the string S into an integer value. In contrast to strtoi
      the number must always be in decimal representation. */
 
 external float tof( string S);
   #pragma linkname "SACtof"
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/String/strtof.o"
   /* Convert the string S into a float value. */
 
 external double tod( string S);
   #pragma linkname "SACtod"
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/String/strtod.o"
   /* Convert the string S into a double value. */
 
 external string tos( int N);
   #pragma linkname "SACitos"
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/String/itos.o"
   /* Convert integer into string. */
 
 external string tos( float N);
   #pragma linkname "SACftos"
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/String/ftos.o"
   /* Convert float into string. */
 
 external string tos( double N);
   #pragma linkname "SACdtos"
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/String/dtos.o"
   /* Convert double into string. */
 
 external string tos( bool B);
   #pragma linkname "SACbtos"
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
   #pragma linkobj "src/String/btos.o"
   /* Convert boolean into string. */
 

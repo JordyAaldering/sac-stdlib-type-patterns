@@ -56,7 +56,7 @@ external C99Benchmarking create_TheBenchmarkObject( );
   #pragma effect World::TheWorld
   #pragma linkname "benchCreate"
   #pragma linkobj "src/C99Benchmarking/bench.o"
-  #pragma linksign [1]
+  #pragma linksign[ 1]
 
 Interval getInterval( string interval_name, int interval_number, int unit_time)
 {
@@ -69,7 +69,7 @@ external Interval _getInterval_u( string interval_name, int interval_number,
   #pragma effect C99Benchmarking::TheBenchmarkObject
   #pragma linkname "benchGetInterval_siu"
   #pragma linkobj "src/C99Benchmarking/bench.o"
-  #pragma linksign [0,1,2,3]
+  #pragma linksign[ 0,1,2,3]
 
 Interval getInterval( string interval_name, int interval_number)
 {
@@ -81,7 +81,7 @@ external Interval _getInterval( string interval_name, int interval_number);
   #pragma effect C99Benchmarking::TheBenchmarkObject
   #pragma linkname "benchGetInterval_si"
   #pragma linkobj "src/C99Benchmarking/bench.o"
-  #pragma linksign [0,1,2]
+  #pragma linksign[ 0,1,2]
 
 Interval getInterval( string interval_name)
 {
@@ -93,7 +93,7 @@ external Interval _getInterval( string interval_name);
   #pragma effect C99Benchmarking::TheBenchmarkObject
   #pragma linkname "benchGetInterval_s"
   #pragma linkobj "src/C99Benchmarking/bench.o"
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
 
 Interval getInterval( int interval_number)
 {
@@ -105,13 +105,13 @@ external Interval _getInterval( int interval_number);
   #pragma effect C99Benchmarking::TheBenchmarkObject
   #pragma linkname "benchGetInterval_i"
   #pragma linkobj "src/C99Benchmarking/bench.o"
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
 
 external string benchUnitType( Interval& interval);
   #pragma effect C99Benchmarking::TheBenchmarkObject
   #pragma linkname "benchUnitName"
   #pragma linkobj "src/C99Benchmarking/bench.o"
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
 
 double benchTime( int unit_time)
 {
@@ -151,22 +151,22 @@ external void benchEnd( Interval& interval, double timestamp);
 external int benchUnit( Interval& interval);
   #pragma effect C99Benchmarking::TheBenchmarkObject
   #pragma linkobj "src/C99Benchmarking/bench.o"
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
 
 external double benchRes( Interval& interval);
   #pragma effect C99Benchmarking::TheBenchmarkObject
   #pragma linkobj "src/C99Benchmarking/bench.o"
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
 
 external int benchNum( Interval& interval);
   #pragma effect C99Benchmarking::TheBenchmarkObject
   #pragma linkobj "src/C99Benchmarking/bench.o"
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
 
 external string benchName( Interval& interval);
   #pragma effect C99Benchmarking::TheBenchmarkObject
   #pragma linkobj "src/C99Benchmarking/bench.o"
-  #pragma linksign [0,1]
+  #pragma linksign[ 0,1]
 
 double, string returnResultUnit( Interval& int1)
 {
@@ -462,6 +462,6 @@ external void benchDestroyInterval( Interval interval);
   #pragma effect C99Benchmarking::TheBenchmarkObject
   #pragma linkname "benchDestroyInterval"
   #pragma linkobj "src/C99Benchmarking/bench.o"
-  #pragma linksign [1]
+  #pragma linksign[ 1]
 
 #endif /* SAC_BACKEND_(C99/CUDA) */

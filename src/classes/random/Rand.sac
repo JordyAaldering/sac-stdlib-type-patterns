@@ -29,14 +29,14 @@ objdef Rand RandomGen = randGen();
  ******************************************************************************/
 
 external Rand randGen();
-  #pragma linksign [0]
+  #pragma linksign[ 0]
   #pragma linkname "create_RandGen"
-  #pragma linkobj  "src/Rand/Rand.o"
+  #pragma linkobj "src/Rand/Rand.o"
 
 external void srandom( uint seed);
   #pragma effect Rand::RandomGen
   #pragma linkname "srand"
-  #pragma linkobj  "src/Rand/Rand.o"
+  #pragma linkobj "src/Rand/Rand.o"
 
 
 /******************************************************************************
@@ -46,22 +46,22 @@ external void srandom( uint seed);
  ******************************************************************************/
 
 external int random( int min, int max);
-  #pragma linksign [0,1,2]
+  #pragma linksign[ 0,1,2]
   #pragma effect Rand::RandomGen
   #pragma linkname "SACrand"
-  #pragma linkobj  "src/Rand/Rand.o"
+  #pragma linkobj "src/Rand/Rand.o"
 
 external int rand();
-  #pragma linksign [0]
+  #pragma linksign[ 0]
   #pragma effect Rand::RandomGen
   #pragma linkname "SACcrand"
-  #pragma linkobj  "src/Rand/Rand.o"
+  #pragma linkobj "src/Rand/Rand.o"
 
 external double random( double min, double max);
-  #pragma linksign [0,1,2]
+  #pragma linksign[ 0,1,2]
   #pragma effect Rand::RandomGen
   #pragma linkname "SACdrand"
-  #pragma linkobj  "src/Rand/Rand.o"
+  #pragma linkobj "src/Rand/Rand.o"
 
 
 /******************************************************************************

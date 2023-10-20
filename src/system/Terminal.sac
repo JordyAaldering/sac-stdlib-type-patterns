@@ -16,7 +16,7 @@ objdef Terminal TheTerminal = create_TheTerminal( );
  */
 
 external Terminal create_TheTerminal( );
-    #pragma effect World::TheWorld
-    #pragma linksign[0]
-    #pragma linkobj "src/Terminal/terminal.o"
+  #pragma effect World::TheWorld
+  #pragma linksign[ 0]
+  #pragma linkobj "src/Terminal/terminal.o"
 
