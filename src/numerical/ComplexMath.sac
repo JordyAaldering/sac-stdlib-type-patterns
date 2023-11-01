@@ -1,9 +1,9 @@
 module ComplexMath;
 
 #define OVERLOADS +,-,*,/
-use Complex: all except {OVERLOADS};
-import Complex: {OVERLOADS};
-import Array: {OVERLOADS};
+use Complex: all except { OVERLOADS };
+import Complex: { OVERLOADS };
+import Array: { OVERLOADS };
 
 export all;
 
@@ -54,14 +54,16 @@ complex tan( complex c)
 inline
 complex asin( complex c)
 {
-  c = toc( -1d) * i() * log( i() * c + sqrt( toc( 1d) - c * c));
+  one = toc( 1d);
+  c = toc( -1d) * i() * log( i() * c + sqrt( one - c * c));
   return( c);
 }
 
 inline
 complex acos( complex c)
 {
-  c = toc( -1d) * i() * log( c + sqrt( c * c - toc( 1d)));
+  one = toc( 1d);
+  c = toc( -1d) * i() * log( c + sqrt( c * c - one));
   return( c);
 }
 
@@ -111,14 +113,16 @@ complex tanh( complex c)
 inline
 complex asinh( complex c)
 {
-  c = log( c + sqrt( c * c + toc( 1d)));
+  one = toc( 1d);
+  c = log( c + sqrt( c * c + one));
   return( c);
 }
 
 inline
 complex acosh( complex c)
 {
-  c = log( c + sqrt( c * c - toc( 1d)));
+  one = toc( 1d);
+  c = log( c + sqrt( c * c - one));
   return( c);
 }
 

@@ -1,8 +1,8 @@
 module Grey;
 
 #define OVERLOADS toi,tod,dim,shape,sel,reshape,+,-
-use Array: all except {OVERLOADS};
-import Array: {OVERLOADS};
+use Array: all except { OVERLOADS };
+import Array: { OVERLOADS };
 
 export all;
 

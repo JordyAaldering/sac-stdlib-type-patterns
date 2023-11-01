@@ -47,7 +47,8 @@ int pow2( int a)
        860880896,
       1721761792
     ];
-  in_range = _ge_SxS_( a, 0) && _lt_SxS_( a, _sel_VxA_( [0], _shape_A_( res)));
+  len = _sel_VxA_( [0], _shape_A_( res));
+  in_range = _ge_SxS_( a, 0) && _lt_SxS_( a, len);
   res = in_range ? _sel_VxA_( [a], res) : _sub_SxS_( 0, 1);
   return( res);
 }
@@ -95,6 +96,6 @@ int log2( int a)
   else if (_lt_SxS_( a,  430440448)) { res = 31; }
   else if (_lt_SxS_( a,  860880896)) { res = 32; }
   else if (_lt_SxS_( a, 1721761792)) { res = 33; }
-  else                     { res = _sub_SxS_( 0, 1); }
+  else                               { res = _sub_SxS_( 0, 1); }
   return( res);
 }

@@ -132,15 +132,15 @@ complex[n:shp,m:vshp] genarray( int[n] shp, complex[m:vshp] val)
 
 /******************************************************************************
  *
- * @fn complex[o:outer,i:inner] modarray( complex[o:outer,i:inner] A, int[o] idx,
- *                                        complex[i:inner] val)
+ * @fn complex[o:outer,i:inner] modarray( complex[o:outer,i:inner] A,
+ *                                        int[o] idx, complex[i:inner] val)
  *
  * @brief modifies the element of array at position idx.
  *
  ******************************************************************************/
 inline
-complex[o:outer,i:inner] modarray( complex[o:outer,i:inner] A, int[o] idx,
-                                   complex[i:inner] val)
+complex[o:outer,i:inner] modarray( complex[o:outer,i:inner] A,
+                                   int[o] idx, complex[i:inner] val)
   | all( idx < outer)
 {
   res = with {

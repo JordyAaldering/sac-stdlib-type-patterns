@@ -1,8 +1,8 @@
 module Quaternion;
 
 #define OVERLOADS tod,dim,shape,sel,+,-,*
-use Array: all except {OVERLOADS};
-import Array: {OVERLOADS};
+use Array: all except { OVERLOADS };
+import Array: { OVERLOADS };
 
 export all;
 
@@ -15,21 +15,21 @@ typedef double[4] quaternion;
  ******************************************************************************/
 
 inline
-quaternion[*] toq( double[+] q)
+quaternion[d:shp] toq( double[d:shp,4] q)
 {
   res = (quaternion[*])q;
   return( res);
 }
 
 inline
-quaternion[*] toq( int[+] q)
+quaternion[d:shp] toq( int[d:shp,4] q)
 {
   res = (quaternion[*])tod( q);
   return( res);
 }
 
 inline
-double[+] tod( quaternion[*] q)
+double[d:shp,4] tod( quaternion[d:shp] q)
 {
   res = (double[+])q;
   // the next line ensures type conformity to be checked....
@@ -59,9 +59,10 @@ int[.] shape( quaternion[*] q)
 }
 
 inline
-quaternion[*] sel( int[.] idx, quaternion[*] a)
+quaternion[d:shp] sel( int[vlen] idx, quaternion[vlen:vshp,d:shp] q)
+  | all( idx < vshp)
 {
-  v = ((double[+])a)[idx];
+  v = ((double[+])q)[idx];
   res = (quaternion[*])v;
   return( res);
 }

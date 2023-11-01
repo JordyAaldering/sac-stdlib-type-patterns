@@ -5,11 +5,11 @@ module String;
 import MutcString: all;
 export all;
 
-#else
+#else /* SAC_BACKEND_MUTC */
 
 import Char: all;
 import ScalarArith: {&,!=,==,+,>=,>,<=,<,++};
-import ArrayBasics: {shape,sel};
+import ArrayBasics: {sel};
 
 export all except {indent};
 
@@ -326,7 +326,6 @@ string to_string( char[n] arr)
   return( res);
 }
 
-
 inline
 char[n] tochar( string s)
 {
@@ -337,22 +336,26 @@ char[n] tochar( string s)
   return( res);
 }
 
-
 inline
 char sel( int[.] index, string s)
 {
-  res = strsel( s, index[[0]]);
+  res = strsel( s, index[0]);
   return( res);
 }
 
+inline
+char sel( int index, string s)
+{
+  res = strsel( s, index);
+  return( res);
+}
 
 inline
 string modarray( string s, int[1] index, char c)
 {
-  res = strmod( s, index[[0]], c);
+  res = strmod( s, index[0], c);
   return( res);
 }
-
 
 inline
 string modarray( string s1, int[1] index, string s2)
@@ -383,8 +386,7 @@ bool pred( string S)                                                           \
 {                                                                              \
   res = false;                                                                 \
   for (i = 0; res && i < strlen( S); i++) {                                    \
-    c = S[[ i]];                                                               \
-    res = pred( c);                                                            \
+    res = pred( S[ i]);                                                        \
   }                                                                            \
   return( res);                                                                \
 }
@@ -408,15 +410,15 @@ string convert( string S)                                                      \
 {                                                                              \
   for (i = 0; i < strlen( S); i++)                                             \
   {                                                                            \
-    if (pred( S[[ i]]))                                                        \
+    if (pred( S[ i]))                                                          \
     {                                                                          \
-      S = strmod( S, i, convert( S[[ i]]));                                    \
+      S = strmod( S, i, convert( S[ i]));                                      \
     }                                                                          \
   }                                                                            \
-  return S;                                                                    \
+  return( S);                                                                  \
 }
 
 CONVERT_STRING( isupper, tolower)
 CONVERT_STRING( islower, toupper)
 
-#endif
+#endif /* SAC_BACKEND_MUTC */
