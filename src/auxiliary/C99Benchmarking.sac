@@ -21,21 +21,21 @@ external classtype;
 
 #if defined(SAC_BACKEND_C99) || defined(SAC_BACKEND_CUDA)
 
-#define NANO_TO_SEC( time)   (tod( time) / 1000000000.0)
-#define NANO_TO_MSEC( time)  (tod( time) / 1000000.0)
-#define NANO_TO_MCSEC( time) (tod( time) / 1000.0)
+#define NANO_TO_SEC( time)    (tod( time) / 1000000000.0)
+#define NANO_TO_MSEC( time)   (tod( time) / 1000000.0)
+#define NANO_TO_MCSEC( time)  (tod( time) / 1000.0)
 
-#define MICRO_TO_SEC( time)  (tod( time) / 1000000.0)
-#define MICRO_TO_MSEC( time) (tod( time) / 1000.0)
-#define MICRO_TO_NSEC( time) (tod( time) * 1000.0)
+#define MICRO_TO_SEC( time)   (tod( time) / 1000000.0)
+#define MICRO_TO_MSEC( time)  (tod( time) / 1000.0)
+#define MICRO_TO_NSEC( time)  (tod( time) * 1000.0)
 
 #define MILLI_TO_SEC( time)   (tod( time) / 1000.0)
 #define MILLI_TO_MCSEC( time) (tod( time) * 1000.0)
 #define MILLI_TO_NSEC( time)  (tod( time) * 1000000.0)
 
-#define SEC_TO_MSEC( time)  (tod( time) * 1000.0)
-#define SEC_TO_MCSEC( time) (tod( time) * 1000000.0)
-#define SEC_TO_NSEC( time)  (tod( time) * 1000000000.0)
+#define SEC_TO_MSEC( time)    (tod( time) * 1000.0)
+#define SEC_TO_MCSEC( time)   (tod( time) * 1000000.0)
+#define SEC_TO_NSEC( time)    (tod( time) * 1000000000.0)
 
 #define SECONDS 0
 #define MILLIS 1
@@ -99,7 +99,7 @@ Interval getInterval( int interval_number)
 {
   interval = _getInterval( interval_number);
   return( interval);
- }
+}
 
 external Interval _getInterval( int interval_number);
   #pragma effect C99Benchmarking::TheBenchmarkObject

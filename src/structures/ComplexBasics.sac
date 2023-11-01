@@ -1,8 +1,8 @@
 module ComplexBasics;
 
 #define OVERLOADS toi,tof,tod,zero,one
-use Array: all except {OVERLOADS};
-import Array: {OVERLOADS};
+use Array: all except { OVERLOADS };
+import Array: { OVERLOADS };
 
 export all;
 

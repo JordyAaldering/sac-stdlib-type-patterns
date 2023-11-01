@@ -38,7 +38,7 @@ export all;
  *
  ******************************************************************************/
 
-#define OP_A_TEMPLATE(op, restype, argtype)                                    \
+#define MAP_UNA_A(op, argtype, restype)                                        \
 inline                                                                         \
 restype[d:shp] op( argtype[d:shp] A)                                           \
 {                                                                              \
@@ -49,7 +49,7 @@ restype[d:shp] op( argtype[d:shp] A)                                           \
   return( res);                                                                \
 }
 
-#define OP_AS_TEMPLATE(op, restype, argtype)                                   \
+#define MAP_BIN_AxS(op, argtype, restype)                                      \
 inline                                                                         \
 restype[d:shp] op( argtype[d:shp] A, argtype S)                                \
 {                                                                              \
@@ -67,7 +67,7 @@ restype[d:shp] op( argtype[d:shp] A, argtype S)                                \
  *
  ******************************************************************************/
 
-#define ALL_TYPES_1( template, arg1)                                           \
+#define ALL_TYPES( template, arg1)                                             \
 template( arg1, float, float)                                                  \
 template( arg1, double, double)
 
@@ -78,12 +78,12 @@ template( arg1, double, double)
  *
  ******************************************************************************/
 
-ALL_TYPES_1( OP_A_TEMPLATE, log)
-ALL_TYPES_1( OP_A_TEMPLATE, log2)
-ALL_TYPES_1( OP_A_TEMPLATE, log10)
-ALL_TYPES_1( OP_A_TEMPLATE, exp)
-ALL_TYPES_1( OP_A_TEMPLATE, fabs)
-ALL_TYPES_1( OP_A_TEMPLATE, sqrt)
-ALL_TYPES_1( OP_A_TEMPLATE, floor)
+ALL_TYPES( MAP_UNA_A, log)
+ALL_TYPES( MAP_UNA_A, log2)
+ALL_TYPES( MAP_UNA_A, log10)
+ALL_TYPES( MAP_UNA_A, exp)
+ALL_TYPES( MAP_UNA_A, fabs)
+ALL_TYPES( MAP_UNA_A, sqrt)
+ALL_TYPES( MAP_UNA_A, floor)
 
-ALL_TYPES_1( OP_AS_TEMPLATE, pow)
+ALL_TYPES( MAP_BIN_AxS, pow)
