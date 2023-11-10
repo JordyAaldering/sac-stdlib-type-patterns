@@ -49,6 +49,7 @@ b[d:shp] name( a[d:shp] A, a[d:shp] B)                                         \
  ******************************************************************************/
 
 #define MAP_MON_SxA( name, op, a, b)
+
 #define MAP_MON_AxS( name, op, a, b)
 
 #define MAP_MON_AxA( name, op, a, b)                                           \
@@ -108,7 +109,7 @@ a[*] take( int[vlen] v, a[vlen:shp,d:shp] A)                                   \
 {                                                                              \
   vext = _cat_VxV_( v, shp);                                                   \
   start = ArrayTransform::where( _lt_VxS_( vext, 0),                           \
-            _max_VxS_( _sub_VxS_( _add_VxV_( shape( A), vext)), 0), 0);        \
+            _max_VxS_( _sub_SxV_( 0, _add_VxV_( shape( A), vext)), 0), 0);     \
   stop = ArrayTransform::where( _lt_VxS_( vext, 0),                            \
             _abs_V_( vext), _min_VxV_( _abs_V_( vext), shape( A)));            \
   offset = ArrayTransform::where( _lt_VxS_( vext, 0),                          \
@@ -140,7 +141,7 @@ a[*] drop( int[vlen] v, a[vlen:vshp,d:shp] A)                                  \
 
 /*----------------------------------------------------------------------------*/
 
-#define TILE( a)                                                               \
+#define TILE_VxVxA( a)                                                         \
 inline                                                                         \
 a[*] tile( int[.] shp, int[.] idx, a[*] A)                                     \
 {                                                                              \
@@ -151,9 +152,12 @@ a[*] tile( int[.] shp, int[.] idx, a[*] A)                                     \
   return( res);                                                                \
 }
 
+#define TILE( a)                                                               \
+TILE_VxVxA( a)
+
 /*----------------------------------------------------------------------------*/
 
-#define CAT( a)                                                                \
+#define CAT_AxA( a)                                                            \
 inline                                                                         \
 a[o,d:shp] ++( a[n,d:shp] A, a[m,d:shp] B)                                     \
 {                                                                              \
@@ -171,9 +175,13 @@ a[o,d:shp] ++( a[n,d:shp] A, a[m,d:shp] B)                                     \
   return( res);                                                                \
 }
 
+#define CAT( a)                                                                \
+CAT_AxA( a)
+
+
 /*----------------------------------------------------------------------------*/
 
-#define REVERSE( a)                                                            \
+#define REVERSE_A( a)                                                          \
 inline                                                                         \
 a[n,d:shp] reverse( a[n,d:shp] A)                                              \
 {                                                                              \
@@ -185,9 +193,12 @@ a[n,d:shp] reverse( a[n,d:shp] A)                                              \
   return( res);                                                                \
 }
 
+#define REVERSE( a)                                                            \
+REVERSE_A( a)
+
 /*----------------------------------------------------------------------------*/
 
-#define SHIFT_SxSxA( a)                                                        \
+#define SHIFT_SxSxSxA( a)                                                      \
 inline                                                                         \
 a[d:shp] shift( int dimension, int count, a boundary, a[d:shp] A)              \
 {                                                                              \
@@ -236,15 +247,14 @@ a[d:shp] shift( int[.] counts, a[d:shp] A)                                     \
   return( res);                                                                \
 }
 
-
 #define SHIFT( a)                                                              \
-SHIFT_SxSxA( a)                                                                \
+SHIFT_SxSxSxA( a)                                                              \
 SHIFT_VxSxA( a)                                                                \
 SHIFT_VxA( a)
 
 /*----------------------------------------------------------------------------*/
 
-#define ROTATE_A( a)                                                           \
+#define ROTATE_SxSxA( a)                                                       \
 inline                                                                         \
 a[d:shp] rotate( int dimension, int count, a[d:shp] A)                         \
 {                                                                              \
@@ -271,7 +281,7 @@ a[d:shp] rotate( int dimension, int count, a[d:shp] A)                         \
   return( res);                                                                \
 }
 
-#define ROTATE_V( a)                                                           \
+#define ROTATE_VxA( a)                                                         \
 inline                                                                         \
 a[d:shp] rotate( int[vlen] counts,  a[d:shp] A)                                \
 {                                                                              \
@@ -283,5 +293,5 @@ a[d:shp] rotate( int[vlen] counts,  a[d:shp] A)                                \
 }
 
 #define ROTATE( a)                                                             \
-ROTATE_A( a)                                                                   \
-ROTATE_V( a)
+ROTATE_SxSxA( a)                                                               \
+ROTATE_VxA( a)
