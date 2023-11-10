@@ -201,7 +201,7 @@ typ[d:shp] modarray( typ[d:shp] array, int[d] idx, typ val)                    \
 inline                                                                         \
 typ[vlen:vshp,d:shp]                                                           \
 modarray( typ[vlen:vshp,d:shp] array, int[vlen] idx, typ[d:shp] val)           \
-  | _all_V_( idx < shp1)                                                       \
+  | _all_V_( idx < shp)                                                        \
 {                                                                              \
   res = with {                                                                 \
           (idx <= iv <= idx) : val;                                            \
